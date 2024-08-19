@@ -21,10 +21,14 @@ const BottomNavigation = (props: Props) => {
             className={nav.label === pageTitle ? '  border-0 text-primary' : ''}
             key={k}
           >
-            <Link to={nav.path} className="flex flex-col items-center">
+            <Link
+              to={nav.path}
+              className="flex flex-col items-center tooltip"
+              data-tip={nav.label}
+            >
               {nav.icon}
 
-              <span className="btm-nav-label">{nav.label}</span>
+              {/* <span className="btm-nav-label">{nav.label}</span> */}
             </Link>
           </button>
         );

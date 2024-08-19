@@ -11,7 +11,7 @@ export default function HeaderLogo() {
         <div className="w-8 rounded-full bg-neutral ring-offset-base-100 ring-offset-2">
           <img src={Logo} />
         </div>
-        <h1 className="text-xl font-semibold ml-2">AliceBot</h1>
+        {/* <h1 className="text-xl font-semibold ml-2">AliceBot</h1> */}
       </div>
     </Link>
   );
