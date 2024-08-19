@@ -1,0 +1,8 @@
+:where(.timeline > li) {
+    position: relative;
+    display: grid;
+    flex-shrink: 0;
+    align-items: center;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto auto auto;
+}
