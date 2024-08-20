@@ -9,6 +9,7 @@ import {
 import Subtitle from '@/shared/components/ui/Typography/subtitle';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
+
 import History from './components';
 
 const Historique: React.FC = () => {

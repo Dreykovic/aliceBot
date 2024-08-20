@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import headerSlice from '@/shared/components/layouts/partials/header/header-slice';
-
 import env from '@/shared/config/env';
 
 import apiSlice from './api-slice';

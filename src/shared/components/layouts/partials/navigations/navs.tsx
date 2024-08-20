@@ -1,4 +1,3 @@
-import privateRoutes from '@/routes/private-routes';
 import {
   BoxArrowDown,
   BoxArrowUp,
@@ -6,6 +5,8 @@ import {
   InfoCircle,
   People,
 } from 'react-bootstrap-icons';
+
+import privateRoutes from '@/routes/private-routes';
 
 const iconsClassName = 'w-8 h-8';
 // console.log('private', privateRoutes);

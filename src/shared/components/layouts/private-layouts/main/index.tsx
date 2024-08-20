@@ -2,12 +2,11 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Header from '@/shared/components/layouts/partials/header';
+import { setPageType } from '@/shared/components/layouts/partials/header/header-slice';
 import Navigations from '@/shared/components/layouts/partials/navigations';
-
 import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
-import { setPageType } from '@/shared/components/layouts/partials/header/header-slice';
 
 type Props = {
   children: ReactNode;
@@ -24,7 +23,7 @@ function SimplePrivateLayout(props: Props) {
       setContentHeight(height - rect.top);
     }
     dispatch(setPageType({ type: 'main' }));
-  }, [width, height, rect]);
+  }, [width, height, rect, dispatch]);
 
   return (
     <>
