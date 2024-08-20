@@ -1,5 +1,5 @@
-import { HomeModernIcon } from '@heroicons/react/24/outline';
 import React, { ReactNode } from 'react';
+import { HouseExclamationFill } from 'react-bootstrap-icons';
 
 type Props = {
   page: string;
@@ -11,7 +11,7 @@ const BreadcrumbsComponent: React.FC<Props> = ({ page, icon }) => {
     <div className="text-sm breadcrumbs">
       <ul>
         <li>
-          <HomeModernIcon />
+          <HouseExclamationFill />
           <a>Home</a>
         </li>
         <li>

@@ -1,11 +1,11 @@
-import {
-  UserIcon,
-  ArchiveBoxArrowDownIcon,
-  ArrowUpOnSquareIcon,
-  InformationCircleIcon,
-} from '@heroicons/react/24/solid';
-
 import privateRoutes from '@/routes/private-routes';
+import {
+  Award,
+  BoxArrowDown,
+  BoxArrowUp,
+  ClockHistory,
+  InfoCircle,
+} from 'react-bootstrap-icons';
 
 const iconsClassName = 'w-8 h-8';
 // console.log('private', privateRoutes);
@@ -13,22 +13,27 @@ const iconsClassName = 'w-8 h-8';
 const navs = [
   {
     label: 'Depot',
-    icon: <ArrowUpOnSquareIcon className={iconsClassName} />,
+    icon: <BoxArrowDown className={iconsClassName} />,
     path: privateRoutes.depot?.path,
   },
   {
     label: 'Retrait',
-    icon: <ArchiveBoxArrowDownIcon className={iconsClassName} />,
+    icon: <BoxArrowUp className={iconsClassName} />,
     path: privateRoutes.retrait?.path,
   },
   {
+    label: 'Historique',
+    icon: <ClockHistory className={iconsClassName} />,
+    path: privateRoutes.historique?.path,
+  },
+  {
     label: 'Parrainage',
-    icon: <UserIcon className={iconsClassName} />,
+    icon: <Award className={iconsClassName} />,
     path: privateRoutes.parrainage?.path,
   },
   {
     label: 'Informations',
-    icon: <InformationCircleIcon className={iconsClassName} />,
+    icon: <InfoCircle className={iconsClassName} />,
     path: privateRoutes.informations?.path,
   },
 ];

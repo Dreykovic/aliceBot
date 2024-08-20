@@ -23,7 +23,7 @@ const AppRoutes = ({ routes }: Props) => {
             delay: 0.5,
             ease: [0, 0.71, 0.2, 1.01],
           }}
-          className="h-full"
+          className="h-full bg-red-900"
         >
           <Routes location={location} key={location.key}>
             {Object.keys(routes).map((key) => (

@@ -2,6 +2,7 @@
 //TODO: rendre les routes nommé
 
 import depotRoutes from '@/pages/depot/routes';
+import historiqueRoutes from '@/pages/historique/routes';
 import informationsRoutes from '@/pages/Informations/routes';
 import parrainageRoutes from '@/pages/parrainage/routes';
 import retraitRoutes from '@/pages/retrait/routes';
@@ -12,6 +13,7 @@ const privateRoutes: RoutesConfigType = {
   ...retraitRoutes,
   ...parrainageRoutes,
   ...informationsRoutes,
+  ...historiqueRoutes,
 };
 
 export default privateRoutes;

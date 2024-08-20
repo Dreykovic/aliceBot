@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import {
   setPageTitle,
   setPageType,
 } from '@/shared/components/layouts/partials/header/header-slice';
 import Subtitle from '@/shared/components/ui/Typography/subtitle';
-import { AppDispatch } from '@/stores';
-import { useNavigate } from 'react-router-dom';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
+import { AppDispatch } from '@/stores';
+import History from './components';
 
-const Parrainage: React.FC = () => {
+const Historique: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
@@ -21,17 +22,20 @@ const Parrainage: React.FC = () => {
       navigate('/');
     }
 
-    dispatch(setPageTitle({ title: 'Parrainage' }));
+    dispatch(setPageTitle({ title: 'Historique' }));
     dispatch(setPageType({ type: 'main' }));
   }, [dispatch, navigate, width]);
+
   return (
     <>
-      {/* {contentHeight} /{height} /{rect?.top} */}
-      <div className="my-2 text-base-300 shadow-md">
-        <Subtitle className="">Parrainages</Subtitle>
+      <div className="p-4 overflow-hidden h-full bg-blue-900">
+        <div className="my-2 text-base-300 shadow-md flex justify-between">
+          <Subtitle className="">{'Historique'}</Subtitle>
+        </div>
+        <History />
       </div>
     </>
   );
 };
 
-export default Parrainage;
+export default Historique;

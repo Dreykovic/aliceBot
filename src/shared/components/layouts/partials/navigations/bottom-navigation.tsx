@@ -13,22 +13,26 @@ const BottomNavigation = (props: Props) => {
   );
   return (
     <div
-      className={`btm-nav ${pageType === 'simple' ? 'sticky' : ''} laptop:hidden bg-base-300 m-0 bottom-0 p-0 rounded-t-lg`}
+      className={`btm-nav  ${pageType === 'simple' ? 'sticky' : ''} laptop:hidden bg-base-300 m-0 bottom-0 p-0 rounded-t-lg`}
     >
       {props.navs.map((nav, k) => {
         return (
           <button
-            className={nav.label === pageTitle ? '  border-0 text-primary' : ''}
-            key={k}
+            key={k + 1}
+            className={`${
+              nav.label === pageTitle
+                ? 'border-0 bg-base-200 text-primary  btn-square rounded-lg'
+                : ''
+            } mx-1`}
           >
             <Link
               to={nav.path}
-              className="flex flex-col items-center tooltip"
+              className={`flex flex-col items-center tooltip `}
               data-tip={nav.label}
             >
-              {nav.icon}
+              <div>{nav.icon}</div>
 
-              {/* <span className="btm-nav-label">{nav.label}</span> */}
+              <span className="text-[8px]">{nav.label}</span>
             </Link>
           </button>
         );
