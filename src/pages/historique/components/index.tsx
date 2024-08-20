@@ -3,12 +3,9 @@ import * as Icon from 'react-bootstrap-icons';
 
 import historyData from './history-data';
 
-const tabClassNames =
-  'tab text-base-200 active:text-base-content checked:text-base-content  focus:text-base-content';
-
 const History = () => {
   return (
-    <div className={`h-full bg-red-900`}>
+    <div className={`h-full  `}>
       <div>
         <div className="flex  py-3 text-base-300 justify-end gap-4">
           <Icon.Calendar className="w-6 h-6" />
@@ -16,7 +13,9 @@ const History = () => {
         </div>
       </div>
 
-      <ul className={`timeline timeline-vertical overflow-y-auto h-full`}>
+      <ul
+        className={`timeline timeline-vertical overflow-y-auto h-full bg-base-200 mb-5`}
+      >
         {historyData.map((historyItem, k) => {
           const statusColor =
             historyItem.status === 'Failed' ? 'error' : 'success';
@@ -24,18 +23,16 @@ const History = () => {
 
           return (
             // TODO: Arranger le format des key
-            <li key={'history' + k} className="mb-3">
+            <li key={'history' + k} className="mb-1">
               <div
-                className={`timeline-start text-neutral-content badge bg-primary`}
+                className={`timeline-start text-neutral-content badge bg-neutral`}
               >
-                {' '}
                 {historyItem.date}
               </div>
               <div
-                className={`timeline-middle hover:border-2 hover:border-${statusColor} rounded-lg p-1 `}
+                className={`timeline-middle  hover:border-${statusColor} rounded-lg p-1 `}
               >
                 <div className="text-base-300">
-                  <h1>{historyItem.type}</h1>
                   <div
                     className={`grid grid-cols-3 place-items-center text-${statusColor}`}
                   >
@@ -44,7 +41,7 @@ const History = () => {
                     <h2>{historyItem.to}</h2>
                   </div>
                   <span className={`text-${statusColor}`}>
-                    {historyItem.amout}
+                    {historyItem.amount}
                   </span>
                 </div>
               </div>

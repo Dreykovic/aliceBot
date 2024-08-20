@@ -1,26 +1,28 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 
 import AppRoutes from '@/routes';
 import privateRoutes from '@/routes/private-routes';
 import MainPrivateLayout from '@/shared/components/layouts/private-layouts/main';
-import SimplePrivateLayout from '@/shared/components/layouts/private-layouts/simple';
-import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
-import { RootState } from '@/stores';
+
+import { Loading } from '@/shared/components/ui/loading';
 
 const AuthProvider: React.FC = () => {
-  const { width } = useWindowDimensions();
-  const { pageType } = useSelector((state: RootState) => state.header);
+  const [loading, setLoading] = useState<Boolean>(true);
+  useEffect(() => {
+    setInterval(() => {
+      setLoading(false);
+    }, 3000);
+  });
+  console.log(loading);
+
   return (
     <>
-      {width >= 1024 || pageType === 'main' ? (
+      {loading === false ? (
         <MainPrivateLayout>
           <AppRoutes routes={privateRoutes} />
         </MainPrivateLayout>
       ) : (
-        <SimplePrivateLayout>
-          <AppRoutes routes={privateRoutes} />
-        </SimplePrivateLayout>
+        <Loading />
       )}
     </>
   );

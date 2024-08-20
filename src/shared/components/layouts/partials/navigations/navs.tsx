@@ -1,10 +1,10 @@
 import privateRoutes from '@/routes/private-routes';
 import {
-  Award,
   BoxArrowDown,
   BoxArrowUp,
   ClockHistory,
   InfoCircle,
+  People,
 } from 'react-bootstrap-icons';
 
 const iconsClassName = 'w-8 h-8';
@@ -28,7 +28,7 @@ const navs = [
   },
   {
     label: 'Parrainage',
-    icon: <Award className={iconsClassName} />,
+    icon: <People className={iconsClassName} />,
     path: privateRoutes.parrainage?.path,
   },
   {
