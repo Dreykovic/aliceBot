@@ -3,6 +3,7 @@ import {
   BoxArrowUp,
   ClockHistory,
   InfoCircle,
+  Key,
   People,
 } from 'react-bootstrap-icons';
 
@@ -31,6 +32,11 @@ const navs = [
     label: 'Parrainage',
     icon: <People className={iconsClassName} />,
     path: privateRoutes.parrainage?.path,
+  },
+  {
+    label: 'Mes Ids',
+    icon: <Key className={iconsClassName} />,
+    path: privateRoutes.mesIds?.path,
   },
   {
     label: 'Informations',

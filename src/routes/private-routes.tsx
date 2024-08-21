@@ -4,6 +4,7 @@
 import depotRoutes from '@/pages/depot/routes';
 import historiqueRoutes from '@/pages/historique/routes';
 import informationsRoutes from '@/pages/Informations/routes';
+import mesIdsRoutes from '@/pages/mes-ids/routes';
 import parrainageRoutes from '@/pages/parrainage/routes';
 import retraitRoutes from '@/pages/retrait/routes';
 import { RoutesConfigType } from '@/shared/types/routes-type';
@@ -14,6 +15,7 @@ const privateRoutes: RoutesConfigType = {
   ...parrainageRoutes,
   ...informationsRoutes,
   ...historiqueRoutes,
+  ...mesIdsRoutes,
 };
 
 export default privateRoutes;
