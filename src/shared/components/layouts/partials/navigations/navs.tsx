@@ -1,5 +1,4 @@
 import {
-  BoxArrowDown,
   BoxArrowInDown,
   BoxArrowUp,
   ClockHistory,
