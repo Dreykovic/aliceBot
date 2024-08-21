@@ -1,5 +1,6 @@
 import {
   BoxArrowDown,
+  BoxArrowInDown,
   BoxArrowUp,
   ClockHistory,
   InfoCircle,
@@ -15,7 +16,7 @@ const iconsClassName = 'w-8 h-8';
 const navs = [
   {
     label: 'Depot',
-    icon: <BoxArrowDown className={iconsClassName} />,
+    icon: <BoxArrowInDown className={iconsClassName} />,
     path: privateRoutes.depot?.path,
   },
   {
