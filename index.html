@@ -24,12 +24,12 @@
                 _telegram.WebApp.expand();
                 const user = _telegram.WebApp.initDataUnsafe.user;
 
-                if (user && user.username) {
-                    document.getElementById("username").innerText = `Bonjour ${user.username}`;
-                } else {
-                    document.getElementById("username").innerText = "Utilisateur inconnu";
-                }
-                document.getElementById("message").innerText = `Tu est sur ${_telegram.WebApp.platform} En mode : ${_telegram.WebApp.colorScheme}`;
+                // if (user && user.username) {
+                //     document.getElementById("username").innerText = `Bonjour ${user.username}`;
+                // } else {
+                //     document.getElementById("username").innerText = "Utilisateur inconnu";
+                // }
+                // document.getElementById("message").innerText = `Tu est sur ${_telegram.WebApp.platform} En mode : ${_telegram.WebApp.colorScheme}`;
             };
             checkTelegramReady();
         });
