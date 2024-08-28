@@ -96,4 +96,5 @@ const historyData = [
     date: '10-02-2023',
   },
 ];
+
 export default historyData;

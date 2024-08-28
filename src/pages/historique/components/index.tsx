@@ -12,10 +12,8 @@ const History = () => {
           <Icon.Funnel className="w-6 h-6" />
         </div>
       </div>
-
       <ul
-        className={`timeline timeline-vertical overflow-y-auto h-full bg-base-200 mb-5`}
-      >
+        className={`timeline timeline-vertical overflow-y-auto h-full bg-base-200 mb-5`}>
         {historyData.map((historyItem, k) => {
           const statusColor =
             historyItem.status === 'Failed' ? 'error' : 'success';
