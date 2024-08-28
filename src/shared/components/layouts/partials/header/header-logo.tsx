@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import Logo from '@/assets/images/logo/logo.jpeg';
+import Logo from '@/assets/images/logo/logo.jpg';
 
 export default function HeaderLogo() {
   // const { authUser } = useSelector((state: RootState) => state.auth);

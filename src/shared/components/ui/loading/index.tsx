@@ -1,4 +1,4 @@
-import Logo from '@/assets/images/logo/logo.jpeg';
+import Logo from '@/assets/images/logo/logo.jpg';
 
 import Title from '../Typography/title';
 export const Loading = () => {
