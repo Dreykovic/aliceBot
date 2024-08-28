@@ -8,6 +8,31 @@
   </head>
   <body>
     <div id="root"></div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const checkTelegramReady = () => {
+                const _telegram = window.Telegram;
+                
+                if (!_telegram || !_telegram.WebApp || !_telegram.WebApp.initData) {
+                    console.log("En attente de l'initialisation de Telegram...");
+                    setTimeout(checkTelegramReady, 100);  // Réessaye après 100ms
+                    return;
+                }
+
+                _telegram.WebApp.expand();
+                const user = _telegram.WebApp.initDataUnsafe.user;
+
+                // if (user && user.username) {
+                //     document.getElementById("username").innerText = `Bonjour ${user.username}`;
+                // } else {
+                //     document.getElementById("username").innerText = "Utilisateur inconnu";
+                // }
+                // document.getElementById("message").innerText = `Tu est sur ${_telegram.WebApp.platform} En mode : ${_telegram.WebApp.colorScheme}`;
+            };
+            checkTelegramReady();
+        });
+    </script>
   </body>
 </html>

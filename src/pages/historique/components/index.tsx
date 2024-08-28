@@ -21,7 +21,6 @@ const History = () => {
           <Icon.Search className="w-6 h-6" />
         </div>
       </div>
-
       <ul className={`timeline timeline-vertical overflow-y-auto h-full  mb-5`}>
         {historyData.map((historyItem, k) => {
           // const statusColor =

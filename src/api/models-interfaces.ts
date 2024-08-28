@@ -1,0 +1,58 @@
+export interface Employee {
+  id: undefined | number;
+  nom: string;
+  prenom: string;
+  contact: string;
+  create_at: string;
+  username: string;
+}
+
+export interface Client {
+  id: undefined | number;
+  nom: string;
+  prenom: string;
+  contact: string;
+  create_at: string;
+  username: string;
+  code_parainage_depot: string;
+  montant_parainage_depot: string;
+  country: string;
+}
+
+export interface PaymentMethode {
+  id: undefined | number;
+  nom_moyen: string;
+  code_operation: string;
+  contact: string;
+  mot_recharge: string;
+  mot_retrait: string;
+}
+
+export interface Bookmaker {
+  id: undefined | number;
+  nom_bookmaker: string;
+}
+
+export interface EmployeePaymentMethode {
+  id: undefined | number;
+  code_agent: string;
+  frais_depot: string;
+  frais_retrait: string;
+  etablissement: string;
+  rue: string;
+  ville: string;
+  employee: number;
+  payement_methode: number;
+  bookmaker: number;
+}
+export interface Order {
+  id: undefined | number;
+  client: string;
+  employee_payment: number;
+  is_depot: string;
+  bookmaker_identifiant: number;
+  transaction_id: string;
+  montant: number;
+  code_parainage: string;
+  state: 'INCOMPLET' | 'COMMING' | 'CONFIRMED' | 'CANCELLED';
+}
