@@ -24,13 +24,16 @@ const History = () => {
 
       <ul className={`timeline timeline-vertical overflow-y-auto h-full  mb-5`}>
         {historyData.map((historyItem, k) => {
-          const statusColor =
-            historyItem.status === 'Failed' ? 'error' : 'success';
-          const iconClassName = `w-6 h-6 text-${statusColor}`;
+          // const statusColor =
+          //   historyItem.status === 'Failed' ? 'error' : 'success';
+          // const iconClassName = `w-6 h-6 text-${statusColor}`;
 
           return (
             // TODO: Arranger le format des key
-            <div className="flex items-center p-3 bg-base-200 rounded-box gap-4 justify-between mb-3">
+            <div
+              className="flex items-center p-3 bg-base-200 rounded-box gap-4 justify-between mb-3"
+              key={k + 1}
+            >
               <div className="flex items-center gap-5">
                 <div className="avatar placeholder  ">
                   <div className="ring-success-content w-12 rounded-full ring ring-offset-2 bg-success">
@@ -42,7 +45,7 @@ const History = () => {
                     <span>
                       <Icon.WalletFill />
                     </span>
-                    <span>Bookmaker</span>
+                    <span>{historyItem.to}</span>
                   </div>
                   <div className="text-[12px]">Payement Reussi</div>
                   <div className="text-[8px] flex items-center gap-2 ">
