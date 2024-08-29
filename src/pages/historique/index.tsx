@@ -30,9 +30,6 @@ const Historique: React.FC = () => {
   return (
     <>
       <div className="p-4 overflow-hidden h-full">
-        <div className="my-2 text-base-300 shadow-md flex justify-between">
-          <Subtitle className="">{'Historique'}</Subtitle>
-        </div>
         <History />
       </div>
     </>
