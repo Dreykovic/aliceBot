@@ -1,8 +1,8 @@
 import './style.css';
+import { motion } from 'framer-motion';
 import * as Icon from 'react-bootstrap-icons';
 
 import historyData from './history-data';
-import { motion } from 'framer-motion';
 const list = {
   visible: {
     opacity: 1,
@@ -54,11 +54,8 @@ const History = () => {
           // const iconClassName = `w-6 h-6 text-${statusColor}`;
 
           return (
-            <motion.div variants={item}>
-              <div
-                className="flex items-center p-3 bg-base-200 rounded-box gap-4 justify-between mb-3 history-badge history-badge-success relative"
-                key={k + 1}
-              >
+            <motion.div variants={item} key={k + 1}>
+              <div className="flex items-center p-3 bg-base-200 rounded-box gap-4 justify-between mb-3 history-badge history-badge-success relative">
                 <div className="flex items-center gap-5">
                   <div className="avatar placeholder  ">
                     <div className="ring-success-content w-12 rounded-full ring ring-offset-2 bg-success">

@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -7,7 +8,6 @@ import Navigations from '@/shared/components/layouts/partials/navigations';
 import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
-import { AnimatePresence, motion } from 'framer-motion';
 
 type Props = {
   children: ReactNode;

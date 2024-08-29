@@ -1,9 +1,9 @@
+import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { NavType } from '@/shared/types/routes-type';
 import { RootState } from '@/stores';
-import { motion } from 'framer-motion';
 
 type Props = {
   navs: NavType[];

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { PAYMENTS } from './lib/payments';
 
-import { SelectMenuOption } from './lib/types';
+import { PAYMENTS } from './lib/payments';
 import PaymentSelector from './lib/selector';
+import { SelectMenuOption } from './lib/types';
 
 const MyPaymentSelector = () => {
   //   const myRef = React.createRef<HTMLDivElement>();

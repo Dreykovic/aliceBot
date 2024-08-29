@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { BoxArrowInDown } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,8 +10,8 @@ import {
 import Subtitle from '@/shared/components/ui/Typography/subtitle';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
+
 import Form from './components';
-import { BoxArrowInDown } from 'react-bootstrap-icons';
 
 const Depot: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

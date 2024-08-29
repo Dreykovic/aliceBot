@@ -1,9 +1,11 @@
-import { SelectMenuOption } from './types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-import { PAYMENTS } from './payments';
-import Tmoney from '@/assets/images/payments/tmoney.svg';
+
 import Flooz from '@/assets/images/payments/flooz.svg';
+import Tmoney from '@/assets/images/payments/tmoney.svg';
+
+import { PAYMENTS } from './payments';
+import { SelectMenuOption } from './types';
 export interface PaymentSelectorProps {
   id: string;
   open: boolean;
@@ -43,7 +45,7 @@ export default function PaymentSelector({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, onToggle, open]);
 
   const [query, setQuery] = useState('');
   const inputClasses =

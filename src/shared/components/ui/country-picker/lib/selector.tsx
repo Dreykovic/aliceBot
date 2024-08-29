@@ -1,7 +1,8 @@
-import { COUNTRIES } from './countries';
-import { SelectMenuOption } from './types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
+
+import { COUNTRIES } from './countries';
+import { SelectMenuOption } from './types';
 
 export interface CountrySelectorProps {
   id: string;
@@ -42,7 +43,7 @@ export default function CountrySelector({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, onToggle, open]);
 
   const [query, setQuery] = useState('');
   const inputClasses =

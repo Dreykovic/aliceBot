@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
 import Subtitle from '@/shared/components/ui/Typography/subtitle';
 import { RootState } from '@/stores';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 export default function HeaderTitle() {
   const { pageTitle } = useSelector((state: RootState) => state.header);

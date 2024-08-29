@@ -1,5 +1,3 @@
-import MyCountrySelector from '@/shared/components/ui/country-picker';
-import MyPaymentSelector from '@/shared/components/ui/payment-method-picker';
 import React from 'react';
 import {
   GlobeEuropeAfrica,
@@ -7,6 +5,9 @@ import {
   KeyFill,
   Wallet,
 } from 'react-bootstrap-icons';
+
+import MyCountrySelector from '@/shared/components/ui/country-picker';
+import MyPaymentSelector from '@/shared/components/ui/payment-method-picker';
 
 const options = [
   { value: '1xbet', label: '1xbet' },
