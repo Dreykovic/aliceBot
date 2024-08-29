@@ -12,7 +12,7 @@ const AuthProvider: React.FC = () => {
       setLoading(false);
     }, 3000);
   });
-  console.log(loading);
+  // console.log(loading);
 
   return (
     <>
