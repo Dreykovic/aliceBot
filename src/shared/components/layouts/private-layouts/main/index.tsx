@@ -7,6 +7,7 @@ import Navigations from '@/shared/components/layouts/partials/navigations';
 import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
+import { AnimatePresence, motion } from 'framer-motion';
 
 type Props = {
   children: ReactNode;
@@ -37,7 +38,11 @@ function SimplePrivateLayout(props: Props) {
               style={{ height: `${contentHeight}px` }}
               className="overflow-hidden"
             >
-              {props.children}
+              <AnimatePresence mode="wait">
+                <motion.div className="h-full" layout>
+                  {props.children}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </main>
         </div>
