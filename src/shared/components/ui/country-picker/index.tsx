@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { COUNTRIES } from './lib/countries';
 import CountrySelector from './lib/selector';
 import { SelectMenuOption } from './lib/types';
 
 const MyCountrySelector = () => {
-  const myRef = React.createRef<HTMLDivElement>();
+  //   const myRef = React.createRef<HTMLDivElement>();
 
   const [isOpen, setIsOpen] = useState(false);
   // Default this to a country's code to preselect it
