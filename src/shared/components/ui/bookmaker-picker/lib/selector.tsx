@@ -59,14 +59,20 @@ export default function BookmakerSelector({
           onClick={onToggle}
           disabled={disabled}
         >
-          <span className="truncate flex items-center">
-            <img
-              alt={`${selectedValue.value}`}
-              src={`assets/svg/bookmakers/${selectedValue.value}.svg`}
-              className={'inline mr-2 h-4 rounded-sm'}
-            />
-            {selectedValue.title}
-          </span>
+          {selectedValue ? (
+            <span className="truncate flex items-center">
+              <img
+                alt={`${selectedValue.value}`}
+                src={`assets/svg/bookmakers/${selectedValue.value}.svg`}
+                className={'inline mr-2 h-4 rounded-sm'}
+              />
+              {selectedValue.title}
+            </span>
+          ) : (
+            <span className="truncate flex items-center">
+              Choisir le Bookmaker
+            </span>
+          )}
           <span
             className={`absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ${
               disabled ? 'hidden' : ''
@@ -151,7 +157,7 @@ export default function BookmakerSelector({
                         <span className="font-normal truncate">
                           {value.title}
                         </span>
-                        {value.value === selectedValue.value ? (
+                        {value.value === selectedValue?.value ? (
                           <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-8">
                             <svg
                               className="h-5 w-5"

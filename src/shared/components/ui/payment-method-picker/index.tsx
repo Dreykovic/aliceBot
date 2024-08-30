@@ -9,7 +9,7 @@ const MyPaymentSelector = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   // Default this to a country's code to preselect it
-  const [payment, setPayment] = useState('TM');
+  const [payment, setPayment] = useState('');
 
   return (
     <PaymentSelector

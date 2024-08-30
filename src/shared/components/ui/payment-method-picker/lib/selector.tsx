@@ -62,14 +62,20 @@ export default function PaymentSelector({
           onClick={onToggle}
           disabled={disabled}
         >
-          <span className="truncate flex items-center">
-            <img
-              alt={`${selectedValue.value}`}
-              src={`assets/svg/payments/${selectedValue.value}.svg`}
-              className={'inline mr-2 h-4 rounded-sm'}
-            />
-            {selectedValue.title}
-          </span>
+          {selectedValue ? (
+            <span className="truncate flex items-center">
+              <img
+                alt={`${selectedValue.value}`}
+                src={`assets/svg/payments/${selectedValue.value}.svg`}
+                className={'inline mr-2 h-4 rounded-sm'}
+              />
+              {selectedValue.title}
+            </span>
+          ) : (
+            <span className="truncate flex items-center">
+              Choisir une méthode de payment
+            </span>
+          )}
           <span
             className={`absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ${
               disabled ? 'hidden' : ''
@@ -123,15 +129,15 @@ export default function PaymentSelector({
                   'max-h-64  scrollbar-track-accent scrollbar-thumb-accent hover:scrollbar-thumb-secondary scrollbar-thumb-rounded scrollbar-thin overflow-y-scroll'
                 }
               >
-                {PAYMENTS.filter((country) =>
-                  country.title.toLowerCase().startsWith(query.toLowerCase()),
+                {PAYMENTS.filter((payment) =>
+                  payment.title.toLowerCase().startsWith(query.toLowerCase()),
                 ).length === 0 ? (
                   <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
-                    No Payment found
+                    Aucun paiement trouvé
                   </li>
                 ) : (
-                  PAYMENTS.filter((country) =>
-                    country.title.toLowerCase().startsWith(query.toLowerCase()),
+                  PAYMENTS.filter((payment) =>
+                    payment.title.toLowerCase().startsWith(query.toLowerCase()),
                   ).map((value, index) => {
                     return (
                       <li
@@ -147,14 +153,14 @@ export default function PaymentSelector({
                       >
                         <img
                           alt={`${value.value}`}
-                          src={`assets/svg/payments/${selectedValue.value}.svg`}
+                          src={`assets/svg/payments/${value.value}.svg`}
                           className={'inline mr-2 h-4 rounded-sm'}
                         />
 
                         <span className="font-normal truncate">
                           {value.title}
                         </span>
-                        {value.value === selectedValue.value ? (
+                        {value.value === selectedValue?.value ? (
                           <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-8">
                             <svg
                               className="h-5 w-5"
