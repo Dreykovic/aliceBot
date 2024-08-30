@@ -9,7 +9,7 @@ import {
 
 import MyBookmakerSelector from '@/shared/components/ui/bookmaker-picker';
 import MyCountrySelector from '@/shared/components/ui/country-picker';
-import MyPaymentSelector from '@/shared/components/ui/payment-method-picker';
+import MyPaymentSelector from '@/shared/components/common/payment-method-picker';
 
 const options = [
   { value: '11', label: '1111' },

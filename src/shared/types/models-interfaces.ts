@@ -19,7 +19,7 @@ export interface Client {
   country: string;
 }
 
-export interface PaymentMethode {
+export interface PaymentMethod {
   id: undefined | number;
   nom_moyen: string;
   code_operation: string;
