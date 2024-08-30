@@ -3,16 +3,18 @@ import {
   GlobeEuropeAfrica,
   Journals,
   KeyFill,
+  PersonBadge,
   Wallet,
 } from 'react-bootstrap-icons';
 
 import MyCountrySelector from '@/shared/components/ui/country-picker';
 import MyPaymentSelector from '@/shared/components/ui/payment-method-picker';
+import MyBookmakerSelector from '@/shared/components/ui/bookmaker-picker';
 
 const options = [
-  { value: '1xbet', label: '1xbet' },
-  { value: 'betWinner', label: 'betWinner' },
-  { value: '1xWin', label: '1xWin' },
+  { value: '11', label: '1111' },
+  { value: '10215', label: '10215' },
+  { value: '102', label: '102' },
 ];
 
 const Form: React.FC = () => {
@@ -23,18 +25,21 @@ const Form: React.FC = () => {
     <>
       <form>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-          <KeyFill className={iconClasses} />
+          <GlobeEuropeAfrica className="w-12 h-12 text-neutral p-1" />
+          <MyCountrySelector />
+        </div>
 
-          <input
-            type="text"
-            id="transactionId"
-            className={inputClasses}
-            placeholder="Transaction Id"
-          />
+        <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
+          <Wallet className="w-12 h-12 text-neutral p-1" />
+          <MyPaymentSelector />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-          <Journals className="w-12 h-12 text-neutral p-1" />
-          <select name="bookmaker" id="bookmaker" className={inputClasses}>
+          <Wallet className="w-12 h-12 text-neutral p-1" />
+          <MyBookmakerSelector />
+        </div>
+        <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
+          <PersonBadge className="w-12 h-12 text-neutral p-1" />
+          <select name="caissier" id="caissier" className={inputClasses}>
             {options.map((option) => {
               return (
                 <option key={option.label} value={option.value}>
@@ -45,12 +50,14 @@ const Form: React.FC = () => {
           </select>
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-          <GlobeEuropeAfrica className="w-12 h-12 text-neutral p-1" />
-          <MyCountrySelector />
-        </div>
-        <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-          <Wallet className="w-12 h-12 text-neutral p-1" />
-          <MyPaymentSelector />
+          <KeyFill className={iconClasses} />
+
+          <input
+            type="text"
+            id="transactionId"
+            className={inputClasses}
+            placeholder="Transaction Id"
+          />
         </div>
 
         <div className="w-full flex items-center justify-center">

@@ -9,7 +9,7 @@ const MyBookmakerSelector = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   // Default this to a country's code to preselect it
-  const [bookmaker, setBookmaker] = useState('TM');
+  const [bookmaker, setBookmaker] = useState('1B');
 
   return (
     <PaymentSelector

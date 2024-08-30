@@ -1,12 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-// import ONEWIN from '@/assets/svg/bookmakers/1win.svg';
-// import ONEXBET from '@/assets/svg/bookmakers/1xbet.svg';
-// import HHHSTARZ from '@/assets/svg/bookmakers/888starz.svg';
-// import BETWINNER from '@/assets/svg/bookmakers/betwinner.svg';
-// import MELBET from '@/assets/svg/bookmakers/melbet.svg';
-
 import { SelectMenuOption } from './types';
 import { BOOKMAKERS } from './bookmakers';
 export interface BookmakerSelector {
@@ -68,7 +62,7 @@ export default function BookmakerSelector({
           <span className="truncate flex items-center">
             <img
               alt={`${selectedValue.value}`}
-              src={`@/assets/svg/bookmakers/${selectedValue.value}.svg`}
+              src={`assets/svg/bookmakers/${selectedValue.value}.svg`}
               className={'inline mr-2 h-4 rounded-sm'}
             />
             {selectedValue.title}
@@ -150,7 +144,7 @@ export default function BookmakerSelector({
                       >
                         <img
                           alt={`${value.value}`}
-                          src={`@/assets/svg/bookmakers/${value.value}.svg`}
+                          src={`assets/svg/bookmakers/${value.value}.svg`}
                           className={'inline mr-2 h-4 rounded-sm'}
                         />
 
