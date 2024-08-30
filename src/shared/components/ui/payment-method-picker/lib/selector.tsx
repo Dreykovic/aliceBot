@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-import Flooz from '@/assets/images/payments/flooz.svg';
-import Tmoney from '@/assets/images/payments/tmoney.svg';
+import Flooz from '@/assets/svg/payments/flooz.svg';
+import Tmoney from '@/assets/svg/payments/tmoney.svg';
 
 import { PAYMENTS } from './payments';
 import { SelectMenuOption } from './types';
