@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-import { SelectMenuOption } from './types';
 import { BOOKMAKERS } from './bookmakers';
+import { SelectMenuOption } from './types';
 export interface BookmakerSelector {
   id: string;
   open: boolean;

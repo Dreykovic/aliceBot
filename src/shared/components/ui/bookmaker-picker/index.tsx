@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
+import { BOOKMAKERS } from './lib/bookmakers';
 import PaymentSelector from './lib/selector';
 import { SelectMenuOption } from './lib/types';
-import { BOOKMAKERS } from './lib/bookmakers';
 
 const MyBookmakerSelector = () => {
   //   const myRef = React.createRef<HTMLDivElement>();

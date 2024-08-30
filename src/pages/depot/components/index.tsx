@@ -1,15 +1,14 @@
 import React from 'react';
 import {
   GlobeEuropeAfrica,
-  Journals,
   KeyFill,
   PersonBadge,
   Wallet,
 } from 'react-bootstrap-icons';
 
+import MyBookmakerSelector from '@/shared/components/ui/bookmaker-picker';
 import MyCountrySelector from '@/shared/components/ui/country-picker';
 import MyPaymentSelector from '@/shared/components/ui/payment-method-picker';
-import MyBookmakerSelector from '@/shared/components/ui/bookmaker-picker';
 
 const options = [
   { value: '11', label: '1111' },
