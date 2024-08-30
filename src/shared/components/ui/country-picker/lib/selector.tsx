@@ -109,7 +109,7 @@ export default function CountrySelector({
                     name="search"
                     autoComplete={'off'}
                     className="focus:ring-primary focus:border-primary block w-full h-10 sm:text-sm border-neutral rounded-md"
-                    placeholder={'Search a country'}
+                    placeholder={'Rechercher Un Pays'}
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </li>

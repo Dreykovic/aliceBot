@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-import { SelectMenuOption } from './types';
 import { BOOKMAKERS } from './bookmakers';
+import { SelectMenuOption } from './types';
 export interface BookmakerSelector {
   id: string;
   open: boolean;
@@ -108,7 +108,7 @@ export default function BookmakerSelector({
                     name="search"
                     autoComplete={'off'}
                     className="focus:ring-primary focus:border-primary block w-full h-10 sm:text-sm border-neutral rounded-md"
-                    placeholder={'Search a country'}
+                    placeholder={'RechercherUn Bookmaker'}
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </li>

@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import colors from './colos.config';
+import colors from './colors.config';
 export default {
   content: [
     './src/**/*.{js,ts,jsx,tsx}',

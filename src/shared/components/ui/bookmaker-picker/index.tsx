@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import PaymentSelector from './lib/selector';
-import { SelectMenuOption } from './lib/types';
 import { BOOKMAKERS } from './lib/bookmakers';
+import BookmakerSelector from './lib/selector';
+import { SelectMenuOption } from './lib/types';
 
 const MyBookmakerSelector = () => {
   //   const myRef = React.createRef<HTMLDivElement>();
@@ -12,7 +12,7 @@ const MyBookmakerSelector = () => {
   const [bookmaker, setBookmaker] = useState('1B');
 
   return (
-    <PaymentSelector
+    <BookmakerSelector
       id={'countries'}
       open={isOpen}
       onToggle={() => setIsOpen(!isOpen)}

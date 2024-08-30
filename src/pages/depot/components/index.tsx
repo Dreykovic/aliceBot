@@ -7,9 +7,9 @@ import {
   Wallet,
 } from 'react-bootstrap-icons';
 
+import MyBookmakerSelector from '@/shared/components/ui/bookmaker-picker';
 import MyCountrySelector from '@/shared/components/ui/country-picker';
 import MyPaymentSelector from '@/shared/components/ui/payment-method-picker';
-import MyBookmakerSelector from '@/shared/components/ui/bookmaker-picker';
 
 const options = [
   { value: '11', label: '1111' },
@@ -34,7 +34,7 @@ const Form: React.FC = () => {
           <MyPaymentSelector />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-          <Wallet className="w-12 h-12 text-neutral p-1" />
+          <Journals className="w-12 h-12 text-neutral p-1" />
           <MyBookmakerSelector />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
