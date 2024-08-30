@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { BOOKMAKERS } from './lib/bookmakers';
-import PaymentSelector from './lib/selector';
+import BookmakerSelector from './lib/selector';
 import { SelectMenuOption } from './lib/types';
 
 const MyBookmakerSelector = () => {
@@ -12,7 +12,7 @@ const MyBookmakerSelector = () => {
   const [bookmaker, setBookmaker] = useState('1B');
 
   return (
-    <PaymentSelector
+    <BookmakerSelector
       id={'countries'}
       open={isOpen}
       onToggle={() => setIsOpen(!isOpen)}

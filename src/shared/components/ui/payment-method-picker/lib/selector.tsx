@@ -111,7 +111,7 @@ export default function PaymentSelector({
                     name="search"
                     autoComplete={'off'}
                     className="focus:ring-primary focus:border-primary block w-full h-10 sm:text-sm border-neutral rounded-md"
-                    placeholder={'Search a country'}
+                    placeholder={'Rechercher Une Méthode De Payment'}
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </li>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   GlobeEuropeAfrica,
+  Journals,
   KeyFill,
   PersonBadge,
   Wallet,
@@ -33,7 +34,7 @@ const Form: React.FC = () => {
           <MyPaymentSelector />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-          <Wallet className="w-12 h-12 text-neutral p-1" />
+          <Journals className="w-12 h-12 text-neutral p-1" />
           <MyBookmakerSelector />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
