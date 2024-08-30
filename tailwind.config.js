@@ -36,7 +36,8 @@ export default {
       // => @media (min-width: 1280px) { ... }
     },
   },
-  plugins: [require('daisyui')],
+
+  plugins: [require('daisyui'), require('tailwind-scrollbar')],
   daisyui: {
     themes: [
       {

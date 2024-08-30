@@ -1,8 +1,35 @@
 :where(.timeline > li) {
-    position: relative;
-    display: grid;
-    flex-shrink: 0;
-    align-items: center;
-    grid-template-rows: auto auto auto;
-    grid-template-columns: auto auto auto;
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  align-items: center;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto;
+}
+
+.history-badge:before {
+  content: '✔︎';
+  font-size: 10px;
+  color: #b7b0b0 !important;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: #b7b0b0;
+  width: 16px;
+  height: 16px;
+  top: -7%;
+  right: 3%;
+}
+
+.history-badge-success:before {
+  background-color: #44a840;
+}
+.history-badge-warning:before {
+  background-color: #f3a460;
 }

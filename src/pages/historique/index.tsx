@@ -6,7 +6,6 @@ import {
   setPageTitle,
   setPageType,
 } from '@/shared/components/layouts/partials/header/header-slice';
-import Subtitle from '@/shared/components/ui/Typography/subtitle';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
 
@@ -30,9 +29,6 @@ const Historique: React.FC = () => {
   return (
     <>
       <div className="p-4 overflow-hidden h-full">
-        <div className="my-2 text-base-300 shadow-md flex justify-between">
-          <Subtitle className="">{'Historique'}</Subtitle>
-        </div>
         <History />
       </div>
     </>

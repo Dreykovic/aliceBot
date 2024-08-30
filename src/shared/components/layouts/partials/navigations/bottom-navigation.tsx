@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +8,7 @@ import { RootState } from '@/stores';
 type Props = {
   navs: NavType[];
 };
+
 const BottomNavigation = (props: Props) => {
   const { pageTitle, pageType } = useSelector(
     (state: RootState) => state.header,
@@ -24,19 +26,15 @@ const BottomNavigation = (props: Props) => {
               className={`flex flex-col items-center absolute tooltip bottom-1`}
               data-tip={nav.label}
             >
-              {/* <div
-                className={`${nav.label === pageTitle ? activeClassNames : ''} `}
-              >
-                <div className="ring ring-neutral">{nav.icon}</div>
-              </div> */}
               <div
                 className={`${nav.label === pageTitle ? 'avatar placeholder -translate-y-4 transform-gpu' : ''} `}
               >
-                <div
+                <motion.div
+                  layout
                   className={`${nav.label === pageTitle ? 'ring-neutral w-12 rounded-full ring ring-offset-2 ring-offset-neutral bg-primary' : ''} `}
                 >
                   {nav.icon}
-                </div>
+                </motion.div>
               </div>
               <span className="text-[8px]">{nav.label}</span>
             </Link>

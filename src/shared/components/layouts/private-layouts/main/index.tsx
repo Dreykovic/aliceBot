@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -37,7 +38,11 @@ function SimplePrivateLayout(props: Props) {
               style={{ height: `${contentHeight}px` }}
               className="overflow-hidden"
             >
-              {props.children}
+              <AnimatePresence mode="wait">
+                <motion.div className="h-full" layout>
+                  {props.children}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </main>
         </div>
