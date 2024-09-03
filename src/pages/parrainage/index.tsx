@@ -17,9 +17,9 @@ const Parrainage: React.FC = () => {
   const { width } = useWindowDimensions();
 
   useEffect(() => {
-    if (width >= 1024) {
-      navigate('/');
-    }
+    // if (width >= 1024) {
+    //   navigate('/');
+    // }
 
     dispatch(setPageTitle({ title: 'Parrainage' }));
     dispatch(setPageType({ type: 'main' }));

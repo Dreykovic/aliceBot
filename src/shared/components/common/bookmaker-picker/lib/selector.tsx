@@ -1,27 +1,35 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-import { PAYMENTS } from './payments';
-import { SelectMenuOption } from './types';
-export interface PaymentSelectorProps {
+import { Bookmaker } from '@/shared/types/models-interfaces';
+import { useGetBookmakersQuery } from '@/shared/services/api';
+export interface BookmakerSelector {
   id: string;
   open: boolean;
   disabled?: boolean;
   onToggle: () => void;
-  onChange: (value: SelectMenuOption['value']) => void;
-  selectedValue: SelectMenuOption;
+  onChange: (value: Bookmaker['id']) => void;
+  selectedValue: Bookmaker;
 }
 
-export default function PaymentSelector({
+export default function BookmakerSelector({
   id,
   open,
   disabled = false,
   onToggle,
   onChange,
   selectedValue,
-}: PaymentSelectorProps) {
+}: BookmakerSelector) {
   const ref = useRef<HTMLDivElement>(null);
-
+  const {
+    data: BOOKMAKERS,
+    isFetching,
+    isLoading,
+  } = useGetBookmakersQuery(id, {
+    pollingInterval: 3000,
+    refetchOnMountOrArgChange: true,
+    skip: false,
+  });
   useEffect(() => {
     const mutableRef = ref as MutableRefObject<HTMLDivElement | null>;
 
@@ -62,15 +70,15 @@ export default function PaymentSelector({
           {selectedValue ? (
             <span className="truncate flex items-center">
               <img
-                alt={`${selectedValue.value}`}
-                src={`assets/svg/payments/${selectedValue.value}.svg`}
+                alt={`${selectedValue.nom_bookmaker}`}
+                src={`assets/svg/bookmakers/${selectedValue.nom_bookmaker}.svg`}
                 className={'inline mr-2 h-4 rounded-sm'}
               />
-              {selectedValue.title}
+              {selectedValue.nom_bookmaker}
             </span>
           ) : (
             <span className="truncate flex items-center">
-              Choisir une méthode de payment
+              Choisir le Bookmaker
             </span>
           )}
           <span
@@ -114,7 +122,7 @@ export default function PaymentSelector({
                     name="search"
                     autoComplete={'off'}
                     className="focus:ring-primary focus:border-primary block w-full h-10 sm:text-sm border-neutral rounded-md"
-                    placeholder={'Rechercher Une Méthode De Payment'}
+                    placeholder={'RechercherUn Bookmaker'}
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </li>
@@ -126,15 +134,19 @@ export default function PaymentSelector({
                   'max-h-64  scrollbar-track-accent scrollbar-thumb-accent hover:scrollbar-thumb-secondary scrollbar-thumb-rounded scrollbar-thin overflow-y-scroll'
                 }
               >
-                {PAYMENTS.filter((payment) =>
-                  payment.title.toLowerCase().startsWith(query.toLowerCase()),
+                {BOOKMAKERS?.filter((bookmaker) =>
+                  bookmaker.nom_bookmaker
+                    .toLowerCase()
+                    .startsWith(query.toLowerCase()),
                 ).length === 0 ? (
                   <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
-                    Aucun paiement trouvé
+                    No Payment found
                   </li>
                 ) : (
-                  PAYMENTS.filter((payment) =>
-                    payment.title.toLowerCase().startsWith(query.toLowerCase()),
+                  BOOKMAKERS?.filter((bookmaker) =>
+                    bookmaker.nom_bookmaker
+                      .toLowerCase()
+                      .startsWith(query.toLowerCase()),
                   ).map((value, index) => {
                     return (
                       <li
@@ -143,21 +155,21 @@ export default function PaymentSelector({
                         id="listbox-option-0"
                         role="option"
                         onClick={() => {
-                          onChange(value.value);
+                          onChange(value.id);
                           setQuery('');
                           onToggle();
                         }}
                       >
                         <img
-                          alt={`${value.value}`}
-                          src={`assets/svg/payments/${value.value}.svg`}
+                          alt={`${value.nom_bookmaker}`}
+                          src={`assets/svg/bookmakers/${value.nom_bookmaker}.svg`}
                           className={'inline mr-2 h-4 rounded-sm'}
                         />
 
                         <span className="font-normal truncate">
-                          {value.title}
+                          {value.nom_bookmaker}
                         </span>
-                        {value.value === selectedValue?.value ? (
+                        {value.id === selectedValue?.id ? (
                           <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-8">
                             <svg
                               className="h-5 w-5"

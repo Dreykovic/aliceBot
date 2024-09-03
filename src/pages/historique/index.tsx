@@ -18,9 +18,9 @@ const Historique: React.FC = () => {
   const { width } = useWindowDimensions();
 
   useEffect(() => {
-    if (width >= 1024) {
-      navigate('/');
-    }
+    // if (width >= 1024) {
+    //   navigate('/');
+    // }
 
     dispatch(setPageTitle({ title: 'Historique' }));
     dispatch(setPageType({ type: 'main' }));

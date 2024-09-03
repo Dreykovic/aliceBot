@@ -17,9 +17,9 @@ const MesIds: React.FC = () => {
   const { width } = useWindowDimensions();
 
   useEffect(() => {
-    if (width >= 1024) {
-      navigate('/');
-    }
+    // if (width >= 1024) {
+    //   navigate('/');
+    // }
 
     dispatch(setPageTitle({ title: 'Mes Ids' }));
     dispatch(setPageType({ type: 'main' }));

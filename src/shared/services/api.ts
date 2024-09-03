@@ -6,10 +6,10 @@ interface EmployeeGerParams {
 }
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPaymentMethods: builder.query<PaymentMethod, string>({
+    getPaymentMethods: builder.query<PaymentMethod[], string>({
       query: () => `payment_methods`,
     }),
-    getBookmakers: builder.query<Bookmaker, string>({
+    getBookmakers: builder.query<Bookmaker[], string>({
       query: () => `bookmakers`,
     }),
     getCaissierByPMAndBookmaker: builder.query<Employee, EmployeeGerParams>({
@@ -21,4 +21,4 @@ const appApi = apiSlice.injectEndpoints({
 });
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetPaymentMethodsQuery } = appApi;
+export const { useGetPaymentMethodsQuery, useGetBookmakersQuery } = appApi;

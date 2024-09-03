@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   GlobeEuropeAfrica,
   Journals,
@@ -7,9 +7,14 @@ import {
   Wallet,
 } from 'react-bootstrap-icons';
 
-import MyBookmakerSelector from '@/shared/components/ui/bookmaker-picker';
 import MyCountrySelector from '@/shared/components/ui/country-picker';
-import MyPaymentSelector from '@/shared/components/common/payment-method-picker';
+
+import PaymentSelector from '@/shared/components/common/payment-method-picker/lib/selector';
+import { PAYMENTS } from '@/shared/components/common/payment-method-picker/lib/payments';
+import { PaymentSelectMenuOption } from '@/shared/components/common/payment-method-picker/lib/types';
+import { BOOKMAKERS } from '@/shared/components/common/bookmaker-picker/lib/bookmakers';
+import BookmakerSelector from '@/shared/components/common/bookmaker-picker/lib/selector';
+import { BookmakerSelectMenuOption } from '@/shared/components/common/bookmaker-picker/lib/types';
 
 const options = [
   { value: '11', label: '1111' },
@@ -18,6 +23,15 @@ const options = [
 ];
 
 const Form: React.FC = () => {
+  const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
+  // Default this to a country's code to preselect it
+  const [payment, setPayment] = useState('');
+  //   const myRef = React.createRef<HTMLDivElement>();
+
+  const [isBookmakerSelectOpen, setIsBookmakerSelectOpen] = useState(false);
+  // Default this to a country's code to preselect it
+  const [bookmaker, setBookmaker] = useState('');
+
   const inputClasses =
     'bg-neutral rounded pl-6 py-2  focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
   const iconClasses = 'w-12 h-12 text-neutral p-1';
@@ -31,11 +45,33 @@ const Form: React.FC = () => {
 
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
           <Wallet className="w-12 h-12 text-neutral p-1" />
-          <MyPaymentSelector />
+          <PaymentSelector
+            id={'payment'}
+            open={isPaymentSelectOpen}
+            onToggle={() => setIsPaymentSelectOpen(!isPaymentSelectOpen)}
+            onChange={(val: string) => setPayment(val)}
+            // We use this type assertion because we are always sure this find will return a value but need to let TS know since it could technically return null
+            selectedValue={
+              PAYMENTS.find(
+                (option) => option.value === payment,
+              ) as PaymentSelectMenuOption
+            }
+          />{' '}
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
           <Journals className="w-12 h-12 text-neutral p-1" />
-          <MyBookmakerSelector />
+          <BookmakerSelector
+            id={'countries'}
+            open={isBookmakerSelectOpen}
+            onToggle={() => setIsBookmakerSelectOpen(!isBookmakerSelectOpen)}
+            onChange={(val: string) => setBookmaker(val)}
+            // We use this type assertion because we are always sure this find will return a value but need to let TS know since it could technically return null
+            selectedValue={
+              BOOKMAKERS.find(
+                (option) => option.value === bookmaker,
+              ) as BookmakerSelectMenuOption
+            }
+          />{' '}
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
           <PersonBadge className="w-12 h-12 text-neutral p-1" />

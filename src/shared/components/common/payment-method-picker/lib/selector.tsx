@@ -2,14 +2,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { PAYMENTS } from './payments';
-import { SelectMenuOption } from './types';
+import { PaymentSelectMenuOption } from './types';
 export interface PaymentSelectorProps {
   id: string;
   open: boolean;
   disabled?: boolean;
   onToggle: () => void;
-  onChange: (value: SelectMenuOption['value']) => void;
-  selectedValue: SelectMenuOption;
+  onChange: (value: PaymentSelectMenuOption['value']) => void;
+  selectedValue: PaymentSelectMenuOption;
 }
 
 export default function PaymentSelector({

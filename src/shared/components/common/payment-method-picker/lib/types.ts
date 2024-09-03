@@ -1,3 +1,3 @@
 import { PAYMENTS } from './payments';
 
-export type SelectMenuOption = (typeof PAYMENTS)[number];
+export type PaymentSelectMenuOption = (typeof PAYMENTS)[number];
