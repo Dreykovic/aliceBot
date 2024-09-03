@@ -7,14 +7,11 @@ import {
   Wallet,
 } from 'react-bootstrap-icons';
 
-import MyCountrySelector from '@/shared/components/ui/country-picker';
-
-import PaymentSelector from '@/shared/components/common/payment-method-picker/lib/selector';
-import { PAYMENTS } from '@/shared/components/common/payment-method-picker/lib/payments';
-import { PaymentSelectMenuOption } from '@/shared/components/common/payment-method-picker/lib/types';
-
 import BookmakerSelector from '@/shared/components/common/bookmaker-picker/lib/selector';
-
+import { PAYMENTS } from '@/shared/components/common/payment-method-picker/lib/payments';
+import PaymentSelector from '@/shared/components/common/payment-method-picker/lib/selector';
+import { PaymentSelectMenuOption } from '@/shared/components/common/payment-method-picker/lib/types';
+import MyCountrySelector from '@/shared/components/ui/country-picker';
 import { useGetBookmakersQuery } from '@/shared/services/api';
 import { Bookmaker } from '@/shared/types/models-interfaces';
 

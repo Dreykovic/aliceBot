@@ -4,7 +4,7 @@ interface NavState {
   status: 'VISIBLE' | 'HIDDEN';
 }
 
-let initialState: NavState = {
+const initialState: NavState = {
   status: 'VISIBLE',
 };
 export const navSlice = createSlice({

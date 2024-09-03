@@ -1,14 +1,15 @@
 import './style.css';
 import { motion, Variants } from 'framer-motion';
+import { useState, useEffect, MutableRefObject } from 'react';
 import * as Icon from 'react-bootstrap-icons';
-import { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { setNavStatus } from '@/shared/components/layouts/partials/navigations/nav-slice';
+import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
+import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
+import { AppDispatch } from '@/stores';
 
 import historyData from './history-data';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/stores';
-import { setNavStatus } from '@/shared/components/layouts/partials/navigations/nav-slice';
-import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
-import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 
 interface HistoryItem {
   to: string;
@@ -38,15 +39,10 @@ const itemVariants: Variants = {
 };
 
 const History = () => {
-  const { width, height } = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const [rect, ref] = useBoundingClientRect<HTMLDivElement>();
   const [contentHeight, setContentHeight] = useState<number>(0);
 
-  useEffect(() => {
-    if (rect) {
-      setContentHeight(height - rect.top);
-    }
-  }, [height, rect]);
   const [lastScrollTop, setLastScrollTop] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -63,6 +59,9 @@ const History = () => {
   };
 
   useEffect(() => {
+    if (rect) {
+      setContentHeight(height - rect.top);
+    }
     const scrollDiv = ref.current;
     if (scrollDiv) {
       scrollDiv.addEventListener('scroll', handleScroll);
@@ -71,7 +70,7 @@ const History = () => {
         scrollDiv.removeEventListener('scroll', handleScroll);
       };
     }
-  }, [lastScrollTop]);
+  }, [lastScrollTop, height, rect, ref]);
 
   return (
     <div className="h-full ">
