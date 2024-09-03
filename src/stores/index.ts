@@ -6,9 +6,11 @@ import env from '@/shared/config/env';
 import apiSlice from './api-slice';
 
 import messageReducer from './message-slice';
+import navSlice from '@/shared/components/layouts/partials/navigations/nav-slice';
 
 const combinedReducer = {
   header: headerSlice,
+  nav: navSlice,
   message: messageReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 };

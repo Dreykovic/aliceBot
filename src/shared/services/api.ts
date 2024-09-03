@@ -6,10 +6,10 @@ interface EmployeeGerParams {
 }
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPaymentMethods: builder.query<PaymentMethod[], string>({
+    getPaymentMethods: builder.query<PaymentMethod[], void>({
       query: () => `payment_methods`,
     }),
-    getBookmakers: builder.query<Bookmaker[], string>({
+    getBookmakers: builder.query<Bookmaker[], void>({
       query: () => `bookmakers`,
     }),
     getCaissierByPMAndBookmaker: builder.query<Employee, EmployeeGerParams>({

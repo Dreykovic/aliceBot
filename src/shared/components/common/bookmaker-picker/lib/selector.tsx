@@ -21,15 +21,7 @@ export default function BookmakerSelector({
   selectedValue,
 }: BookmakerSelector) {
   const ref = useRef<HTMLDivElement>(null);
-  const {
-    data: BOOKMAKERS,
-    isFetching,
-    isLoading,
-  } = useGetBookmakersQuery(id, {
-    pollingInterval: 3000,
-    refetchOnMountOrArgChange: true,
-    skip: false,
-  });
+  const { data: BOOKMAKERS } = useGetBookmakersQuery();
   useEffect(() => {
     const mutableRef = ref as MutableRefObject<HTMLDivElement | null>;
 

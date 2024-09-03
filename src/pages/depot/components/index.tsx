@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   GlobeEuropeAfrica,
   Journals,
@@ -12,9 +12,11 @@ import MyCountrySelector from '@/shared/components/ui/country-picker';
 import PaymentSelector from '@/shared/components/common/payment-method-picker/lib/selector';
 import { PAYMENTS } from '@/shared/components/common/payment-method-picker/lib/payments';
 import { PaymentSelectMenuOption } from '@/shared/components/common/payment-method-picker/lib/types';
-import { BOOKMAKERS } from '@/shared/components/common/bookmaker-picker/lib/bookmakers';
+
 import BookmakerSelector from '@/shared/components/common/bookmaker-picker/lib/selector';
-import { BookmakerSelectMenuOption } from '@/shared/components/common/bookmaker-picker/lib/types';
+
+import { useGetBookmakersQuery } from '@/shared/services/api';
+import { Bookmaker } from '@/shared/types/models-interfaces';
 
 const options = [
   { value: '11', label: '1111' },
@@ -30,11 +32,15 @@ const Form: React.FC = () => {
 
   const [isBookmakerSelectOpen, setIsBookmakerSelectOpen] = useState(false);
   // Default this to a country's code to preselect it
-  const [bookmaker, setBookmaker] = useState('');
-
+  const [bookmaker, setBookmaker] = useState<number>();
+  const { data: BOOKMAKERS } = useGetBookmakersQuery();
+  console.log(BOOKMAKERS);
   const inputClasses =
     'bg-neutral rounded pl-6 py-2  focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
   const iconClasses = 'w-12 h-12 text-neutral p-1';
+  useEffect(() => {
+    console.log(bookmaker);
+  });
   return (
     <>
       <form>
@@ -64,12 +70,10 @@ const Form: React.FC = () => {
             id={'countries'}
             open={isBookmakerSelectOpen}
             onToggle={() => setIsBookmakerSelectOpen(!isBookmakerSelectOpen)}
-            onChange={(val: string) => setBookmaker(val)}
+            onChange={(val?: number) => setBookmaker(val)}
             // We use this type assertion because we are always sure this find will return a value but need to let TS know since it could technically return null
             selectedValue={
-              BOOKMAKERS.find(
-                (option) => option.value === bookmaker,
-              ) as BookmakerSelectMenuOption
+              BOOKMAKERS?.find((option) => option.id === bookmaker) as Bookmaker
             }
           />{' '}
         </div>
