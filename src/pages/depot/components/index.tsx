@@ -24,7 +24,7 @@ import {
 
 const Form: React.FC = () => {
   const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
-  const [payment, setPayment] = useState<string>();
+  const [payment, setPayment] = useState<number>();
   const { data: PAYMENTS, isLoading: isPaymentsLoading } =
     useGetPaymentMethodsQuery();
 
@@ -38,7 +38,7 @@ const Form: React.FC = () => {
     useGetCaissierByPMAndBookmakerQuery(
       {
         bookmaker_id: bookmaker as number,
-        payment_method_id: payment as string,
+        payment_method_id: payment as number,
       },
       {
         skip: !payment || !bookmaker, // Skip the query if payment or bookmaker is not selected
@@ -68,11 +68,9 @@ const Form: React.FC = () => {
           id="payment"
           open={isPaymentSelectOpen}
           onToggle={() => setIsPaymentSelectOpen(!isPaymentSelectOpen)}
-          onChange={(val?: string) => setPayment(val)}
+          onChange={(val?: number) => setPayment(val)}
           selectedValue={
-            PAYMENTS?.find(
-              (option) => option.nom_moyen === payment,
-            ) as PaymentMethod
+            PAYMENTS?.find((option) => option.id === payment) as PaymentMethod
           }
           dataArray={PAYMENTS}
           isLoading={isPaymentsLoading}

@@ -3,7 +3,7 @@ import apiSlice from '@/stores/api-slice';
 import { Bookmaker, Employee, PaymentMethod } from '../types/models-interfaces';
 interface EmployeeGerParams {
   bookmaker_id: number;
-  payment_method_id: string;
+  payment_method_id: number;
 }
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

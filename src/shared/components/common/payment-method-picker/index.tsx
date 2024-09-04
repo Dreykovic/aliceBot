@@ -8,7 +8,7 @@ export interface PaymentSelectorProps {
   open: boolean;
   disabled?: boolean;
   onToggle: () => void;
-  onChange: (value: PaymentMethod['nom_moyen']) => void;
+  onChange: (value: PaymentMethod['id']) => void;
   selectedValue: PaymentMethod;
   isLoading: boolean;
   dataArray?: PaymentMethod[];
@@ -154,7 +154,7 @@ export default function PaymentSelector({
                           id="listbox-option-0"
                           role="option"
                           onClick={() => {
-                            onChange(value.nom_moyen);
+                            onChange(value.id);
                             setQuery('');
                             onToggle();
                           }}
