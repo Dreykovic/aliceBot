@@ -50,7 +50,7 @@ export default function EmployeeSelector({
 
   const [query, setQuery] = useState('');
   const inputClasses =
-    'bg-neutral rounded pl-6 py-2  focus:outline-none w-full text-neutral-content focus:bg-base-100  focus:text-neutral';
+    'bg-neutral rounded pl-6 py-2  focus:outline-none w-full text-neutral-content focus:bg-base-100  focus:text-neutral disabled:bg-base-200';
   return (
     <div ref={ref} className={`w-full m-1 `}>
       <div className="relative w-full">
@@ -74,7 +74,9 @@ export default function EmployeeSelector({
             </span>
           ) : (
             <span className="truncate flex items-center">
-              Choisir une méthode de payment
+              {disabled
+                ? "Choisir le payment et le bookmaker d'abord"
+                : 'Choisir le caissier'}
             </span>
           )}
           <span
@@ -118,7 +120,7 @@ export default function EmployeeSelector({
                     name="search"
                     autoComplete={'off'}
                     className="focus:ring-primary focus:border-primary block w-full h-10 sm:text-sm border-neutral rounded-md"
-                    placeholder={'Rechercher Une Méthode De Payment'}
+                    placeholder={'Rechercher Un caissier'}
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </li>
@@ -136,7 +138,7 @@ export default function EmployeeSelector({
                     .startsWith(query.toLowerCase()),
                 ).length === 0 || isLoading ? (
                   <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
-                    Aucun paiement trouvé
+                    Aucun employee trouvé
                   </li>
                 ) : (
                   dataArray
