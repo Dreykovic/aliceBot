@@ -10,7 +10,7 @@ export interface BookmakerSelector {
   onChange: (value: Bookmaker['id']) => void;
   selectedValue: Bookmaker;
   dataArray?: Bookmaker[];
-  isLoading: Boolean;
+  isLoading: boolean;
 }
 
 export default function BookmakerSelector({

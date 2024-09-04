@@ -1,6 +1,7 @@
-import { Employee } from '@/shared/types/models-interfaces';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
+
+import { Employee } from '@/shared/types/models-interfaces';
 
 export interface EmployeeSelectorProps {
   id: string;
@@ -9,7 +10,7 @@ export interface EmployeeSelectorProps {
   onToggle: () => void;
   onChange: (value: Employee['id']) => void;
   selectedValue: Employee;
-  isLoading: Boolean;
+  isLoading: boolean;
   dataArray?: Employee[];
 }
 

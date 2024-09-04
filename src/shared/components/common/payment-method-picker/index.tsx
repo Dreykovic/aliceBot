@@ -1,6 +1,7 @@
-import { PaymentMethod } from '@/shared/types/models-interfaces';
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
+
+import { PaymentMethod } from '@/shared/types/models-interfaces';
 
 export interface PaymentSelectorProps {
   id: string;
@@ -9,7 +10,7 @@ export interface PaymentSelectorProps {
   onToggle: () => void;
   onChange: (value: PaymentMethod['nom_moyen']) => void;
   selectedValue: PaymentMethod;
-  isLoading: Boolean;
+  isLoading: boolean;
   dataArray?: PaymentMethod[];
 }
 

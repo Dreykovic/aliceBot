@@ -8,16 +8,14 @@ import {
 } from 'react-bootstrap-icons';
 
 import BookmakerSelector from '@/shared/components/common/bookmaker-picker';
-import MyCountrySelector from '@/shared/components/ui/country-picker';
-import PaymentSelector from '@/shared/components/common/payment-method-picker';
 import EmployeeSelector from '@/shared/components/common/employe-picker';
-
+import PaymentSelector from '@/shared/components/common/payment-method-picker';
+import MyCountrySelector from '@/shared/components/ui/country-picker';
 import {
   useGetBookmakersQuery,
   useGetCaissierByPMAndBookmakerQuery,
   useGetPaymentMethodsQuery,
 } from '@/shared/services/api';
-
 import {
   Bookmaker,
   Employee,
