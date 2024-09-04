@@ -33,7 +33,7 @@ export interface Bookmaker {
   nom_bookmaker: string;
 }
 
-export interface EmployeePaymentMethode {
+export interface EmployeePaymentMethod {
   id: undefined | number;
   code_agent: string;
   frais_depot: string;

@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-import { useGetBookmakersQuery } from '@/shared/services/api';
 import { Bookmaker } from '@/shared/types/models-interfaces';
 export interface BookmakerSelector {
   id: string;
@@ -10,6 +9,8 @@ export interface BookmakerSelector {
   onToggle: () => void;
   onChange: (value: Bookmaker['id']) => void;
   selectedValue: Bookmaker;
+  dataArray?: Bookmaker[];
+  isLoading: Boolean;
 }
 
 export default function BookmakerSelector({
@@ -19,9 +20,11 @@ export default function BookmakerSelector({
   onToggle,
   onChange,
   selectedValue,
+  dataArray,
+  isLoading,
 }: BookmakerSelector) {
   const ref = useRef<HTMLDivElement>(null);
-  const { data: BOOKMAKERS } = useGetBookmakersQuery();
+  // const { data: BOOKMAKERS, isLoading } = useGetBookmakersQuery();
   useEffect(() => {
     const mutableRef = ref as MutableRefObject<HTMLDivElement | null>;
 
@@ -126,61 +129,63 @@ export default function BookmakerSelector({
                   'max-h-64  scrollbar-track-accent scrollbar-thumb-accent hover:scrollbar-thumb-secondary scrollbar-thumb-rounded scrollbar-thin overflow-y-scroll'
                 }
               >
-                {BOOKMAKERS?.filter((bookmaker) =>
+                {dataArray?.filter((bookmaker) =>
                   bookmaker.nom_bookmaker
                     .toLowerCase()
                     .startsWith(query.toLowerCase()),
-                ).length === 0 ? (
+                ).length === 0 || isLoading ? (
                   <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
-                    No Payment found
+                    No bookmaker found
                   </li>
                 ) : (
-                  BOOKMAKERS?.filter((bookmaker) =>
-                    bookmaker.nom_bookmaker
-                      .toLowerCase()
-                      .startsWith(query.toLowerCase()),
-                  ).map((value, index) => {
-                    return (
-                      <li
-                        key={`${id}-${index}`}
-                        className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 flex items-center hover:bg-accent transition"
-                        id="listbox-option-0"
-                        role="option"
-                        onClick={() => {
-                          onChange(value.id);
-                          setQuery('');
-                          onToggle();
-                        }}
-                      >
-                        <img
-                          alt={`${value.nom_bookmaker}`}
-                          src={`assets/svg/bookmakers/${value.nom_bookmaker}.svg`}
-                          className={'inline mr-2 h-4 rounded-sm'}
-                        />
+                  dataArray
+                    ?.filter((bookmaker) =>
+                      bookmaker.nom_bookmaker
+                        .toLowerCase()
+                        .startsWith(query.toLowerCase()),
+                    )
+                    .map((value, index) => {
+                      return (
+                        <li
+                          key={`${id}-${index}`}
+                          className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 flex items-center hover:bg-accent transition"
+                          id="listbox-option-0"
+                          role="option"
+                          onClick={() => {
+                            onChange(value.id);
+                            setQuery('');
+                            onToggle();
+                          }}
+                        >
+                          <img
+                            alt={`${value.nom_bookmaker}`}
+                            src={`assets/svg/bookmakers/${value.nom_bookmaker}.svg`}
+                            className={'inline mr-2 h-4 rounded-sm'}
+                          />
 
-                        <span className="font-normal truncate">
-                          {value.nom_bookmaker}
-                        </span>
-                        {value.id === selectedValue?.id ? (
-                          <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-8">
-                            <svg
-                              className="h-5 w-5"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
+                          <span className="font-normal truncate">
+                            {value.nom_bookmaker}
                           </span>
-                        ) : null}
-                      </li>
-                    );
-                  })
+                          {value.id === selectedValue?.id ? (
+                            <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-8">
+                              <svg
+                                className="h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </span>
+                          ) : null}
+                        </li>
+                      );
+                    })
                 )}
               </div>
             </motion.ul>
