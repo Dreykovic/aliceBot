@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FormEventHandler, useEffect, useState } from 'react';
 import {
   GlobeEuropeAfrica,
   Journals,
@@ -10,10 +10,12 @@ import {
 import BookmakerSelector from '@/shared/components/common/bookmaker-picker';
 import EmployeeSelector from '@/shared/components/common/employe-picker';
 import PaymentSelector from '@/shared/components/common/payment-method-picker';
-import MyCountrySelector from '@/shared/components/ui/country-picker';
 import {
+  useDepositMutation,
   useGetBookmakersQuery,
   useGetCaissierByPMAndBookmakerQuery,
+  useGetEmployeePaymentMethodQuery,
+  useGetOrCreateClientMutation,
   useGetPaymentMethodsQuery,
 } from '@/shared/services/api';
 import {
@@ -21,15 +23,26 @@ import {
   Employee,
   PaymentMethod,
 } from '@/shared/types/models-interfaces';
+import { Order } from '@/shared/types/forms-interfaces';
+import { COUNTRIES } from '@/shared/components/ui/country-picker/lib/countries';
+import { SelectMenuOption } from '@/shared/components/ui/country-picker/lib/types';
+import CountrySelector from '@/shared/components/ui/country-picker/lib/selector';
 
 const Form: React.FC = () => {
-  const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
+  const [country, setCountry] = useState<string>('TG');
   const [payment, setPayment] = useState<number>();
+  const [bookmaker, setBookmaker] = useState<number>();
+  const [caissier, setCaissier] = useState<number>();
+  const [transaction, setTransaction] = useState<string>();
+
+  const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
+  const [isCountrySelectorOpen, setIsCountrySelectorOpen] = useState(false);
+  const [isBookmakerSelectOpen, setIsBookmakerSelectOpen] = useState(false);
+  const [isCaissierSelectOpen, setIsCaissierSelectOpen] = useState(false);
+
   const { data: PAYMENTS, isLoading: isPaymentsLoading } =
     useGetPaymentMethodsQuery();
 
-  const [isBookmakerSelectOpen, setIsBookmakerSelectOpen] = useState(false);
-  const [bookmaker, setBookmaker] = useState<number>();
   const { data: BOOKMAKERS, isLoading: isBookmakersLoading } =
     useGetBookmakersQuery();
 
@@ -45,21 +58,82 @@ const Form: React.FC = () => {
         refetchOnMountOrArgChange: true,
       },
     );
-  const [caissier, setCaissier] = useState<number>();
 
   const caissiers = caissiersData || [];
   const isCaissierDisabled = !payment || !bookmaker;
-  const [isCaissierSelectOpen, setIsCaissierSelectOpen] = useState(false);
+  const { data: employeePaymentData } = useGetEmployeePaymentMethodQuery(
+    {
+      employee_id: caissier as number,
+      bookmaker_id: bookmaker as number,
+      payment_method_id: payment as number,
+    },
+    {
+      skip: !payment || !bookmaker || !caissier, // Skip the query if payment or bookmaker is not selected
+      refetchOnMountOrArgChange: true,
+    },
+  );
+
+  const [getOrCreateClient] = useGetOrCreateClientMutation();
+  const [deposit] = useDepositMutation();
+  useEffect(() => {
+    const createClient = async () => {
+      try {
+        const response = await getOrCreateClient({
+          chat_id: 12546368,
+        }).unwrap();
+        console.log('Client created or retrieved:', response.id_chat);
+      } catch (error) {
+        console.error('Error creating client:', error);
+      }
+    };
+    // Appelle la fonction seulement si certaines conditions sont remplies (ex: au montage du composant)
+    // if (payment && bookmaker) {
+    //   createClient();
+    // }
+    createClient();
+  }, [getOrCreateClient]);
+  console.log({ caissier, bookmaker, payment, employeePaymentData });
 
   const inputClasses =
-    'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary';
+    'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
   const iconClasses = 'w-12 h-12 text-neutral p-1';
-
+  const handleSubmit: FormEventHandler = async (e) => {
+    e.preventDefault();
+    const data: Order = {
+      country: country as string,
+      employee_payment: caissier as number,
+      is_depot: 'true',
+      bookmaker_identifiant: bookmaker as number,
+      transaction_id: transaction as string,
+      montant: 500,
+    };
+    const makeDepot = async () => {
+      try {
+        const response = await deposit(data).unwrap();
+        console.log('Dépot effectué:', response);
+      } catch (error) {
+        console.error('Error Lors du depot:', error);
+      }
+    };
+    makeDepot();
+    console.log(data);
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <GlobeEuropeAfrica className="w-12 h-12 text-neutral p-1" />
-        <MyCountrySelector />
+        <CountrySelector
+          id={'countries'}
+          open={isCountrySelectorOpen}
+          onToggle={() => setIsCountrySelectorOpen(!isCountrySelectorOpen)}
+          onChange={(val: string) => setCountry(val)}
+          // We use this type assertion because we are always sure this find will return a value but need to let TS know since it could technically return null
+          selectedValue={
+            COUNTRIES.find(
+              (option) => option.value === country,
+            ) as SelectMenuOption
+          }
+        />
       </div>
 
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
@@ -107,6 +181,25 @@ const Form: React.FC = () => {
           disabled={isCaissierDisabled}
         />
       </div>
+      <div
+        role="alert"
+        className={`alert alert-info mb-6 ${employeePaymentData ? '' : 'hidden'}`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          className="h-6 w-6 shrink-0 stroke-current"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>{`Tapez : ${employeePaymentData?.syntaxe} , Puis entrez l'id de votre transaction dans le champs ci dessous `}</span>
+      </div>
 
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <KeyFill className={iconClasses} />
@@ -114,12 +207,19 @@ const Form: React.FC = () => {
           type="text"
           id="transactionId"
           className={inputClasses}
-          placeholder="Transaction Id"
+          placeholder=""
+          value={transaction}
+          onChange={(e) => setTransaction(e.target.value)}
         />
       </div>
 
       <div className="w-full flex items-center justify-center">
-        <div className="btn-wide btn font-bold mb-6 rounded-btn">Soumettre</div>
+        <button
+          className="btn-wide btn font-bold mb-6 rounded-btn"
+          onClick={handleSubmit}
+        >
+          Soumettre
+        </button>
       </div>
     </form>
   );

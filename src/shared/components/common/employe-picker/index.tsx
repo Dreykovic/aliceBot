@@ -76,7 +76,7 @@ export default function EmployeeSelector({
           ) : (
             <span className="truncate flex items-center">
               {disabled
-                ? "Choisir le payment et le bookmaker d'abord"
+                ? 'Choisir le payment et le bookmaker'
                 : 'Choisir le caissier'}
             </span>
           )}

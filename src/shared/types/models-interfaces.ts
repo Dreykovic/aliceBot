@@ -35,15 +35,16 @@ export interface Bookmaker {
 
 export interface EmployeePaymentMethod {
   id: undefined | number;
-  code_agent: string;
-  frais_depot: string;
-  frais_retrait: string;
+  code_agent: number;
+  frais_depot: number;
+  frais_retrait: number;
   etablissement: string;
   rue: string;
   ville: string;
   employee: number;
   payement_methode: number;
   bookmaker: number;
+  syntaxe: string;
 }
 export interface Order {
   id: undefined | number;
