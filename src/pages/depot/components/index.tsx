@@ -38,6 +38,10 @@ const user: TelegramUser = {
   photoUrl: 'string | null',
   languageCode: 'string',
 };
+
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
 const Form: React.FC = () => {
   // State variables
   const [country, setCountry] = useState<string>('TG');
@@ -106,10 +110,13 @@ const Form: React.FC = () => {
   const inputClasses =
     'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary';
   const iconClasses = 'w-12 h-12 text-neutral p-1';
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Form submit handler
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Commence le chargement
+
     const data: Order = {
       country,
       employee_payment_methode: caissier as number,
@@ -120,17 +127,52 @@ const Form: React.FC = () => {
       client: client as number,
     };
     console.log(data);
+    const MySwal = withReactContent(Swal);
 
     try {
       const response = await deposit(data).unwrap();
       console.log('Dépot effectué:', response);
+
+      MySwal.fire({
+        title: 'Succès !',
+        text: 'Le dépôt a été effectué avec succès.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        timer: 3000,
+
+        didOpen: (alert) => {
+          alert.onmouseenter = MySwal.stopTimer;
+          alert.onmouseleave = MySwal.resumeTimer;
+        },
+        allowOutsideClick: false,
+      });
+      // Réinitialiser le formulaire après le succès
+      setCountry('TG');
+      setPayment(undefined);
+      setBookmaker(undefined);
+      setCaissier(undefined);
+      setTransaction('');
+      setMontant('');
     } catch (error) {
       console.error('Error Lors du depot:', error);
+      MySwal.fire({
+        title: 'Erreur',
+        text: 'Une erreur est survenue lors du dépôt.',
+        icon: 'error',
+        confirmButtonText: 'Réessayer',
+        didOpen: () => {
+          // `MySwal` is a subclass of `Swal` with all the same instance & static methods
+          MySwal.showLoading();
+        },
+        allowOutsideClick: false,
+      });
+    } finally {
+      setIsLoading(false); // Arrête le chargement, quelle que soit l'issue
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="">
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <Cash className={iconClasses} />
         <input
@@ -235,12 +277,17 @@ const Form: React.FC = () => {
         />
       </div>
 
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full flex items-center justify-center flex-shrink">
         <button
           className="btn-wide btn font-bold mb-6 rounded-btn"
           type="submit"
+          disabled={isLoading} // Désactive le bouton lorsque isLoading est true
         >
-          Soumettre
+          {isLoading ? (
+            <span className="loading loading-spinner text-warning loading-md"></span> // Spinner en cours de chargement
+          ) : (
+            'Soumettre'
+          )}
         </button>
       </div>
     </form>

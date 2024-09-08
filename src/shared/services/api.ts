@@ -40,7 +40,7 @@ const appApi = apiSlice.injectEndpoints({
     }),
     deposit: builder.mutation({
       query: (data: Order) => ({
-        url: 'orders/create/',
+        url: 'orders/create',
         method: 'POST',
         body: data,
       }),
