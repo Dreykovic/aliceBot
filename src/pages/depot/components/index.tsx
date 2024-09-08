@@ -122,7 +122,7 @@ const Form: React.FC = () => {
       is_depot: 'true',
       bookmaker_identifiant: bookmaker as number,
       transaction_id: transaction as string,
-      montant: 500,
+      montant: montant as number,
       client: client as number,
     };
     console.log(data);
