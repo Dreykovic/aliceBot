@@ -50,6 +50,7 @@ const Form: React.FC = () => {
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   const [client, setClient] = useState<number>();
   const currentUser: TelegramUser = useTelegramUser() ?? user;
+  console.log(currentUser);
 
   const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
   const [isCountrySelectorOpen, setIsCountrySelectorOpen] = useState(false);
