@@ -134,7 +134,7 @@ const Form: React.FC = () => {
 
       MySwal.fire({
         title: 'Succès !',
-        text: 'Le dépôt a été effectué avec succès.',
+        text: 'Votre demande a été prise en compte et sera traitée dans les plus bref délais.',
         icon: 'success',
         confirmButtonText: 'OK',
         timer: 3000,
