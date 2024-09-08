@@ -170,18 +170,6 @@ const Form: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="">
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-        <Cash className={iconClasses} />
-        <input
-          type="number"
-          id="transactionId"
-          className={inputClasses}
-          placeholder="Montant"
-          value={montant || ''}
-          onChange={(e) => setMontant(Number(e.target.value))}
-        />
-      </div>
-
-      <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <GlobeEuropeAfrica className="w-12 h-12 text-neutral p-1" />
         <CountrySelector
           id="countries"
@@ -225,7 +213,17 @@ const Form: React.FC = () => {
           isLoading={isBookmakersLoading}
         />
       </div>
-
+      <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
+        <Cash className={iconClasses} />
+        <input
+          type="number"
+          id="transactionId"
+          className={inputClasses}
+          placeholder="Montant"
+          value={montant || ''}
+          onChange={(e) => setMontant(Number(e.target.value))}
+        />
+      </div>
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <PersonBadge className="w-12 h-12 text-neutral p-1" />
         <EmployeeSelector
