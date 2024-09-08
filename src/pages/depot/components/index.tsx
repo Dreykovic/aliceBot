@@ -112,7 +112,7 @@ const Form: React.FC = () => {
     e.preventDefault();
     const data: Order = {
       country,
-      employee_payment: caissier as number,
+      employee_payment_methode: caissier as number,
       is_depot: 'true',
       bookmaker_identifiant: bookmaker as number,
       transaction_id: transaction as string,

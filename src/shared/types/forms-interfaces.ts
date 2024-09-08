@@ -1,6 +1,6 @@
 export interface Order {
   country: string;
-  employee_payment: number;
+  employee_payment_methode: number;
   is_depot: string;
   bookmaker_identifiant: number;
   transaction_id: string;
