@@ -7,4 +7,5 @@ export interface Order {
   montant: number;
   code_parainage?: string;
   state?: 'INCOMPLET' | 'COMMING' | 'CONFIRMED' | 'CANCELLED';
+  client: number;
 }

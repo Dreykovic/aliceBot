@@ -17,7 +17,7 @@ interface EmployeePaymentGetParams {
   employee_id: number;
 }
 interface DepositParams {
-  chat_id: number;
+  chat_id: string;
 }
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
