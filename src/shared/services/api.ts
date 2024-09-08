@@ -1,12 +1,12 @@
 import apiSlice from '@/stores/api-slice';
 
+import { Order } from '../types/forms-interfaces';
 import {
   Bookmaker,
   Employee,
   PaymentMethod,
   EmployeePaymentMethod,
 } from '../types/models-interfaces';
-import { Order } from '../types/forms-interfaces';
 interface EmployeeGetParams {
   bookmaker_id: number;
   payment_method_id: number;

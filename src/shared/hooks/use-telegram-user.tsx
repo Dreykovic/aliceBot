@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { TelegramUser } from '../types/api';
 
 const useTelegramUser = (): TelegramUser | null => {

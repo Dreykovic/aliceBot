@@ -11,8 +11,10 @@ import {
 import BookmakerSelector from '@/shared/components/common/bookmaker-picker';
 import EmployeeSelector from '@/shared/components/common/employee-picker';
 import PaymentSelector from '@/shared/components/common/payment-method-picker';
+import { COUNTRIES } from '@/shared/components/ui/country-picker/lib/countries';
 import CountrySelector from '@/shared/components/ui/country-picker/lib/selector';
-
+import { SelectMenuOption } from '@/shared/components/ui/country-picker/lib/types';
+import useTelegramUser from '@/shared/hooks/use-telegram-user';
 import {
   useDepositMutation,
   useGetBookmakersQuery,
@@ -21,18 +23,14 @@ import {
   useGetOrCreateClientMutation,
   useGetPaymentMethodsQuery,
 } from '@/shared/services/api';
-
+import { TelegramUser } from '@/shared/types/api';
 import { Order } from '@/shared/types/forms-interfaces';
 import {
   Bookmaker,
   Employee,
   PaymentMethod,
 } from '@/shared/types/models-interfaces';
-import { COUNTRIES } from '@/shared/components/ui/country-picker/lib/countries';
-import { SelectMenuOption } from '@/shared/components/ui/country-picker/lib/types';
-import useTelegramUser from '@/shared/hooks/use-telegram-user';
-import { TelegramUser } from '@/shared/types/api';
-let user: TelegramUser = {
+const user: TelegramUser = {
   id: '7332983362',
   firstName: 'Audrey',
   lastName: 'AMONA',
@@ -103,7 +101,7 @@ const Form: React.FC = () => {
       }
     };
     createClient();
-  }, [getOrCreateClient]);
+  }, [getOrCreateClient, currentUser.id]);
 
   const inputClasses =
     'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary';
