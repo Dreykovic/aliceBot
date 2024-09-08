@@ -7,13 +7,13 @@ import {
   setPageTitle,
   setPageType,
 } from '@/shared/components/layouts/partials/header/header-slice';
+import { setNavStatus } from '@/shared/components/layouts/partials/navigations/nav-slice';
 import Subtitle from '@/shared/components/ui/Typography/subtitle';
+import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
 
 import Form from './components';
-import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
-import { setNavStatus } from '@/shared/components/layouts/partials/navigations/nav-slice';
 
 const Depot: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,7 +31,6 @@ const Depot: React.FC = () => {
   }, [dispatch, navigate, width]);
   const { height } = useWindowDimensions();
   const [rect, ref] = useBoundingClientRect<HTMLDivElement>();
-  const [contentHeight, setContentHeight] = useState<number>(0);
 
   const [lastScrollTop, setLastScrollTop] = useState<number>(0);
 
@@ -48,9 +47,6 @@ const Depot: React.FC = () => {
   };
 
   useEffect(() => {
-    if (rect) {
-      setContentHeight(height - rect.top);
-    }
     const scrollDiv = ref.current;
     if (scrollDiv) {
       scrollDiv.addEventListener('scroll', handleScroll);

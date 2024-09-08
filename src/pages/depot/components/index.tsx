@@ -7,6 +7,8 @@ import {
   PersonBadge,
   Wallet,
 } from 'react-bootstrap-icons';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 import BookmakerSelector from '@/shared/components/common/bookmaker-picker';
 import EmployeeSelector from '@/shared/components/common/employee-picker';
@@ -38,9 +40,6 @@ const user: TelegramUser = {
   photoUrl: 'string | null',
   languageCode: 'string',
 };
-
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 
 const Form: React.FC = () => {
   // State variables
