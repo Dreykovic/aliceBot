@@ -159,10 +159,7 @@ const Form: React.FC = () => {
         text: 'Une erreur est survenue lors du dépôt.',
         icon: 'error',
         confirmButtonText: 'Réessayer',
-        didOpen: () => {
-          // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-          MySwal.showLoading();
-        },
+
         allowOutsideClick: false,
       });
     } finally {
