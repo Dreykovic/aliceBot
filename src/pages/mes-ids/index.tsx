@@ -64,7 +64,7 @@ const TelegramUserInfo: React.FC = () => {
 
   return (
     <div>
-      <h2>Bienvenue {user.first_name} {user.last_name || ""}</h2>
+      <h2>Bienvenue ... {user.first_name} {user.last_name || ""}</h2>
       {user.photo_url && <img src={user.photo_url} alt="User Avatar" />}
       <p>Username: @{user.username}</p>
       <p>User ID: {user.id}</p>
