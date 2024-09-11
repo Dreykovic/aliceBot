@@ -48,6 +48,8 @@ const Form: React.FC = () => {
   const [bookmaker, setBookmaker] = useState<number>();
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string>('');
+  const [compteID, setCompteId] = useState<string>('');
+  const [phoneNumber, setphoneNumber] = useState<number>();
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   const [client, setClient] = useState<number>();
   const currentUser: TelegramUser = useTelegramUser() ?? user;
@@ -224,6 +226,19 @@ const Form: React.FC = () => {
           onChange={(e) => setMontant(Number(e.target.value))}
         />
       </div>
+
+      <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
+        <KeyFill className={iconClasses} />
+        <input
+          type="text"
+          id="compteId"
+          className={inputClasses}
+          placeholder="ID de votre Compte"
+          value={compteID || ''}
+          onChange={(e) => setCompteId(e.target.value)}
+        />
+      </div>
+
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <PersonBadge className="w-12 h-12 text-neutral p-1" />
         <EmployeeSelector
@@ -237,6 +252,18 @@ const Form: React.FC = () => {
           dataArray={caissiers}
           isLoading={isCaissierLoading}
           disabled={isCaissierDisabled}
+        />
+      </div>
+
+      <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
+        <KeyFill className={iconClasses} />
+        <input
+          type="text"
+          id="compteId"
+          className={inputClasses}
+          placeholder="votre numéro de téléphone"
+          value={phoneNumber || ''}
+          onChange={(e) => setCompteId(e.target.value)}
         />
       </div>
 

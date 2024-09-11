@@ -55,5 +55,6 @@ export interface Order {
   transaction_id: string;
   montant: number;
   code_parainage: string;
+  contact: string;
   state: 'INCOMPLET' | 'COMMING' | 'CONFIRMED' | 'CANCELLED';
 }
