@@ -5,41 +5,50 @@ import { TelegramUser } from '../types/api';
 const useTelegramUser = (): TelegramUser | null => {
   const [user, setUser] = useState<TelegramUser | null>(null);
 
-  useEffect(() => {
-    // Vérifier si Telegram Web App est disponible
-    if (window.TelegramWebApp) {
-      const telegramWebApp = window.TelegramWebApp;
+  const loadTelegram = async (): Promise<TelegramUser | null> => {
+    const _telegram = (window as any).Telegram;
 
-      // Vérifier si les données utilisateur sont disponibles
-      if (telegramWebApp.initData) {
-        const initData = telegramWebApp.initData;
-        const userData = parseInitData(initData);
-
-        // Mettre à jour l'état avec les données utilisateur
-        setUser(userData);
-      } else {
-        // Si les données ne sont pas disponibles, écouter les changements
-        telegramWebApp.on('user', (data: TelegramUser) => {
-          setUser(data);
-        });
-      }
-    } else {
-      console.error('Telegram Web App API non disponible');
+    if (!_telegram || !_telegram.WebApp || !_telegram.WebApp.initData) {
+      console.log("En attente de l'initialisation de Telegram...");
+      return null;
     }
-  }, []);
+
+    const initData = _telegram.WebApp.initData;
+    return parseInitData(initData);
+  };
+
+  useEffect(() => {
+    const tryLoadTelegram = async () => {
+      try {
+        const response = await loadTelegram();
+        if (response) {
+          //alert('Telegram Web App API disponible');
+          setUser(response);
+        } else {
+          setTimeout(tryLoadTelegram, 100); // Réessaye après 100ms
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement de Telegram', error);
+      }
+    };
+
+    tryLoadTelegram();
+  }, []); // Dépendance vide pour ne s'exécuter qu'une fois au montage
 
   const parseInitData = (initData: string): TelegramUser | null => {
-    // Implémentez une logique pour parser les données d'initData si nécessaire
-    // Exemple de parsing simplifié
     try {
       const params = new URLSearchParams(initData);
+      const userEncoded = params.get('user') || '';
+      const userDecoded = JSON.parse(userEncoded);
+      // alert(userEncoded);
+      // alert(userDecoded);
       return {
-        id: params.get('user_id') || '',
-        firstName: params.get('first_name') || '',
-        lastName: params.get('last_name') || '',
-        username: params.get('username'),
-        photoUrl: params.get('photo_url'),
-        languageCode: params.get('language_code') || '',
+        id: userDecoded?.id,
+        firstName: userDecoded?.first_name,
+        lastName: userDecoded?.last_name,
+        username: userDecoded?.username,
+        photoUrl: userDecoded?.photo_url,
+        languageCode: userDecoded?.language_code,
       };
     } catch (error) {
       console.error('Erreur lors du parsing des données initData', error);
