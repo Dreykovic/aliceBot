@@ -59,10 +59,10 @@ const Depot: React.FC = () => {
   return (
     <>
       <div
-        className="p-4 overflow-auto h-full text-neutral-content"
+        className="p-4 overflow-auto h-full text-neutral-content  "
         ref={ref as MutableRefObject<HTMLDivElement>}
       >
-        <div className="w-full p- m-auto  ">
+        <div className="w-full p- m-auto   ">
           <header>
             <div className="my-2 flex justify-between items-center flex-col text-neutral-content">
               <BoxArrowInDown className="w-12 h-12" />

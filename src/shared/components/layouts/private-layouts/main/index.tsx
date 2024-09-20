@@ -8,6 +8,7 @@ import Navigations from '@/shared/components/layouts/partials/navigations';
 import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
+import BgAnimated from '@/shared/components/ui/bg-animaton';
 
 type Props = {
   children: ReactNode;
@@ -29,18 +30,19 @@ function SimplePrivateLayout(props: Props) {
   return (
     <>
       {/* Left drawer - containing page content and side bar (always open) */}
-      <div className="bg-base-300 overflow-hidden" style={{ height }}>
-        <div className="h-full  relative w-full bg-neutral overflow-auto">
+      <div className="  overflow-hidden" style={{ height }}>
+        <div className="h-full  relative w-full   overflow-auto">
           <main>
             <Header />
             <div
               ref={ref}
               style={{ height: `${contentHeight}px` }}
-              className="overflow-hidden"
+              className="overflow-hidden  "
             >
               <AnimatePresence mode="wait">
-                <motion.div className="h-full" layout>
+                <motion.div className="h-full  " layout>
                   {props.children}
+                  <BgAnimated />
                 </motion.div>
               </AnimatePresence>
             </div>

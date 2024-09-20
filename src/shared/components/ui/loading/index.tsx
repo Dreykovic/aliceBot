@@ -8,7 +8,7 @@ export const Loading = () => {
         <img src={Logo} alt="" className="" />
       </div>
 
-      <div className="w-full h-screen  flex items-center justify-center bg-transparent">
+      <div className="w-full h-screen  flex items-center justify-center  ">
         <div className="flex flex-col items-center justify-end ">
           <div className="m-8">
             <span className="loading loading-spinner text-warning loading-lg"></span>
