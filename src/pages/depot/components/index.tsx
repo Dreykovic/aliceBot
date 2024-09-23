@@ -5,6 +5,7 @@ import {
   Journals,
   KeyFill,
   PersonBadge,
+  PhoneFill,
   Wallet,
 } from 'react-bootstrap-icons';
 import Swal from 'sweetalert2';
@@ -48,6 +49,7 @@ const Form: React.FC = () => {
   const [bookmaker, setBookmaker] = useState<number>();
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string>('');
+  const [contact, setContact] = useState<string>('');
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   const [client, setClient] = useState<number>();
   const currentUser: TelegramUser = useTelegramUser() ?? user;
@@ -119,11 +121,12 @@ const Form: React.FC = () => {
     const data: Order = {
       country,
       employee_payment_methode: caissier as number,
-      is_depot: 'true',
+      order_type: 'DEPOT',
       bookmaker_identifiant: bookmaker as number,
-      transaction_id: transaction as string,
+      reference_id: transaction as string,
       montant: montant as number,
       client: client as number,
+      contact: contact,
     };
     console.log(data);
     const MySwal = withReactContent(Swal);
@@ -270,7 +273,17 @@ const Form: React.FC = () => {
           onChange={(e) => setTransaction(e.target.value)}
         />
       </div>
-
+      <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
+        <PhoneFill className={iconClasses} />
+        <input
+          type="text"
+          id="contactId"
+          className={inputClasses}
+          placeholder="Contact"
+          value={contact || ''}
+          onChange={(e) => setContact(e.target.value)}
+        />
+      </div>
       <div className="w-full flex items-center justify-center flex-shrink">
         <button
           className="btn-wide btn font-bold mb-6 rounded-btn"
