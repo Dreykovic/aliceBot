@@ -140,50 +140,50 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         }).unwrap();
         setClient(response.id);
         console.log('Id_client', response.id);
+
+        setIsLoading(true); // Commence le chargement
+        const data: Order = {
+          employee_payment_method: caissier as number,
+          order_type: prop.order_type,
+          bookmaker_identifiant: bookmaker as number,
+          reference_id: transaction as string,
+          montant: montant as number,
+          client: client as number,
+          contact: contact,
+        };
+        console.log(data);
+
+        const result = await deposit(data).unwrap();
+        console.log(`${prop.order_type} effectué:`, result);
+
+        MySwal.fire({
+          title: 'Succès !',
+          text: 'Votre demande a été prise en compte et sera traitée dans les plus bref délais.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          timer: 3000,
+
+          didOpen: (alert) => {
+            alert.onmouseenter = MySwal.stopTimer;
+            alert.onmouseleave = MySwal.resumeTimer;
+          },
+          allowOutsideClick: false,
+        });
+        // Réinitialiser le formulaire après le succès
+        setCountry('TG');
+        setPayment(undefined);
+        setBookmaker(undefined);
+        setCaissier(undefined);
+        setTransaction('');
+        setMontant('');
       } else {
         throw new Error('No client');
       }
-
-      setIsLoading(true); // Commence le chargement
-      const data: Order = {
-        employee_payment_method: caissier as number,
-        order_type: prop.order_type,
-        bookmaker_identifiant: bookmaker as number,
-        reference_id: transaction as string,
-        montant: montant as number,
-        client: client as number,
-        contact: contact,
-      };
-      console.log(data);
-
-      const response = await deposit(data).unwrap();
-      console.log(`${prop.order_type} effectué:`, response);
-
-      MySwal.fire({
-        title: 'Succès !',
-        text: 'Votre demande a été prise en compte et sera traitée dans les plus bref délais.',
-        icon: 'success',
-        confirmButtonText: 'OK',
-        timer: 3000,
-
-        didOpen: (alert) => {
-          alert.onmouseenter = MySwal.stopTimer;
-          alert.onmouseleave = MySwal.resumeTimer;
-        },
-        allowOutsideClick: false,
-      });
-      // Réinitialiser le formulaire après le succès
-      setCountry('TG');
-      setPayment(undefined);
-      setBookmaker(undefined);
-      setCaissier(undefined);
-      setTransaction('');
-      setMontant('');
     } catch (error) {
       console.error(`Error Lors du ${prop.order_type}:`, error);
       MySwal.fire({
         title: 'Erreur',
-        text: `Une erreur est survenue lors du ${prop.order_type}.`,
+        text: `Une erreur est survenue lors du ${prop.order_type}. ${(error as any).message}`,
         icon: 'error',
         confirmButtonText: 'Réessayer',
 
