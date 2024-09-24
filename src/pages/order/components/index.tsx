@@ -304,7 +304,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         </div>
       )}
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
-        <KeyFill className={iconClasses} />
+        <PersonBadge className={iconClasses} />
         <input
           type="text"
           id="accountId"
