@@ -15,7 +15,7 @@ const classes = 'w-full h-full';
 const BgParticles = () => {
   return (
     <div className="area bg-neutral">
-      <ul className="circles text-base-content">
+      <ul className="circles text-primary">
         <li>
           <CashCoin className={classes} />
         </li>

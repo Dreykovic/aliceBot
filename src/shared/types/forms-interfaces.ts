@@ -1,6 +1,5 @@
 export interface Order {
-  country: string;
-  employee_payment_methode: number;
+  employee_payment_method: number;
   order_type: 'DEPOT' | 'RETRAIT';
   bookmaker_identifiant: number;
   reference_id: string;

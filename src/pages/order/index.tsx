@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useEffect, useState } from 'react';
-import { BoxArrowDown, BoxArrowInUp, BoxArrowUp } from 'react-bootstrap-icons';
+import { BoxArrowUp } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,10 +12,13 @@ import Subtitle from '@/shared/components/ui/Typography/subtitle';
 import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
+import Form from '@/pages/order/components';
 
-import Form from './components';
-
-const Retrait: React.FC = () => {
+type OrderPropsType = {
+  title: 'Dépôt' | 'Retrait';
+  type: 'RETRAIT' | 'DEPOT';
+};
+const Order: React.FC<OrderPropsType> = (prop: OrderPropsType) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ const Retrait: React.FC = () => {
     //   navigate('/');
     // }
 
-    dispatch(setPageTitle({ title: 'Retrait' }));
+    dispatch(setPageTitle({ title: prop.title }));
     dispatch(setPageType({ type: 'main' }));
   }, [dispatch, navigate, width]);
   const { height } = useWindowDimensions();
@@ -66,14 +69,14 @@ const Retrait: React.FC = () => {
           <header>
             <div className="my-2 flex justify-between items-center flex-col text-neutral-content">
               <BoxArrowUp className="w-12 h-12" />
-              <Subtitle className="">{'Retrait'}</Subtitle>
+              <Subtitle className="">{prop.title}</Subtitle>
             </div>
           </header>
-          <Form />
+          <Form order_type={prop.type} />
         </div>
       </div>
     </>
   );
 };
 
-export default Retrait;
+export default Order;

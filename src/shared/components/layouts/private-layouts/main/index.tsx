@@ -9,8 +9,6 @@ import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
 
-import BgParticles from '@/shared/components/ui/bg-particles';
-
 type Props = {
   children: ReactNode;
 };
@@ -43,7 +41,6 @@ function SimplePrivateLayout(props: Props) {
               <AnimatePresence mode="wait">
                 <motion.div className="h-full  " layout>
                   {props.children}
-                  <BgParticles />
                 </motion.div>
               </AnimatePresence>
             </div>

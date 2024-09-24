@@ -4,6 +4,7 @@ import AppRoutes from '@/routes';
 import privateRoutes from '@/routes/private-routes';
 import MainPrivateLayout from '@/shared/components/layouts/private-layouts/main';
 import { Loading } from '@/shared/components/ui/loading';
+import BgParticles from '@/shared/components/ui/bg-particles';
 
 const AuthProvider: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,6 +20,7 @@ const AuthProvider: React.FC = () => {
       {loading === false ? (
         <MainPrivateLayout>
           <AppRoutes routes={privateRoutes} />
+          <BgParticles />
         </MainPrivateLayout>
       ) : (
         <Loading />

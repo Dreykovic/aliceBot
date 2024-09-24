@@ -9,7 +9,7 @@ const useTelegramUser = (): TelegramUser | null => {
     const _telegram = (window as any).Telegram;
 
     if (!_telegram || !_telegram.WebApp || !_telegram.WebApp.initData) {
-      console.log("En attente de l'initialisation de Telegram...");
+      // console.log("En attente de l'initialisation de Telegram...");
       return null;
     }
 
@@ -28,7 +28,7 @@ const useTelegramUser = (): TelegramUser | null => {
           setTimeout(tryLoadTelegram, 100); // Réessaye après 100ms
         }
       } catch (error) {
-        console.error('Erreur lors du chargement de Telegram', error);
+        // console.error('Erreur lors du chargement de Telegram', error);
       }
     };
 
@@ -51,7 +51,7 @@ const useTelegramUser = (): TelegramUser | null => {
         languageCode: userDecoded?.language_code,
       };
     } catch (error) {
-      console.error('Erreur lors du parsing des données initData', error);
+      // console.error('Erreur lors du parsing des données initData', error);
       return null;
     }
   };

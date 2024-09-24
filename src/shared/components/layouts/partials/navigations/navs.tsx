@@ -14,7 +14,7 @@ const iconsClassName = 'w-8 h-8';
 
 const navs = [
   {
-    label: 'Depot',
+    label: 'Dépôt',
     icon: <BoxArrowInDown className={iconsClassName} />,
     path: privateRoutes.depot?.path,
   },

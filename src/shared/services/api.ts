@@ -18,6 +18,7 @@ interface EmployeePaymentGetParams {
 }
 interface DepositParams {
   chat_id: string;
+  country: string;
 }
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -47,10 +48,10 @@ const appApi = apiSlice.injectEndpoints({
     }),
     //Endpoint : POST http://127.0.0.1:8000/api/clients/get_or_create/<chat_id:str>
     getOrCreateClient: builder.mutation({
-      query: ({ chat_id }: DepositParams) => ({
+      query: ({ chat_id, country }: DepositParams) => ({
         url: `clients/get_or_create/${chat_id}`,
         method: 'POST',
-        body: { id_chat: chat_id },
+        body: { id_chat: chat_id, country },
       }),
     }),
   }),

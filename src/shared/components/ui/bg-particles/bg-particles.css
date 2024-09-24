@@ -72,7 +72,7 @@
   list-style: none;
   width: 30px;
   height: 30px;
-  background: rgba(255, 255, 255, 0.2);
+  /* background: rgba(255, 255, 255, 0.2); */
   animation: animate 25s ease-in-out infinite;
   bottom: -90px;
   /* color: '#fac118'; */
