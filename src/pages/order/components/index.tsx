@@ -181,7 +181,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       console.error(`Error Lors du ${prop.order_type}:`, error);
       MySwal.fire({
         title: 'Erreur',
-        text: `Une erreur est survenue lors du ${prop.order_type}. \n ${error}`,
+        text: `Une erreur est survenue lors du ${prop.order_type}. \n ${client}`,
         icon: 'error',
         confirmButtonText: 'Réessayer',
 
