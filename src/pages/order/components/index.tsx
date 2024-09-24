@@ -130,7 +130,16 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    await handleCountryCHange(country);
+    if (currentUser) {
+      const response = await getOrCreateClient({
+        chat_id: currentUser.id,
+        country: country || 'TG',
+      }).unwrap();
+      setClient(response.id);
+      console.log('Id_client', response.id);
+    } else {
+      throw new Error('No client');
+    }
 
     setIsLoading(true); // Commence le chargement
     const data: Order = {
