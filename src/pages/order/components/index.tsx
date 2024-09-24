@@ -148,7 +148,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Commence le chargement
-    handleCountryCHange(country);
+    await handleCountryCHange(country);
     const data: Order = {
       employee_payment_method: caissier as number,
       order_type: prop.order_type,
