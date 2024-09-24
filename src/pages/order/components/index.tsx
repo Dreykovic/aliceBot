@@ -45,7 +45,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [account, setAccount] = useState<number | string>('');
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string>('');
-  const [contact, setContact] = useState<string>('');
+  const [contact, setContact] = useState<string | number>('');
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   const [client, setClient] = useState<number>();
   const currentUser = useTelegramUser();
@@ -154,7 +154,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             reference_id: transaction as string,
             montant: montant as number,
             client: clientId,
-            contact: contact,
+            contact: contact as string,
           };
 
           console.log(client);
@@ -170,7 +170,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
                       <img src=${ALICE} alt="" />
                     </div>`,
             icon: 'success',
-            timer: 3000,
+
             background: '#938888',
             color: '#f9f9f9',
             didOpen: (alert) => {
@@ -178,7 +178,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
               alert.onmouseleave = MySwal.resumeTimer;
             },
             allowOutsideClick: false,
-            timerProgressBar: true,
+
             showCloseButton: true,
             showConfirmButton: false,
           });
@@ -330,7 +330,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <PhoneFill className={iconClasses} />
         <input
-          type="text"
+          type="number"
           id="contactId"
           className={inputClasses}
           placeholder="Contact"
