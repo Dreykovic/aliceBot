@@ -20,7 +20,7 @@
 
           if (!_telegram || !_telegram.WebApp || !_telegram.WebApp.initData) {
             // console.log("En attente de l'initialisation de Telegram...");
-            // setTimeout(checkTelegramReady, 100); // Réessaye après 100ms
+            setTimeout(checkTelegramReady, 100); // Réessaye après 100ms
             return;
           }
 
