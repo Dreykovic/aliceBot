@@ -26,21 +26,13 @@ import {
   useGetOrCreateClientMutation,
   useGetPaymentMethodsQuery,
 } from '@/shared/services/api';
-import { TelegramUser } from '@/shared/types/api';
 import { Order } from '@/shared/types/forms-interfaces';
 import {
   Bookmaker,
   Employee,
   PaymentMethod,
 } from '@/shared/types/models-interfaces';
-const user: TelegramUser = {
-  id: '1',
-  firstName: '',
-  lastName: '',
-  username: 'Boss',
-  photoUrl: 'string | null',
-  languageCode: 'string',
-};
+
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
 };
@@ -53,8 +45,8 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [transaction, setTransaction] = useState<string>('');
   const [contact, setContact] = useState<string>('');
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
-  const [client, setClient] = useState<number>(parseInt(user.id));
-  const currentUser: TelegramUser = useTelegramUser() ?? user;
+  const [client, setClient] = useState<number>();
+  const currentUser = useTelegramUser();
   console.log(currentUser);
 
   const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
@@ -121,21 +113,34 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const handleCountryCHange = async (value: string) => {
     setCountry(value);
     try {
-      const response = await getOrCreateClient({
-        chat_id: currentUser.id,
-        country: country || 'TG',
-      }).unwrap();
-      setClient(response.id);
-      console.log('Id_client', response.id);
+      if (currentUser) {
+        const response = await getOrCreateClient({
+          chat_id: currentUser.id,
+          country: country || 'TG',
+        }).unwrap();
+        setClient(response.id);
+        console.log('Id_client', response.id);
+      } else {
+        throw new Error('No client');
+      }
     } catch (error) {
-      // console.error('Error creating client:', error);
+      const MySwal = withReactContent(Swal);
+
+      MySwal.fire({
+        title: 'Erreur',
+        text: `Une erreur est survenue lors de la connexion.`,
+        icon: 'error',
+        confirmButtonText: 'Réessayer',
+
+        allowOutsideClick: false,
+      });
     }
   };
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Commence le chargement
-
+    handleCountryCHange(country);
     const data: Order = {
       employee_payment_method: caissier as number,
       order_type: prop.order_type,
