@@ -130,31 +130,32 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    if (currentUser) {
-      const response = await getOrCreateClient({
-        chat_id: currentUser.id,
-        country: country || 'TG',
-      }).unwrap();
-      setClient(response.id);
-      console.log('Id_client', response.id);
-    } else {
-      throw new Error('No client');
-    }
-
-    setIsLoading(true); // Commence le chargement
-    const data: Order = {
-      employee_payment_method: caissier as number,
-      order_type: prop.order_type,
-      bookmaker_identifiant: bookmaker as number,
-      reference_id: transaction as string,
-      montant: montant as number,
-      client: client as number,
-      contact: contact,
-    };
-    console.log(data);
     const MySwal = withReactContent(Swal);
 
     try {
+      if (currentUser) {
+        const response = await getOrCreateClient({
+          chat_id: currentUser.id,
+          country: country || 'TG',
+        }).unwrap();
+        setClient(response.id);
+        console.log('Id_client', response.id);
+      } else {
+        throw new Error('No client');
+      }
+
+      setIsLoading(true); // Commence le chargement
+      const data: Order = {
+        employee_payment_method: caissier as number,
+        order_type: prop.order_type,
+        bookmaker_identifiant: bookmaker as number,
+        reference_id: transaction as string,
+        montant: montant as number,
+        client: client as number,
+        contact: contact,
+      };
+      console.log(data);
+
       const response = await deposit(data).unwrap();
       console.log(`${prop.order_type} effectué:`, response);
 
