@@ -154,7 +154,8 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             client: clientId,
             contact: contact,
           };
-          console.log(data);
+
+          console.log(client);
 
           const result = await deposit(data).unwrap();
           console.log(`${prop.order_type} effectué:`, result);
