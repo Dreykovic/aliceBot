@@ -87,7 +87,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [getOrCreateClient] = useGetOrCreateClientMutation();
   const [deposit] = useDepositMutation();
 
-  // Create or fetch client on component mount
+  // // Create or fetch client on component mount
   // useEffect(() => {
   //   const createClient = async () => {
   //     try {
@@ -112,8 +112,6 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   // Form submit handler
   const handleCountryCHange = async (value: string) => {
     setCountry(value);
-    const MySwal = withReactContent(Swal);
-
     try {
       if (currentUser) {
         const response = await getOrCreateClient({
@@ -122,33 +120,19 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         }).unwrap();
         setClient(response.id);
         console.log('Id_client', response.id);
-        MySwal.fire({
-          title: 'Success',
-          text: response.id,
-          icon: 'success',
-          confirmButtonText: 'Réessayer',
-          timer: 3000,
-          allowOutsideClick: false,
-        });
       } else {
         throw new Error('No client');
       }
     } catch (error) {
-      MySwal.fire({
-        title: 'Erreur',
-        text: `Une erreur est survenue lors de la connexion.`,
-        icon: 'error',
-        confirmButtonText: 'Réessayer',
-
-        allowOutsideClick: false,
-      });
+      console.log('error');
     }
   };
 
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Commence le chargement
     await handleCountryCHange(country);
+
+    setIsLoading(true); // Commence le chargement
     const data: Order = {
       employee_payment_method: caissier as number,
       order_type: prop.order_type,
@@ -189,7 +173,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       console.error(`Error Lors du ${prop.order_type}:`, error);
       MySwal.fire({
         title: 'Erreur',
-        text: `Une erreur est survenue lors du ${prop.order_type}. \n ${client}`,
+        text: `Une erreur est survenue lors du ${prop.order_type}.`,
         icon: 'error',
         confirmButtonText: 'Réessayer',
 
