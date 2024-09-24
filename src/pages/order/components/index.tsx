@@ -133,23 +133,25 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     const MySwal = withReactContent(Swal);
 
     try {
+      let clientId: number;
       if (currentUser) {
         const response = await getOrCreateClient({
           chat_id: currentUser.id,
           country: country || 'TG',
         }).unwrap();
         setClient(response.id);
+        clientId = response.id;
         console.log('Id_client', response.id);
 
         setIsLoading(true); // Commence le chargement
-        if (client) {
+        if (clientId) {
           const data: Order = {
             employee_payment_method: caissier as number,
             order_type: prop.order_type,
             bookmaker_identifiant: bookmaker as number,
             reference_id: transaction as string,
             montant: montant as number,
-            client: client as number,
+            client: clientId,
             contact: contact,
           };
           console.log(data);
