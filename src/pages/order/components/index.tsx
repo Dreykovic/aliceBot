@@ -10,6 +10,7 @@ import {
 } from 'react-bootstrap-icons';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import ALICE from '@/assets/images/alice.png';
 
 import BookmakerSelector from '@/shared/components/common/bookmaker-picker';
 import EmployeeSelector from '@/shared/components/common/employee-picker';
@@ -162,16 +163,23 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
           MySwal.fire({
             title: 'Succès !',
-            text: 'Votre demande a été prise en compte et sera traitée dans les plus bref délais.',
-            icon: 'success',
-            confirmButtonText: 'OK',
-            timer: 3000,
 
+            html: ` <div>
+                      <h1>${prop.order_type} pris en compte et sera traité dans les plus bref délais !!!</h1>
+                      <img src=${ALICE} alt="" />
+                    </div>`,
+            icon: 'success',
+            timer: 3000,
+            background: '#938888',
+            color: '#f9f9f9',
             didOpen: (alert) => {
               alert.onmouseenter = MySwal.stopTimer;
               alert.onmouseleave = MySwal.resumeTimer;
             },
             allowOutsideClick: false,
+            timerProgressBar: true,
+            showCloseButton: true,
+            showConfirmButton: false,
           });
           // Réinitialiser le formulaire après le succès
           setCountry('TG');
@@ -274,7 +282,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         />
       </div>
 
-      {(employeePaymentData || prop.order_type === 'RETRAIT') && (
+      {employeePaymentData && prop.order_type === 'DEPOT' && (
         <div role="alert" className="alert alert-info mb-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
