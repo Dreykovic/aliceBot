@@ -42,6 +42,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [country, setCountry] = useState<string>('TG');
   const [payment, setPayment] = useState<number>();
   const [bookmaker, setBookmaker] = useState<number>();
+  const [account, setAccount] = useState<number | string>('');
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string>('');
   const [contact, setContact] = useState<string>('');
@@ -149,7 +150,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           const data: Order = {
             employee_payment_method: caissier as number,
             order_type: prop.order_type,
-            bookmaker_identifiant: bookmaker as number,
+            bookmaker_identifiant: account as number,
             reference_id: transaction as string,
             montant: montant as number,
             client: clientId,
@@ -188,6 +189,8 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           setCaissier(undefined);
           setTransaction('');
           setMontant('');
+          setAccount('');
+          setContact('');
         } else {
           throw new Error('No client');
         }
@@ -300,14 +303,26 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           <span>{`Tapez : ${employeePaymentData?.syntaxe}, puis entrez l'id de votre transaction ci-dessous`}</span>
         </div>
       )}
-
+      <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
+        <KeyFill className={iconClasses} />
+        <input
+          type="text"
+          id="accountId"
+          className={inputClasses}
+          placeholder={'ID Compte'}
+          value={account || ''}
+          onChange={(e) => setAccount(Number(e.target.value))}
+        />
+      </div>
       <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
         <KeyFill className={iconClasses} />
         <input
           type="text"
           id="transactionId"
           className={inputClasses}
-          placeholder="ID de transaction"
+          placeholder={
+            prop.order_type === 'DEPOT' ? 'Référence' : 'Code Retrait'
+          }
           value={transaction || ''}
           onChange={(e) => setTransaction(e.target.value)}
         />
