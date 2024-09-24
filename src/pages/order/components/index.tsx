@@ -274,7 +274,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         />
       </div>
 
-      {employeePaymentData && (
+      {(employeePaymentData || prop.order_type === 'RETRAIT') && (
         <div role="alert" className="alert alert-info mb-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
