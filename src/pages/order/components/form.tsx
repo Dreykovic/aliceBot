@@ -171,7 +171,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
               alert.onmouseleave = MySwal.resumeTimer;
             },
             allowOutsideClick: false,
-            timer: 5000,
+            timer: 10000,
             timerProgressBar: true,
             showCloseButton: true,
             showConfirmButton: false,

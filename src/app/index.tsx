@@ -1,18 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { themeChange } from 'theme-change';
 
-import AppProvider from './providers';
+import AppRoutes from '@/routes';
+import privateRoutes from '@/routes/private-routes';
+import MainPrivateLayout from '@/shared/components/layouts/private-layouts/main';
+import BgParticles from '@/shared/components/ui/bg-particles';
+import { Loading } from '@/shared/components/ui/loading';
 
 const App: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    // Initialisation des thèmes de Daisy UI
-    themeChange(false);
-  }, []);
-
+    setInterval(() => {
+      setLoading(false);
+    }, 3000);
+  });
+  // console.log(loading);
   return (
     <ErrorBoundary fallback={<div>Something went wrong</div>}>
-      <AppProvider />
+      {loading === false ? (
+        <MainPrivateLayout>
+          <AppRoutes routes={privateRoutes} />
+          <BgParticles />
+        </MainPrivateLayout>
+      ) : (
+        <Loading />
+      )}
     </ErrorBoundary>
   );
 };
