@@ -1,7 +1,6 @@
 import React, { MutableRefObject, useEffect, useState } from 'react';
 import { BoxArrowUp } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import {
   setPageTitle,
@@ -22,17 +21,12 @@ type OrderPropsType = {
 const Order: React.FC<OrderPropsType> = (prop: OrderPropsType) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const navigate = useNavigate();
   const { width } = useWindowDimensions();
 
   useEffect(() => {
-    // if (width >= 1024) {
-    //   navigate('/');
-    // }
-
     dispatch(setPageTitle({ title: prop.title }));
     dispatch(setPageType({ type: 'main' }));
-  }, [dispatch, navigate, width]);
+  }, [dispatch, width]);
   const { height } = useWindowDimensions();
   const [rect, ref] = useBoundingClientRect<HTMLDivElement>();
 
