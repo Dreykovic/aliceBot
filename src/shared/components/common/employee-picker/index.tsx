@@ -139,7 +139,7 @@ export default function EmployeeSelector({
                     .startsWith(query.toLowerCase()),
                 ).length === 0 ? (
                   isLoading ? (
-                    <span className="loading loading-spinner"></span>
+                    <span className="loading loading-spinner text-warning"></span>
                   ) : (
                     <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
                       Aucun employee trouvé
