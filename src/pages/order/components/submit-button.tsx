@@ -7,7 +7,9 @@ type SubmitType = {
 
 const SubmitButton: React.FC<SubmitType> = ({ isLoading }) => {
   return (
-    <button className={`btn btn-secondary ${isLoading ? 'loading' : ''}`}>
+    <button
+      className={`btn btn-secondary ${isLoading ? 'loading loading-spinner text-warning' : ''}`}
+    >
       Valider la Transaction
     </button>
   );
