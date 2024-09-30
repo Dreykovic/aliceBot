@@ -21,12 +21,6 @@ type OrderPropsType = {
 const Order: React.FC<OrderPropsType> = (prop: OrderPropsType) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    dispatch(setPageTitle({ title: prop.title }));
-    dispatch(setPageType({ type: 'main' }));
-  }, [dispatch, width]);
   const { height } = useWindowDimensions();
   const [rect, ref] = useBoundingClientRect<HTMLDivElement>();
 
@@ -45,6 +39,8 @@ const Order: React.FC<OrderPropsType> = (prop: OrderPropsType) => {
   };
 
   useEffect(() => {
+    dispatch(setPageTitle({ title: prop.title }));
+    dispatch(setPageType({ type: 'main' }));
     const scrollDiv = ref.current;
     if (scrollDiv) {
       scrollDiv.addEventListener('scroll', handleScroll);
@@ -53,7 +49,7 @@ const Order: React.FC<OrderPropsType> = (prop: OrderPropsType) => {
         scrollDiv.removeEventListener('scroll', handleScroll);
       };
     }
-  }, [lastScrollTop, height, rect, ref]);
+  }, [lastScrollTop, height, rect, ref, prop.title, dispatch]);
   return (
     <>
       <div

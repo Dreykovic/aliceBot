@@ -9,6 +9,7 @@ import {
   PhoneFill,
   Wallet,
 } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -37,7 +38,6 @@ import {
 
 import StepButton from './step-button';
 import SubmitButton from './submit-button';
-import { useNavigate } from 'react-router-dom';
 
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
