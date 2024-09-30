@@ -137,10 +137,14 @@ export default function EmployeeSelector({
                   payment.username
                     .toLowerCase()
                     .startsWith(query.toLowerCase()),
-                ).length === 0 || isLoading ? (
-                  <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
-                    Aucun employee trouvé
-                  </li>
+                ).length === 0 ? (
+                  isLoading ? (
+                    <span className="loading loading-spinner"></span>
+                  ) : (
+                    <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
+                      Aucun employee trouvé
+                    </li>
+                  )
                 ) : (
                   dataArray
                     ?.filter((payment) =>

@@ -133,10 +133,14 @@ export default function BookmakerSelector({
                   bookmaker.nom_bookmaker
                     .toLowerCase()
                     .startsWith(query.toLowerCase()),
-                ).length === 0 || isLoading ? (
-                  <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
-                    No bookmaker found
-                  </li>
+                ).length === 0 ? (
+                  isLoading ? (
+                    <span className="loading loading-spinner"></span>
+                  ) : (
+                    <li className="text-neutral cursor-default select-none relative py-2 pl-3 pr-9">
+                      No bookmaker found
+                    </li>
+                  )
                 ) : (
                   dataArray
                     ?.filter((bookmaker) =>
