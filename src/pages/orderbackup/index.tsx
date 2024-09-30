@@ -3,6 +3,7 @@ import { BoxArrowUp } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import Form from '@/pages/order/components';
 import {
   setPageTitle,
   setPageType,
@@ -12,8 +13,6 @@ import Subtitle from '@/shared/components/ui/Typography/subtitle';
 import useBoundingClientRect from '@/shared/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/shared/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
-
-import Form from './components/form';
 
 type OrderPropsType = {
   title: 'Dépôt' | 'Retrait';
