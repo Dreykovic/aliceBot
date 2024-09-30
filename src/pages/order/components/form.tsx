@@ -37,6 +37,7 @@ import {
 
 import StepButton from './step-button';
 import SubmitButton from './submit-button';
+import { useNavigate } from 'react-router-dom';
 
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
@@ -50,10 +51,11 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string>('');
   const [contact, setContact] = useState<string | number>('');
+
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
-  const [client, setClient] = useState<number>();
+  // const [client, setClient] = useState<number>();
   const currentUser = useTelegramUser();
-  console.log(currentUser);
+  const navigate = useNavigate();
 
   const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
   const [isCountrySelectorOpen, setIsCountrySelectorOpen] = useState(false);
@@ -107,7 +109,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           chat_id: currentUser.id,
           country: country || 'TG',
         }).unwrap();
-        setClient(response.id);
+        // setClient(response.id);
         console.log('Id_client', response.id);
       } else {
         throw new Error('No client');
@@ -130,7 +132,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           chat_id: currentUser.id,
           country: country || 'TG',
         }).unwrap();
-        setClient(response.id);
+        // setClient(response.id);
         clientId = response.id;
         console.log('Id_client', response.id);
 
@@ -145,8 +147,6 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             client: clientId,
             contact: contact as string,
           };
-
-          console.log(client);
 
           const result = await deposit(data).unwrap();
           console.log(`${prop.order_type} effectué:`, result);
@@ -167,7 +167,8 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
               alert.onmouseleave = MySwal.resumeTimer;
             },
             allowOutsideClick: false,
-
+            timer: 5000,
+            timerProgressBar: true,
             showCloseButton: true,
             showConfirmButton: false,
           });
@@ -180,6 +181,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           setMontant('');
           setAccount('');
           setContact('');
+          prop.order_type === 'DEPOT' ? navigate('/') : navigate('/retrait');
         } else {
           throw new Error('No client');
         }
@@ -190,7 +192,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       console.error(`Error Lors du ${prop.order_type}:`, error);
       MySwal.fire({
         title: 'Erreur',
-        text: `Une erreur est survenue lors du ${prop.order_type}. ${(error as any).message}`,
+        text: `Une erreur est survenue lors du ${prop.order_type}. Vérifiez lrs informations entrées`,
         icon: 'error',
         confirmButtonText: 'Réessayer',
 
@@ -299,7 +301,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 ></path>
               </svg>
-              <span>{`Tapez : ${employeePaymentData?.syntaxe}, puis entrez l'id de votre transaction ci-dessous`}</span>
+              <span>{`Tapez : ${employeePaymentData?.syntaxe}, puis entrez l'id de votre transaction sur la page suivante`}</span>
             </div>
           )}
         </div>
