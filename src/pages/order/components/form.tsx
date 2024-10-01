@@ -38,6 +38,7 @@ import {
 
 import StepButton from './step-button';
 import SubmitButton from './submit-button';
+import env from '@/shared/config/env';
 
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
@@ -54,7 +55,19 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   // const [client, setClient] = useState<number>();
-  const currentUser = useTelegramUser();
+  let currentUser = useTelegramUser();
+
+  if (env.appState === 'dev') {
+    currentUser = {
+      id: 'string',
+      firstName: 'Tester',
+      lastName: 'Local',
+      username: 'LocalTester',
+      photoUrl: 'string',
+      languageCode: 'string',
+    };
+  }
+
   const navigate = useNavigate();
 
   const [isPaymentSelectOpen, setIsPaymentSelectOpen] = useState(false);
