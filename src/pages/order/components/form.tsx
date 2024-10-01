@@ -52,6 +52,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string>('');
   const [contact, setContact] = useState<string | number>('');
+  // console.log(caissier);
 
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   // const [client, setClient] = useState<number>();
@@ -59,7 +60,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   if (env.appState === 'dev') {
     currentUser = {
-      id: 'string',
+      id: '12354867',
       firstName: 'Tester',
       lastName: 'Local',
       username: 'LocalTester',
@@ -91,6 +92,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     );
 
   const caissiers = caissiersData || [];
+
   const isCaissierDisabled = !payment || !bookmaker;
 
   const {
@@ -164,7 +166,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             client: clientId,
             contact: contact as string,
           };
-
+          console.log(data);
           const result = await deposit(data).unwrap();
           console.log(`${prop.order_type} effectué:`, result);
 
@@ -305,7 +307,9 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         <div>
           {/* isEmployeePaymentDataLoading */}
           {isEmployeePaymentDataLoading ? (
-            <span className="loading loading-dots"></span>
+            <span className="loading loading-dots">
+              Chargement du code à taper
+            </span>
           ) : (
             employeePaymentData &&
             prop.order_type === 'DEPOT' &&
