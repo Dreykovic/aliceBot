@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import headerSlice from '@/shared/components/layouts/partials/header/header-slice';
-import navSlice from '@/shared/components/layouts/partials/navigations/nav-slice';
-import env from '@/shared/config/env';
+import headerSlice from '@/components/header/header-slice';
+import navSlice from '@/components/navigations/nav-slice';
+import env from '@/config/env';
 
 import apiSlice from './api-slice';
 import messageReducer from './message-slice';

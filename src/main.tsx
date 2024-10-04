@@ -4,7 +4,7 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import SuspenseContent from '@/shared/components/ui/suspens-content';
+import SuspenseContent from '@/components/ui/suspens-content';
 import store from '@/stores/';
 
 const App = lazy(() => import('./app'));

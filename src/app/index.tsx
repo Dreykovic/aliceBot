@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import AppRoutes from '@/routes';
-import privateRoutes from '@/routes/private-routes';
-import MainPrivateLayout from '@/shared/components/layouts/private-layouts/main';
-import BgParticles from '@/shared/components/ui/bg-particles';
-import { Loading } from '@/shared/components/ui/loading';
+import BgParticles from '@/components/ui/bg-particles';
+import { Loading } from '@/components/ui/loading';
+import Layout from '@/layouts';
+import routes from '@/routes';
+import RoutesProvider from '@/routes/provider';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -18,10 +18,10 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary fallback={<div>Something went wrong</div>}>
       {loading === false ? (
-        <MainPrivateLayout>
-          <AppRoutes routes={privateRoutes} />
+        <Layout>
+          <RoutesProvider routes={routes} />
           <BgParticles />
-        </MainPrivateLayout>
+        </Layout>
       ) : (
         <Loading />
       )}
