@@ -10,6 +10,7 @@ import {
 interface EmployeeGetParams {
   bookmaker_id: number;
   payment_method_id: number;
+  country_code: string;
 }
 interface EmployeePaymentGetParams {
   bookmaker_id: number;
@@ -29,15 +30,15 @@ const appApi = apiSlice.injectEndpoints({
       query: () => `bookmakers`,
     }),
     getCaissierByPMAndBookmaker: builder.query<Employee[], EmployeeGetParams>({
-      query: ({ bookmaker_id, payment_method_id }) =>
-        `employees/filter/${bookmaker_id}/${payment_method_id}`,
+      query: ({ bookmaker_id, payment_method_id, country_code }) =>
+        `employees/filter/${bookmaker_id}/${payment_method_id}/${country_code}`,
     }),
     getEmployeePaymentMethod: builder.query<
       EmployeePaymentMethod,
       EmployeePaymentGetParams
     >({
       query: ({ bookmaker_id, payment_method_id, employee_id }) =>
-        `employee_payement_methode_by_employee_and_bookmaker_and_payement_methode/${employee_id}/${bookmaker_id}/${payment_method_id}`,
+        `employee_payement_methodes/filter/${employee_id}/${bookmaker_id}/${payment_method_id}`,
     }),
     deposit: builder.mutation({
       query: (data: Order) => ({

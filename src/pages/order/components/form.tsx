@@ -87,8 +87,12 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       {
         bookmaker_id: bookmaker as number,
         payment_method_id: payment as number,
+        country_code: country,
       },
-      { skip: !payment || !bookmaker, refetchOnMountOrArgChange: true },
+      {
+        skip: !payment || !bookmaker || !country,
+        refetchOnMountOrArgChange: true,
+      },
     );
 
   const caissiers = caissiersData || [];
