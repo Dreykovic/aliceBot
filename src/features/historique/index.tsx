@@ -20,10 +20,9 @@ const Historique: React.FC = () => {
   const [orderType, setOrderType] = useState<'RETRAIT' | 'DEPOT'>('DEPOT');
   const { data: orderList, isLoading } = useGetOrderListQuery(
     {
-      chat_id: currentUser?.id ?? 'notfound',
+      chat_id: currentUser?.id ?? '12354867',
     },
     {
-      skip: !currentUser,
       refetchOnMountOrArgChange: true,
     },
   );
