@@ -8,9 +8,9 @@
 }
 
 .history-badge:before {
-  content: '✔︎';
+  /* content: '✔︎'; */
   font-size: 10px;
-  color: #b7b0b0 !important;
+  color: #0b0a0c !important;
   position: absolute;
   z-index: 0;
   display: flex;
@@ -20,7 +20,7 @@
   --tw-bg-opacity: 1;
   outline-style: solid;
   outline-width: 2px;
-  outline-color: #b7b0b0;
+  outline-color: #0b0a0c;
   width: 16px;
   height: 16px;
   top: -7%;
@@ -28,15 +28,19 @@
 }
 
 .history-badge-success:before {
+  content: '✔︎';
   background-color: #44a840;
 }
 .history-badge-warning:before {
+  content: '✔︎';
   background-color: #f3a460;
 }
 .history-badge-error:before {
+  content: 'x';
   background-color: #ff0000;
 }
 
 .history-badge-info:before {
+  content: '?';
   background-color: #74c1e1;
 }

@@ -95,7 +95,11 @@ const History: React.FC<HistoryDataType> = (props: HistoryDataType) => {
                   <div
                     className={`ring-success-content w-12 rounded-full ring ring-offset-2  ${historyItem.state === 'COMMING' ? 'bg-info' : historyItem.state === 'CANCELLED' ? 'bg-error' : historyItem.order_type === 'DEPOT' ? 'bg-success' : 'bg-warning'}`}
                   >
-                    <Icon.BuildingFillDown className="w-6 h-6" />
+                    {historyItem.order_type === 'DEPOT' ? (
+                      <Icon.BuildingFillDown className="w-6 h-6" />
+                    ) : (
+                      <Icon.BuildingFillUp className="w-6 h-6" />
+                    )}
                   </div>
                 </div>
                 <div>
@@ -103,7 +107,15 @@ const History: React.FC<HistoryDataType> = (props: HistoryDataType) => {
                     <Icon.WalletFill />
                     <span>{historyItem.bookmaker_identifiant}</span>
                   </div>
-                  <div className="text-[12px]">Payement Reussi</div>
+                  <div className="text-[12px]">
+                    {historyItem.state === 'COMMING'
+                      ? historyItem.order_type + ' en attente'
+                      : historyItem.state === 'CANCELLED'
+                        ? historyItem.order_type + 'Payment annulé'
+                        : historyItem.order_type === 'DEPOT'
+                          ? historyItem.order_type + 'effectué'
+                          : historyItem.order_type + 'effectué'}
+                  </div>
                   <div className="text-[8px] flex items-center gap-2">
                     {historyItem.state === 'COMMING' ? (
                       <div className="bg-info flex justify-center items-center w-4 h-4 rounded-full">
@@ -122,7 +134,7 @@ const History: React.FC<HistoryDataType> = (props: HistoryDataType) => {
                         <Icon.Check className="w-2 h-2" />
                       </div>
                     )}
-                    effectué le 22/20/021
+                    {/* effectué le 22/20/021 */}
                   </div>
                 </div>
               </div>

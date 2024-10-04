@@ -8,9 +8,11 @@ import { AppDispatch } from '@/stores';
 import * as Icon from 'react-bootstrap-icons';
 import History from './components';
 import { useGetOrderListQuery } from './api';
+import useTelegramUser from '@/hooks/use-telegram-user';
 
 const Historique: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  let currentUser = useTelegramUser();
 
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -18,9 +20,10 @@ const Historique: React.FC = () => {
   const [orderType, setOrderType] = useState<'RETRAIT' | 'DEPOT'>('DEPOT');
   const { data: orderList, isLoading } = useGetOrderListQuery(
     {
-      chat_id: '12354867',
+      chat_id: currentUser?.id ?? 'notfound',
     },
     {
+      skip: !currentUser,
       refetchOnMountOrArgChange: true,
     },
   );
