@@ -21,9 +21,9 @@ interface DepositParams {
   chat_id: string;
   country: string;
 }
-interface OrderListParam {
-  chat_id: string;
-}
+// interface OrderListParam {
+//   chat_id: string;
+// }
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPaymentMethods: builder.query<PaymentMethod[], void>({
