@@ -33,3 +33,10 @@
 .history-badge-warning:before {
   background-color: #f3a460;
 }
+.history-badge-error:before {
+  background-color: #ff0000;
+}
+
+.history-badge-info:before {
+  background-color: #74c1e1;
+}
