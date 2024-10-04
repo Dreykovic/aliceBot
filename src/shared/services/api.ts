@@ -21,6 +21,9 @@ interface DepositParams {
   chat_id: string;
   country: string;
 }
+interface OrderListParam {
+  chat_id: string;
+}
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPaymentMethods: builder.query<PaymentMethod[], void>({
@@ -33,6 +36,11 @@ const appApi = apiSlice.injectEndpoints({
       query: ({ bookmaker_id, payment_method_id, country_code }) =>
         `employees/filter/${bookmaker_id}/${payment_method_id}/${country_code}`,
     }),
+
+    // getOrderList: builder.query<Employee[], OrderListParam>({
+    //   query: ({ chat_id }) =>
+    //     `orders/filter/${bookmaker_id}/${payment_method_id}/${country_code}`,
+    // }),
     getEmployeePaymentMethod: builder.query<
       EmployeePaymentMethod,
       EmployeePaymentGetParams
