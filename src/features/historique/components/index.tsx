@@ -83,6 +83,15 @@ const History: React.FC<HistoryDataType> = React.memo(
                   ? 'history-badge-success'
                   : 'history-badge-warning';
 
+          const stateIconClass =
+            historyItem.state === 'COMMING'
+              ? 'bg-info'
+              : historyItem.state === 'CANCELLED'
+                ? 'bg-error'
+                : historyItem.order_type === 'DEPOT'
+                  ? 'bg-success'
+                  : 'bg-warning';
+
           const stateIcon =
             historyItem.state === 'COMMING' ? (
               <div className="bg-info flex justify-center items-center w-4 h-4 rounded-full">
@@ -110,7 +119,7 @@ const History: React.FC<HistoryDataType> = React.memo(
                 <div className="flex items-center gap-5">
                   <div className="avatar placeholder">
                     <div
-                      className={`ring-success-content w-12 rounded-full ring ring-offset-2 ${stateClass}`}
+                      className={`ring-success-content w-12 rounded-full ring ring-offset-2 ${stateIconClass}`}
                     >
                       {historyItem.order_type === 'DEPOT' ? (
                         <Icon.BuildingFillDown className="w-6 h-6" />
