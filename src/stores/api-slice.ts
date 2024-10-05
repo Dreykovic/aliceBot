@@ -12,6 +12,17 @@ export const apiSlice = createApi({
 
     return response;
   },
+  tagTypes: [
+    'PaymentMethods',
+    'Bookmakers',
+    'Employees',
+    'EmployeePaymentMethods',
+  ],
+
+  refetchOnReconnect: true, // Relance toutes les requêtes après une reconnexion
+  refetchOnFocus: true, // Relance toutes les requêtes après un retour en focus
+  keepUnusedDataFor: 300, // Garde les données en cache 5 minutes globalement
+
   endpoints: () => ({}),
 });
 

@@ -51,7 +51,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [bookmaker, setBookmaker] = useState<number>();
   const [account, setAccount] = useState<number | string>('');
   const [caissier, setCaissier] = useState<number>();
-  const [transaction, setTransaction] = useState<string>('');
+  const [transaction, setTransaction] = useState<string | number>('');
   const [contact, setContact] = useState<string | number>('');
   // console.log(caissier);
 
@@ -166,7 +166,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             employee_payment_method: caissier as number,
             order_type: prop.order_type,
             bookmaker_identifiant: account as number,
-            reference_id: transaction as string,
+            reference_id: transaction as number,
             montant: montant as number,
             client: clientId,
             contact: contact as string,
@@ -354,14 +354,14 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
           <KeyFill className={iconClasses} />
           <input
-            type="text"
+            type="number"
             id="transactionId"
             className={inputClasses}
             placeholder={
               prop.order_type === 'DEPOT' ? 'Référence' : 'Code Retrait'
             }
             value={transaction || ''}
-            onChange={(e) => setTransaction(e.target.value)}
+            onChange={(e) => setTransaction(Number(e.target.value))}
           />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg">
