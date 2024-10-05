@@ -116,7 +116,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     },
   );
 
-  console.log(employeePaymentData);
+  // console.log(employeePaymentData);
 
   const [getOrCreateClient] = useGetOrCreateClientMutation();
   const [deposit] = useDepositMutation();
@@ -160,7 +160,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         }).unwrap();
         // setClient(response.id);
         clientId = response.id;
-        console.log('Id_client', response.id);
+        // console.log('Id_client', response.id);
 
         setIsLoading(true); // Commence le chargement
         if (clientId && employeePaymentData) {
