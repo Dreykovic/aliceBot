@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import ALICE from '@/assets/images/alice.png';
+// import ALICE from '@/assets/images/alice.png';
 import { COUNTRIES } from '@/components/ui/country-picker/lib/countries';
 import CountrySelector from '@/components/ui/country-picker/lib/selector';
 import { SelectMenuOption } from '@/components/ui/country-picker/lib/types';
@@ -182,7 +182,6 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
             html: ` <div>
                       <h1>${prop.order_type} pris en compte et sera traité dans les plus bref délais !!!</h1>
-                      <img src=${ALICE} alt="" />
                     </div>`,
             icon: 'success',
 
@@ -360,7 +359,9 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             id="transactionId"
             className={inputClasses}
             placeholder={
-              prop.order_type === 'DEPOT' ? 'Référence' : 'Code Retrait'
+              prop.order_type === 'DEPOT'
+                ? 'Référence de transaction'
+                : 'Code Retrait'
             }
             value={transaction || ''}
             onChange={(e) => setTransaction(Number(e.target.value))}
@@ -372,7 +373,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             type="number"
             id="contactId"
             className={inputClasses}
-            placeholder="Contact"
+            placeholder="Numéro"
             value={contact || ''}
             onChange={(e) => setContact(e.target.value)}
           />
