@@ -9,7 +9,7 @@ import {
 
 import routes from '@/routes';
 
-const iconsClassName = 'w-8 h-8';
+const iconsClassName = 'w-8 h-8 ';
 // console.log('private', routes);
 
 const navs = [

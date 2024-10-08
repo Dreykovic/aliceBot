@@ -15,14 +15,14 @@ const BottomNavigation = (props: Props) => {
 
   return (
     <div
-      className={`btm-nav  ${status === 'VISIBLE' ? '' : 'hidden'}  bg-base-100  m-0 bottom-0 p-0 rounded-t-2xl`}
+      className={`btm-nav  ${status === 'VISIBLE' ? '' : 'hidden'}  bg-base-100  m-0 bottom-0 p-0 rounded-t-2xl bordered`}
     >
       {props.navs.map((nav, k) => {
         return (
           <button key={k + 1} className={` mx-1`}>
             <Link
               to={nav.path}
-              className={`flex flex-col items-center absolute tooltip bottom-1`}
+              className={`flex flex-col items-center absolute tooltip bottom-1 `}
               data-tip={nav.label}
             >
               <div
@@ -30,7 +30,7 @@ const BottomNavigation = (props: Props) => {
               >
                 <motion.div
                   layout
-                  className={`${nav.label === pageTitle ? 'ring-neutral w-12 rounded-full ring ring-offset-2 ring-offset-neutral bg-primary' : ''} `}
+                  className={`${nav.label === pageTitle ? 'ring-neutral w-12 rounded-full ring ring-offset-2 ring-offset-neutral bg-primary ' : ''} `}
                 >
                   {nav.icon}
                 </motion.div>

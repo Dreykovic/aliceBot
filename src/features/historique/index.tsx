@@ -39,7 +39,7 @@ const Historique: React.FC = () => {
             <Icon.Sliders className="w-6 h-6" />
             <div className="flex justify-between items-center gap-4 my-4">
               <button
-                className={`btn rounded-full text-success ${orderType === 'DEPOT' ? 'shadow-lg shadow-success' : ''}`}
+                className={`btn rounded-full text-success ${orderType === 'DEPOT' ? 'shadow-lg shadow-primary' : ''} bordered`}
                 onClick={() => {
                   setOrderType('DEPOT');
                 }}
@@ -47,7 +47,7 @@ const Historique: React.FC = () => {
                 <Icon.BuildingFillDown className="w-6 h-6" />
               </button>
               <button
-                className={`btn rounded-full text-warning ${orderType === 'RETRAIT' ? 'shadow-lg shadow-warning' : ''}`}
+                className={`btn rounded-full text-warning ${orderType === 'RETRAIT' ? 'shadow-lg shadow-primary' : ''} bordered`}
                 onClick={() => {
                   setOrderType('RETRAIT');
                 }}

@@ -7,10 +7,10 @@ type ActionType = {
 
 const StepButton: React.FC<ActionType> = ({ next }) => {
   return (
-    <button className="btn btn-ghost">
+    <button className="btn btn-ghost bordered text-primary">
       {next ? (
         <>
-          Continuer <ArrowRightShort className="w-6 h-6" />
+          Continuer <ArrowRightShort className="w-6 h-6 " />
         </>
       ) : (
         <>

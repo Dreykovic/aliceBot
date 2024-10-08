@@ -114,12 +114,12 @@ const History: React.FC<HistoryDataType> = React.memo(
           return (
             <motion.div key={index} variants={itemVariants}>
               <div
-                className={`flex items-center p-3 bg-base-200 rounded-box gap-4 justify-between mb-3 history-badge relative ${stateClass}`}
+                className={`flex items-center p-3 bg-base-200 rounded-box gap-4 justify-between mb-3 history-badge relative ${stateClass} bordered`}
               >
                 <div className="flex items-center gap-5">
                   <div className="avatar placeholder">
                     <div
-                      className={`ring-success-content w-12 rounded-full ring ring-offset-2 ${stateIconClass}`}
+                      className={`ring-primary w-12 rounded-full ring ring-offset-2 ${stateIconClass}`}
                     >
                       {historyItem.order_type === 'DEPOT' ? (
                         <Icon.BuildingFillDown className="w-6 h-6" />
@@ -145,7 +145,7 @@ const History: React.FC<HistoryDataType> = React.memo(
                     </div>
                   </div>
                 </div>
-                <div className="btn rounded-full bg-base-300 p-2">
+                <div className="btn rounded-full bg-base-300 p-2 bordered">
                   {historyItem.montant}
                 </div>
               </div>
