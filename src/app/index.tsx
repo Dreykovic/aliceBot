@@ -10,9 +10,9 @@ import RoutesProvider from '@/routes/provider';
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    setInterval(() => {
+    setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 1000);
   });
   // console.log(loading);
   return (
