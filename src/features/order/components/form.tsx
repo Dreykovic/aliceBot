@@ -123,7 +123,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   const inputClasses =
     'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
-  const iconClasses = 'w-12 h-12 text-neutral p-1';
+  const iconClasses = 'w-12 h-12 text-neutral-content p-1';
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Form submit handler
@@ -239,7 +239,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     >
       <div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">
-          <GlobeEuropeAfrica className="w-12 h-12 text-neutral p-1" />
+          <GlobeEuropeAfrica className={iconClasses} />
           <CountrySelector
             id="countries"
             open={isCountrySelectorOpen}
@@ -254,7 +254,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         </div>
 
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">
-          <Wallet className="w-12 h-12 text-neutral p-1" />
+          <Wallet className={iconClasses} />
           <PaymentSelector
             id="payment"
             open={isPaymentSelectOpen}
@@ -269,7 +269,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         </div>
 
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">
-          <Journals className="w-12 h-12 text-neutral p-1" />
+          <Journals className={iconClasses} />
           <BookmakerSelector
             id="bookmaker"
             open={isBookmakerSelectOpen}
@@ -296,7 +296,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">
-          <PersonBadge className="w-12 h-12 text-neutral p-1" />
+          <PersonBadge className={iconClasses} />
           <EmployeeSelector
             id="caissier"
             open={isCaissierSelectOpen}

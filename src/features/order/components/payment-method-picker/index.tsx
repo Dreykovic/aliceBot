@@ -154,7 +154,7 @@ export default function PaymentSelector({
                       return (
                         <li
                           key={`${id}-${index}`}
-                          className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 flex items-center hover:bg-accent transition"
+                          className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 flex items-center hover:bg-accent hover:text-neutral-content transition"
                           id="listbox-option-0"
                           role="option"
                           onClick={() => {
