@@ -22,7 +22,7 @@ export default {
   success: '#44A840', // vert pour succès
   'success-content': '#FFFFFF', // blanc pour le contraste
 
-  warning: '#937171', // cinereous pour une couleur d’avertissement moins agressive
+  warning: '#be9519', // cinereous pour une couleur d’avertissement moins agressive
   'warning-content': '#1F1109', // marron foncé pour un bon contraste
 
   error: '#EC0000', // rouge vif pour les erreurs
