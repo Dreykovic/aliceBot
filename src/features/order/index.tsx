@@ -1,9 +1,5 @@
 import React, { MutableRefObject, useEffect, useState } from 'react';
-import {
-  BoxArrowDown,
-  BoxArrowInDown,
-  BoxArrowUp,
-} from 'react-bootstrap-icons';
+import { BoxArrowInDown, BoxArrowUp } from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
