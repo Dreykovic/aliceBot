@@ -7,11 +7,11 @@ interface DataSelectorProps<T> {
   disabled?: boolean;
   onToggle: () => void;
   onChange: (value: T) => void;
-  selectedValue: T;
+  selectedValue?: T;
   dataArray?: T[];
   isLoading: boolean;
   filterFunction?: (item: T, query: string) => boolean;
-  renderIcon?: (item: T) => React.ReactNode;
+
   placeholder?: string;
   noDataText?: string;
 }
@@ -27,7 +27,7 @@ export default function DataSelector<T>({
   isLoading,
   filterFunction = (item, query) =>
     String(item).toLowerCase().includes(query.toLowerCase()),
-  renderIcon,
+
   placeholder = 'Choose an item',
   noDataText = 'No items found',
 }: DataSelectorProps<T>) {
@@ -59,7 +59,6 @@ export default function DataSelector<T>({
         disabled={disabled}
       >
         <span className="flex items-center truncate">
-          {renderIcon && renderIcon(selectedValue)}
           {selectedValue ? String(selectedValue) : placeholder}
         </span>
       </button>
@@ -98,7 +97,6 @@ export default function DataSelector<T>({
                     }}
                     className="p-2 hover:bg-gray-200 cursor-pointer"
                   >
-                    {renderIcon && renderIcon(item)}
                     <span>{String(item)}</span>
                   </li>
                 ))
