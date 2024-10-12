@@ -1,5 +1,9 @@
 import React, { MutableRefObject, useEffect, useState } from 'react';
-import { BoxArrowDown, BoxArrowUp } from 'react-bootstrap-icons';
+import {
+  BoxArrowDown,
+  BoxArrowInDown,
+  BoxArrowUp,
+} from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
@@ -57,7 +61,7 @@ const Order: React.FC<OrderPropsType> = (prop: OrderPropsType) => {
           <header>
             <div className="my-2 flex justify-between items-center flex-col text-neutral-content">
               {prop.type === 'DEPOT' ? (
-                <BoxArrowDown className="w-12 h-12" />
+                <BoxArrowInDown className="w-12 h-12" />
               ) : (
                 <BoxArrowUp className="w-12 h-12" />
               )}
