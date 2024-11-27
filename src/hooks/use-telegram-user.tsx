@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { TelegramUser } from '../types/api';
+import env from '@/config/env';
 
 const useTelegramUser = (): TelegramUser | null => {
   const [user, setUser] = useState<TelegramUser | null>(null);
@@ -56,7 +57,16 @@ const useTelegramUser = (): TelegramUser | null => {
     }
   };
 
-  return user;
+  return env.appState === 'dev'
+    ? {
+        id: '7332983362',
+        firstName: 'Tester',
+        lastName: 'Local',
+        username: 'CodeurPassionnes',
+        photoUrl: 'https://t.me/CodeurPassionnes',
+        languageCode: 'string',
+      }
+    : user;
 };
 
 export default useTelegramUser;

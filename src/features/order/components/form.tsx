@@ -17,7 +17,7 @@ import withReactContent from 'sweetalert2-react-content';
 import { COUNTRIES } from '@/components/ui/country-picker/lib/countries';
 import CountrySelector from '@/components/ui/country-picker/lib/selector';
 import { SelectMenuOption } from '@/components/ui/country-picker/lib/types';
-import env from '@/config/env';
+
 import useTelegramUser from '@/hooks/use-telegram-user';
 import {
   Bookmaker,
@@ -40,6 +40,7 @@ import EmployeeSelector from './employee-picker';
 import PaymentSelector from './payment-method-picker';
 import StepButton from './step-button';
 import SubmitButton from './submit-button';
+import { TelegramUser } from '@/types/api';
 
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
@@ -58,17 +59,6 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   // const [client, setClient] = useState<number>();
   let currentUser = useTelegramUser();
-
-  if (env.appState === 'dev') {
-    currentUser = {
-      id: '12354867',
-      firstName: 'Tester',
-      lastName: 'Local',
-      username: 'LocalTester',
-      photoUrl: 'string',
-      languageCode: 'string',
-    };
-  }
 
   const navigate = useNavigate();
 
@@ -131,12 +121,10 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     setCountry(value);
     try {
       if (currentUser) {
-        const response = await getOrCreateClient({
-          chat_id: currentUser.id,
-          country: country || 'TG',
-        }).unwrap();
+        const response = await handleGetOrCreateClient(currentUser);
         // setClient(response.id);
         console.log('Id_client', response.id);
+        console.log('Client Created', response);
       } else {
         throw new Error('No client');
       }
@@ -144,7 +132,15 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       console.log('error');
     }
   };
-
+  const handleGetOrCreateClient = async (theCurrentUser: TelegramUser) => {
+    return await getOrCreateClient({
+      chat_id: theCurrentUser.id,
+      country: country || 'TG',
+      nom: theCurrentUser.lastName,
+      prenom: theCurrentUser.firstName,
+      username: theCurrentUser.username,
+    }).unwrap();
+  };
   const handleSubmit = async (e: number) => {
     // e.preventDefault();
     console.log(e);
@@ -154,13 +150,11 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     try {
       let clientId: number;
       if (currentUser) {
-        const response = await getOrCreateClient({
-          chat_id: currentUser.id,
-          country: country || 'TG',
-        }).unwrap();
+        const response = await handleGetOrCreateClient(currentUser);
         // setClient(response.id);
         clientId = response.id;
         // console.log('Id_client', response.id);
+        console.log('Client Created', response);
 
         setIsLoading(true); // Commence le chargement
         if (clientId && employeePaymentData) {
