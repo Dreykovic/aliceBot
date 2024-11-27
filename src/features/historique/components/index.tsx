@@ -164,7 +164,11 @@ const History: React.FC<HistoryDataType> = React.memo(
         style={{ height: `${contentHeight}px` }}
         ref={ref}
       >
-        {renderedOrders}
+        {orders.length > 0 ? (
+          renderedOrders
+        ) : (
+          <div className="text-center">Aucune commande passée</div>
+        )}
       </motion.div>
     );
   },

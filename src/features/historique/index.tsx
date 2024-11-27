@@ -13,6 +13,7 @@ import useTelegramUser from '@/hooks/use-telegram-user';
 const Historique: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   let currentUser = useTelegramUser();
+  console.log('historique', currentUser);
 
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -20,7 +21,7 @@ const Historique: React.FC = () => {
   const [orderType, setOrderType] = useState<'RETRAIT' | 'DEPOT'>('DEPOT');
   const { data: orderList, isLoading } = useGetOrderListQuery(
     {
-      chat_id: currentUser?.id ?? '12354867',
+      chat_id: currentUser?.id as string,
     },
     {
       refetchOnMountOrArgChange: true,
@@ -30,7 +31,7 @@ const Historique: React.FC = () => {
     dispatch(setPageTitle({ title: 'Historique' }));
     dispatch(setPageType({ type: 'main' }));
   }, [dispatch, navigate, width]);
-
+  console.log(orderList);
   return (
     <>
       <div className="p-4 overflow-hidden h-full">
