@@ -151,7 +151,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         console.log('Client Created', response);
         setIsLoading(true); // Commence le chargement
 
-        if (!response.created) {
+        if (response.created && prop.order_type === 'DEPOT') {
           const result = await swalForParrainage.fire({
             title: 'Parrainage',
             icon: 'question',
