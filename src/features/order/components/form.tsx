@@ -133,13 +133,14 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     }
   };
   const handleGetOrCreateClient = async (theCurrentUser: TelegramUser) => {
-    return await getOrCreateClient({
+    const response = await getOrCreateClient({
       chat_id: theCurrentUser.id,
       country: country || 'TG',
       nom: theCurrentUser.lastName,
       prenom: theCurrentUser.firstName,
       username: theCurrentUser.username,
     }).unwrap();
+    return response.data;
   };
   const handleSubmit = async (e: number) => {
     // e.preventDefault();
@@ -153,7 +154,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         const response = await handleGetOrCreateClient(currentUser);
         // setClient(response.id);
         clientId = response.id;
-        // console.log('Id_client', response.id);
+        console.log('Id_client', response.id);
         console.log('Client Created', response);
 
         setIsLoading(true); // Commence le chargement
