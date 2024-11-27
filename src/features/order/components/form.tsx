@@ -116,22 +116,6 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const iconClasses = 'w-12 h-12 text-neutral-content p-1';
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // Form submit handler
-  const handleCountryCHange = async (value: string) => {
-    setCountry(value);
-    try {
-      if (currentUser) {
-        const response = await handleGetOrCreateClient(currentUser);
-        // setClient(response.id);
-        console.log('Id_client', response.id);
-        console.log('Client Created', response);
-      } else {
-        throw new Error('No client');
-      }
-    } catch (error) {
-      console.log('error');
-    }
-  };
   const handleGetOrCreateClient = async (theCurrentUser: TelegramUser) => {
     const response = await getOrCreateClient({
       chat_id: theCurrentUser.id,
@@ -140,24 +124,70 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       prenom: theCurrentUser.firstName,
       username: theCurrentUser.username,
     }).unwrap();
-    return response.data;
+    return response;
   };
+
+  const [codeParrainage, setCodeParrainage] = useState<string | undefined>();
+
   const handleSubmit = async (e: number) => {
     // e.preventDefault();
     console.log(e);
 
     const MySwal = withReactContent(Swal);
+    const swalForParrainage = MySwal.mixin({
+      allowOutsideClick: false,
 
+      allowEscapeKey: false,
+      showCancelButton: true,
+    });
     try {
       let clientId: number;
+
       if (currentUser) {
         const response = await handleGetOrCreateClient(currentUser);
         // setClient(response.id);
-        clientId = response.id;
-        console.log('Id_client', response.id);
+        clientId = response.data.id;
+        console.log('Id_client', response.data.id);
         console.log('Client Created', response);
-
         setIsLoading(true); // Commence le chargement
+
+        if (!response.created) {
+          const result = await swalForParrainage.fire({
+            title: 'Parrainage',
+            icon: 'question',
+
+            text: 'Voulez vous utiliser un code de parrainage ?',
+
+            confirmButtonText: 'Oui',
+            cancelButtonText: 'Non',
+            reverseButtons: true,
+          });
+          if (result.isConfirmed) {
+            const { value: code_parrainage } = await swalForParrainage.fire({
+              title: 'Entrez le code de parrainage',
+              input: 'text',
+              inputLabel: 'Code',
+              inputValidator: (value) => {
+                if (!value) {
+                  return 'Vous devez écrire le code de parrainage!';
+                }
+              },
+              confirmButtonText: 'Valider',
+              cancelButtonText: 'Annuler',
+            });
+            if (code_parrainage) {
+              setCodeParrainage(code_parrainage);
+              await MySwal.fire({
+                text: `Code de parrainage ${code_parrainage} ajouté à votre commande`,
+                allowOutsideClick: false,
+                timer: 10000,
+                timerProgressBar: true,
+                showCloseButton: true,
+                showConfirmButton: false,
+              });
+            }
+          }
+        }
         if (clientId && employeePaymentData) {
           const data: Order = {
             employee_payment_method: employeePaymentData.id as number,
@@ -166,6 +196,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             reference_id: transaction as number,
             montant: montant as number,
             client: clientId,
+            code_parainage: codeParrainage,
             contact: contact as string,
           };
           console.log(data);
@@ -239,7 +270,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             id="countries"
             open={isCountrySelectorOpen}
             onToggle={() => setIsCountrySelectorOpen(!isCountrySelectorOpen)}
-            onChange={handleCountryCHange}
+            onChange={(value: string) => setCountry(value)}
             selectedValue={
               COUNTRIES.find(
                 (option) => option.value === country,
