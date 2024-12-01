@@ -22,25 +22,27 @@ import useTelegramUser from '@/hooks/use-telegram-user';
 import {
   Bookmaker,
   Employee,
-  Order,
+  OrderCreate,
   PaymentMethod,
 } from '@/types/models-interfaces';
 
 import {
   useDepositMutation,
-  useGetBookmakersQuery,
   useGetCaissierByPMAndBookmakerQuery,
   useGetEmployeePaymentMethodQuery,
-  useGetOrCreateClientMutation,
   useGetPaymentMethodsQuery,
 } from '../api';
 
-import BookmakerSelector from './bookmaker-picker';
 import EmployeeSelector from './employee-picker';
 import PaymentSelector from './payment-method-picker';
 import StepButton from './step-button';
 import SubmitButton from './submit-button';
 import { TelegramUser } from '@/types/api';
+import BookmakerSelector from '@/components/bookmaker-picker';
+import {
+  useGetBookmakersQuery,
+  useGetOrCreateClientMutation,
+} from '@/stores/api-slice';
 
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
@@ -58,7 +60,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   // const [client, setClient] = useState<number>();
-  let currentUser = useTelegramUser();
+  const currentUser = useTelegramUser();
 
   const navigate = useNavigate();
 
@@ -189,7 +191,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           }
         }
         if (clientId && employeePaymentData) {
-          const data: Order = {
+          const data: OrderCreate = {
             employee_payment_method: employeePaymentData.id as number,
             order_type: prop.order_type,
             bookmaker_identifiant: account as number,

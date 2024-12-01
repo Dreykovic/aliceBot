@@ -1,10 +1,9 @@
 import apiSlice from '@/stores/api-slice';
 import {
-  Bookmaker,
   Employee,
   PaymentMethod,
   EmployeePaymentMethod,
-  Order,
+  OrderCreate,
 } from '@/types/models-interfaces';
 
 interface EmployeeGetParams {
@@ -17,13 +16,6 @@ interface EmployeePaymentGetParams {
   payment_method_id: number;
   employee_id: number;
 }
-interface DepositParams {
-  chat_id: string;
-  country: string;
-  nom: string | null;
-  prenom: string | null;
-  username: string | null;
-}
 
 const appApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -31,10 +23,10 @@ const appApi = apiSlice.injectEndpoints({
       query: () => `payment_methods`,
       providesTags: ['PaymentMethods'], // Ajouter un tag
     }),
-    getBookmakers: builder.query<Bookmaker[], void>({
-      query: () => `bookmakers`,
-      providesTags: ['Bookmakers'], // Ajouter un tag
-    }),
+    // getBookmakers: builder.query<Bookmaker[], void>({
+    //   query: () => `bookmakers`,
+    //   providesTags: ['Bookmakers'], // Ajouter un tag
+    // }),
     getCaissierByPMAndBookmaker: builder.query<Employee[], EmployeeGetParams>({
       query: ({ bookmaker_id, payment_method_id, country_code }) =>
         `employees/filter/${bookmaker_id}/${payment_method_id}/${country_code}`,
@@ -50,7 +42,7 @@ const appApi = apiSlice.injectEndpoints({
       providesTags: ['EmployeePaymentMethods'], // Ajouter un tag
     }),
     deposit: builder.mutation({
-      query: (data: Order) => ({
+      query: (data: OrderCreate) => ({
         url: 'orders/create',
         method: 'POST',
         body: data,
@@ -62,14 +54,6 @@ const appApi = apiSlice.injectEndpoints({
         'EmployeePaymentMethods',
       ], // Invalider les caches
     }),
-
-    getOrCreateClient: builder.mutation({
-      query: ({ chat_id, country, nom, prenom, username }: DepositParams) => ({
-        url: `clients/get_or_create/${chat_id}`,
-        method: 'POST',
-        body: { id_chat: chat_id, country, nom, prenom, username },
-      }),
-    }),
   }),
   overrideExisting: false,
 });
@@ -78,9 +62,8 @@ const appApi = apiSlice.injectEndpoints({
 // auto-generated based on the defined endpoints
 export const {
   useGetPaymentMethodsQuery,
-  useGetBookmakersQuery,
+
   useGetCaissierByPMAndBookmakerQuery,
   useGetEmployeePaymentMethodQuery,
   useDepositMutation,
-  useGetOrCreateClientMutation,
 } = appApi;

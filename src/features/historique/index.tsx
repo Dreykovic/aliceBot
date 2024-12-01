@@ -31,7 +31,7 @@ const Historique: React.FC = () => {
     dispatch(setPageTitle({ title: 'Historique' }));
     dispatch(setPageType({ type: 'main' }));
   }, [dispatch, navigate, width]);
-  console.log(orderList);
+  console.log('list', orderList);
   return (
     <>
       <div className="p-4 overflow-hidden h-full">
@@ -65,8 +65,9 @@ const Historique: React.FC = () => {
           ) : (
             <History
               orders={
-                orderList?.filter((order) => order.order_type === orderType) ??
-                []
+                orderList?.filter(
+                  (order) => order.type_transaction === orderType,
+                ) ?? []
               }
             />
           )}

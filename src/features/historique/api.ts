@@ -9,8 +9,6 @@ const appApi = apiSlice.injectEndpoints({
     getOrderList: builder.query<Order[], OrderListParam>({
       query: ({ chat_id }) => `orders/filter/${chat_id}`,
     }),
-
-    //Endpoint : POST http://127.0.0.1:8000/api/clients/get_or_create/<chat_id:str>
   }),
   overrideExisting: false,
 });

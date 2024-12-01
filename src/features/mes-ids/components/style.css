@@ -1,0 +1,46 @@
+:where(.timeline > li) {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  align-items: center;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto;
+}
+
+.history-badge:before {
+  /* content: '✔︎'; */
+  font-size: 10px;
+  color: #0b0a0c !important;
+  position: absolute;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  outline-style: solid;
+  outline-width: 2px;
+  outline-color: #0b0a0c;
+  width: 16px;
+  height: 16px;
+  top: -7%;
+  right: 3%;
+}
+
+.history-badge-success:before {
+  content: '✔︎';
+  background-color: #44a840;
+}
+.history-badge-warning:before {
+  content: '✔︎';
+  background-color: #f3a460;
+}
+.history-badge-error:before {
+  content: 'x';
+  background-color: #ff0000;
+}
+
+.history-badge-info:before {
+  content: '?';
+  background-color: #74c1e1;
+}

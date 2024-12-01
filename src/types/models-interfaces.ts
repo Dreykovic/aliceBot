@@ -18,6 +18,11 @@ export interface Client {
   montant_parainage_depot: string;
   country: string;
 }
+export interface ClientBookmaker {
+  identifiant: string;
+  client: number;
+  bookmaker: number;
+}
 
 export interface PaymentMethod {
   id: undefined | number;
@@ -46,9 +51,21 @@ export interface EmployeePaymentMethod {
   bookmaker: number;
   syntaxe: string;
 }
-export interface Order {
+export interface OrderCreate {
   employee_payment_method: number;
   order_type: 'DEPOT' | 'RETRAIT';
+  bookmaker_identifiant: number;
+  reference_id: number;
+  montant: number;
+  code_parainage?: string;
+  state?: 'COMMING' | 'CONFIRMED' | 'CANCELLED';
+  client: number;
+  contact?: string;
+}
+
+export interface Order {
+  employee_payment_method: number;
+  type_transaction: 'DEPOT' | 'RETRAIT';
   bookmaker_identifiant: number;
   reference_id: number;
   montant: number;

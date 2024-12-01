@@ -42,7 +42,7 @@ const History: React.FC<HistoryDataType> = React.memo(
     const [contentHeight, setContentHeight] = useState<number>(0);
     const dispatch = useDispatch<AppDispatch>();
     const [lastScrollTop, setLastScrollTop] = useState<number>(0);
-    console.log(orders);
+    console.log('orders', orders);
 
     // Mémoïrisation de la fonction de scroll
     const handleScroll = useCallback(() => {
@@ -79,7 +79,7 @@ const History: React.FC<HistoryDataType> = React.memo(
               ? 'history-badge-info'
               : historyItem.state === 'CANCELLED'
                 ? 'history-badge-error'
-                : historyItem.order_type === 'DEPOT'
+                : historyItem.type_transaction === 'DEPOT'
                   ? 'history-badge-success'
                   : 'history-badge-warning';
 
@@ -88,7 +88,7 @@ const History: React.FC<HistoryDataType> = React.memo(
               ? 'bg-info'
               : historyItem.state === 'CANCELLED'
                 ? 'bg-error'
-                : historyItem.order_type === 'DEPOT'
+                : historyItem.type_transaction === 'DEPOT'
                   ? 'bg-success'
                   : 'bg-warning';
 
@@ -101,7 +101,7 @@ const History: React.FC<HistoryDataType> = React.memo(
               <div className="bg-error flex justify-center items-center w-4 h-4 rounded-full">
                 <Icon.X className="w-2 h-2" />
               </div>
-            ) : historyItem.order_type === 'DEPOT' ? (
+            ) : historyItem.type_transaction === 'DEPOT' ? (
               <div className="bg-success flex justify-center items-center w-4 h-4 rounded-full">
                 <Icon.Check className="w-2 h-2" />
               </div>
@@ -121,7 +121,7 @@ const History: React.FC<HistoryDataType> = React.memo(
                     <div
                       className={`ring-primary w-12 rounded-full ring ring-offset-2 ${stateIconClass}`}
                     >
-                      {historyItem.order_type === 'DEPOT' ? (
+                      {historyItem.type_transaction === 'DEPOT' ? (
                         <Icon.BuildingFillDown className="w-6 h-6" />
                       ) : (
                         <Icon.BuildingFillUp className="w-6 h-6" />
@@ -135,10 +135,10 @@ const History: React.FC<HistoryDataType> = React.memo(
                     </div>
                     <div className="text-[12px]">
                       {historyItem.state === 'COMMING'
-                        ? historyItem.order_type + ' en attente'
+                        ? historyItem.type_transaction + ' en attente'
                         : historyItem.state === 'CANCELLED'
-                          ? historyItem.order_type + ' Payment annulé'
-                          : historyItem.order_type + ' effectué'}
+                          ? historyItem.type_transaction + ' Payment annulé'
+                          : historyItem.type_transaction + ' effectué'}
                     </div>
                     <div className="text-[8px] flex items-center gap-2">
                       {stateIcon}
