@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -10,7 +10,7 @@ import useTelegramUser from '@/hooks/use-telegram-user';
 import Layout from '@/layouts';
 import routes from '@/routes';
 import RoutesProvider from '@/routes/provider';
-import { AppDispatch, RootState } from '@/stores';
+import { AppDispatch } from '@/stores';
 import { useGetOrCreateClientMutation } from '@/stores/api-slice';
 import { setUserState } from '@/stores/user-slice';
 import { TelegramUser } from '@/types/api';
