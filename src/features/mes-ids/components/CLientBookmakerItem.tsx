@@ -45,7 +45,7 @@ const CLientBookmakerItem = ({ IdsItem }: Props) => {
           title: 'Supprimer Id',
           icon: 'warning',
 
-          text: `Voulez vous supprimer l'ID ${IdsItem.identifiant} du bookmaker ${IdsItem.bookmaker}?`,
+          text: `Voulez vous supprimer l'ID ${IdsItem.identifiant} du bookmaker ${bookmakerData?.nom_bookmaker}?`,
 
           confirmButtonText: 'Oui',
           cancelButtonText: 'Non',
