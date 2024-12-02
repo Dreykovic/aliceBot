@@ -26,6 +26,7 @@ const customStyles = {
 };
 const MesIds: React.FC = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [search, setSearch] = React.useState('');
 
   function openModal() {
     setIsOpen(true);
@@ -61,11 +62,17 @@ const MesIds: React.FC = () => {
   return (
     <>
       <div className="p-4 overflow-hidden h-full">
-        <div className="flex my-1 p-1 text-base-300 justify-between items-center ">
+        <div className="flex my-1 p-1 text-base-300 justify-between items-center gap-1 flex-wrap">
           <label className="input input-bordered flex items-center gap-2">
             <Icon.Search className="w-4 h-4" />
 
-            <input type="text" className="grow" placeholder="Recherche" />
+            <input
+              type="text"
+              className=""
+              placeholder="Recherche"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </label>
 
           <button className="btn btn-square btn-secondary" onClick={openModal}>
@@ -78,7 +85,15 @@ const MesIds: React.FC = () => {
             <span className="loading loading-spinner text-primary loading-lg"></span>
           </div>
         ) : (
-          <Ids ids={idsList ?? []} />
+          <Ids
+            ids={
+              idsList?.filter((idsItem) =>
+                idsItem.identifiant
+                  .toLowerCase()
+                  .includes(search.toLowerCase()),
+              ) ?? []
+            }
+          />
         )}
       </div>
 

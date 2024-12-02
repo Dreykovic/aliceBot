@@ -22,6 +22,7 @@ export interface ClientBookmaker {
   identifiant: string;
   client: number;
   bookmaker: number;
+  id: number;
 }
 
 export interface PaymentMethod {

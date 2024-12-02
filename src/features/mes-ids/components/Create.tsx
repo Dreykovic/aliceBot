@@ -64,7 +64,7 @@ const CreateClientBookmaker = ({
         setIsLoading(true); // Commence le chargement
 
         if (clientId) {
-          const data: ClientBookmaker = {
+          const data: Partial<ClientBookmaker> = {
             identifiant: identifiant as string,
             bookmaker: bookmaker as number,
             client: clientId,
