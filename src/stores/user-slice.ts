@@ -1,8 +1,9 @@
-import { Client } from '@/types/models-interfaces';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+import { Client } from '@/types/models-interfaces';
+
 interface UserState {
-  created: Boolean;
+  created: boolean;
   client?: Client;
 }
 

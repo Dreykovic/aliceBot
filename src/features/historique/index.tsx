@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import * as Icon from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch, RootState } from '@/stores';
-import * as Icon from 'react-bootstrap-icons';
-import History from './components';
+
 import { useGetOrderListQuery } from './api';
+import History from './components';
 
 const Historique: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

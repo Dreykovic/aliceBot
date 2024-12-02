@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 import BgParticles from '@/components/ui/bg-particles';
 import { Loading } from '@/components/ui/loading';
+import useTelegramUser from '@/hooks/use-telegram-user';
 import Layout from '@/layouts';
 import routes from '@/routes';
 import RoutesProvider from '@/routes/provider';
-import useTelegramUser from '@/hooks/use-telegram-user';
-import { useGetOrCreateClientMutation } from '@/stores/api-slice';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
-import { TelegramUser } from '@/types/api';
 import { AppDispatch } from '@/stores';
-import { useDispatch } from 'react-redux';
+import { useGetOrCreateClientMutation } from '@/stores/api-slice';
 import { setUserState } from '@/stores/user-slice';
+import { TelegramUser } from '@/types/api';
+
 const MySwal = withReactContent(Swal);
 
 const App: React.FC = () => {

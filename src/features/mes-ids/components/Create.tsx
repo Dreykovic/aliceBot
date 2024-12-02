@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import * as Icon from 'react-bootstrap-icons';
-
+import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
+import BookmakerSelector from '@/components/bookmaker-picker';
+import { RootState } from '@/stores';
+import { useGetBookmakersQuery } from '@/stores/api-slice';
 import { Bookmaker, ClientBookmaker } from '@/types/models-interfaces';
 
-import BookmakerSelector from '@/components/bookmaker-picker';
-import { useGetBookmakersQuery } from '@/stores/api-slice';
 import { useCreateClientBookmakerMutation } from '../api';
-import { TelegramUser } from '@/types/api';
-import { RootState } from '@/stores';
-import { useSelector } from 'react-redux';
 
 const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
   const [isBookmakerSelectOpen, setIsBookmakerSelectOpen] = useState(false);

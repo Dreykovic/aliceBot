@@ -1,18 +1,19 @@
-import { ClientBookmaker } from '@/types/models-interfaces';
 import { useState } from 'react';
-
 import * as Icon from 'react-bootstrap-icons';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+
+import { ClientBookmaker } from '@/types/models-interfaces';
+
 import { useDeleteClientBookmakerMutation, useGetBookmakerQuery } from '../api';
 
 type Props = { IdsItem: ClientBookmaker };
 
 const CLientBookmakerItem = ({ IdsItem }: Props) => {
   const actionBtnClasses = 'btn btn-ghost p-2 ';
-  const [copied, setCopied] = useState<Boolean>(false);
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     data: bookmakerData,
     isLoading: isBookmakerLoading,

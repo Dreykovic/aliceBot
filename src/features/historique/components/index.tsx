@@ -2,12 +2,13 @@ import './style.css';
 import { motion, Variants } from 'framer-motion';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import * as Icon from 'react-bootstrap-icons';
+import { useDispatch } from 'react-redux';
+
 import { setNavStatus } from '@/components/navigations/nav-slice';
 import useBoundingClientRect from '@/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
-import { Order } from '@/types/models-interfaces';
 import { AppDispatch } from '@/stores';
-import { useDispatch } from 'react-redux';
+import { Order } from '@/types/models-interfaces';
 
 const listVariants: Variants = {
   visible: {

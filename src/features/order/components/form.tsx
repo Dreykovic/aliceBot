@@ -9,15 +9,18 @@ import {
   PhoneFill,
   Wallet,
 } from 'react-bootstrap-icons';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 // import ALICE from '@/assets/images/alice.png';
+import BookmakerSelector from '@/components/bookmaker-picker';
 import { COUNTRIES } from '@/components/ui/country-picker/lib/countries';
 import CountrySelector from '@/components/ui/country-picker/lib/selector';
 import { SelectMenuOption } from '@/components/ui/country-picker/lib/types';
-
+import { RootState } from '@/stores';
+import { useGetBookmakersQuery } from '@/stores/api-slice';
 import {
   Bookmaker,
   Employee,
@@ -36,11 +39,6 @@ import EmployeeSelector from './employee-picker';
 import PaymentSelector from './payment-method-picker';
 import StepButton from './step-button';
 import SubmitButton from './submit-button';
-
-import BookmakerSelector from '@/components/bookmaker-picker';
-import { useGetBookmakersQuery } from '@/stores/api-slice';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/stores';
 
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';

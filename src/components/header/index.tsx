@@ -1,9 +1,11 @@
 // import Clock from  '@components/ui/clock';
 
+import { useSelector } from 'react-redux';
+
+import { RootState } from '@/stores';
+
 import HeaderLogo from './header-logo';
 import HeaderTitle from './header-title';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/stores';
 
 function Header() {
   const { client } = useSelector((state: RootState) => state.user);

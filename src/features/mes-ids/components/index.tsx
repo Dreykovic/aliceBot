@@ -1,12 +1,14 @@
 import './style.css';
 import { motion, Variants } from 'framer-motion';
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { setNavStatus } from '@/components/navigations/nav-slice';
 import useBoundingClientRect from '@/hooks/use-bounding-client-rect';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
-import { ClientBookmaker } from '@/types/models-interfaces';
 import { AppDispatch } from '@/stores';
-import { useDispatch } from 'react-redux';
+import { ClientBookmaker } from '@/types/models-interfaces';
+
 import CLientBookmakerItem from './CLientBookmakerItem';
 
 const listVariants: Variants = {

@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
 import Modal from 'react-modal';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
-Modal.setAppElement('#root');
-
 import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch, RootState } from '@/stores';
-
+import { useGetClientBookmakersListQuery } from './api';
 import Ids from './components';
 import CreateClientBookmaker from './components/Create';
-import { useGetClientBookmakersListQuery } from './api';
+Modal.setAppElement('#root');
 
 const customStyles = {
   content: {
