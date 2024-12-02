@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -10,15 +10,18 @@ import useTelegramUser from '@/hooks/use-telegram-user';
 import Layout from '@/layouts';
 import routes from '@/routes';
 import RoutesProvider from '@/routes/provider';
-import { AppDispatch } from '@/stores';
+import { AppDispatch, RootState } from '@/stores';
 import { useGetOrCreateClientMutation } from '@/stores/api-slice';
 import { setUserState } from '@/stores/user-slice';
 import { TelegramUser } from '@/types/api';
+import Page404 from '@/components/ui/page-404';
+import { Client } from '@/types/models-interfaces';
 
 const MySwal = withReactContent(Swal);
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<Client>();
   const [getOrCreateClient] = useGetOrCreateClientMutation();
   const dispatch = useDispatch<AppDispatch>();
   const currentUser = useTelegramUser();
@@ -43,6 +46,7 @@ const App: React.FC = () => {
 
         if (clientId) {
           dispatch(setUserState({ created: true, client: response.data }));
+          setUser(response.data);
         } else {
           throw new Error('No client');
         }
@@ -76,10 +80,17 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary fallback={<div>Something went wrong</div>}>
       {loading === false ? (
-        <Layout>
-          <RoutesProvider routes={routes} />
-          <BgParticles />
-        </Layout>
+        user ? (
+          <Layout>
+            <RoutesProvider routes={routes} />
+            <BgParticles />
+          </Layout>
+        ) : (
+          <Layout>
+            <Page404 />
+            <BgParticles />
+          </Layout>
+        )
       ) : (
         <Loading />
       )}

@@ -54,7 +54,7 @@ const CLientBookmakerItem = ({ IdsItem }: Props) => {
         if (result.isConfirmed) {
           await deleteClientBookmaker(String(IdsItem.id)).unwrap();
           await MySwal.fire({
-            text: `Id ${IdsItem.identifiant} du bookmaker ${IdsItem.bookmaker} a été supprimé`,
+            text: `Id ${IdsItem.identifiant} du bookmaker ${bookmakerData?.nom_bookmaker} a été supprimé`,
             allowOutsideClick: false,
             timer: 10000,
             timerProgressBar: true,

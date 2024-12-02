@@ -59,20 +59,22 @@ const MesIds: React.FC = () => {
   return (
     <>
       <div className="p-4 overflow-hidden h-full">
-        <div className="flex my-1 p-1 text-base-300 justify-between items-center gap-1 flex-wrap">
-          <label className="input input-bordered flex items-center gap-2">
-            <Icon.Search className="w-4 h-4" />
-
+        <div className="grid grid-cols-4 my-1 bg-red-900 text-base-300 justify-between items-center gap-1 flex-wrap">
+          <label className="col-span-5 input input-bordered flex items-center gap-2">
             <input
               type="text"
-              className=""
+              className="grow"
               placeholder="Recherche"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
+            <Icon.Search className="w-4 h-4" />
           </label>
 
-          <button className="btn btn-square btn-secondary" onClick={openModal}>
+          <button
+            className="col-end-12  btn btn-square btn-secondary "
+            onClick={openModal}
+          >
             <Icon.PlusCircle className="w-6 h-6" />
           </button>
         </div>
