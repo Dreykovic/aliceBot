@@ -59,7 +59,7 @@ const MesIds: React.FC = () => {
   return (
     <>
       <div className="p-4 overflow-hidden h-full">
-        <div className="grid grid-cols-4 my-1 bg-red-900 text-base-300 justify-between items-center gap-1 flex-wrap">
+        <div className="grid grid-cols-4 my-1  text-base-300 justify-between items-center gap-1 flex-wrap">
           <label className="col-span-5 input input-bordered flex items-center gap-2">
             <input
               type="text"
