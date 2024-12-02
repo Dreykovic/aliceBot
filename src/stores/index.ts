@@ -6,10 +6,12 @@ import env from '@/config/env';
 
 import apiSlice from './api-slice';
 import messageReducer from './message-slice';
+import userSlice from './user-slice';
 
 const combinedReducer = {
   header: headerSlice,
   nav: navSlice,
+  user: userSlice,
   message: messageReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 };

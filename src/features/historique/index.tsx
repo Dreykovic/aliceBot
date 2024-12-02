@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
-import { AppDispatch } from '@/stores';
+import { AppDispatch, RootState } from '@/stores';
 import * as Icon from 'react-bootstrap-icons';
 import History from './components';
 import { useGetOrderListQuery } from './api';
-import useTelegramUser from '@/hooks/use-telegram-user';
 
 const Historique: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  let currentUser = useTelegramUser();
-  console.log('historique', currentUser);
+
+  const { client } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
@@ -21,7 +20,7 @@ const Historique: React.FC = () => {
   const [orderType, setOrderType] = useState<'RETRAIT' | 'DEPOT'>('DEPOT');
   const { data: orderList, isLoading } = useGetOrderListQuery(
     {
-      chat_id: currentUser?.id as string,
+      chat_id: client?.id_chat as string,
     },
     {
       refetchOnMountOrArgChange: true,

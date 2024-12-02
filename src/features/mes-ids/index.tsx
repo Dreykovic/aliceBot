@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
 import Modal from 'react-modal';
@@ -8,12 +8,12 @@ import { setPageTitle, setPageType } from '@/components/header/header-slice';
 Modal.setAppElement('#root');
 
 import useWindowDimensions from '@/hooks/use-window-dimensions';
-import { AppDispatch } from '@/stores';
+import { AppDispatch, RootState } from '@/stores';
 
 import Ids from './components';
 import CreateClientBookmaker from './components/Create';
 import { useGetClientBookmakersListQuery } from './api';
-import useTelegramUser from '@/hooks/use-telegram-user';
+
 const customStyles = {
   content: {
     top: '50%',
@@ -49,11 +49,11 @@ const MesIds: React.FC = () => {
     dispatch(setPageTitle({ title: 'Mes Ids' }));
     dispatch(setPageType({ type: 'main' }));
   }, [dispatch, navigate, width]);
-  const currentUser = useTelegramUser();
 
+  const { client } = useSelector((state: RootState) => state.user);
   const { data: idsList, isLoading } = useGetClientBookmakersListQuery(
     {
-      chat_id: currentUser?.id as string,
+      chat_id: client?.id_chat as string,
     },
     {
       refetchOnMountOrArgChange: true,
@@ -103,14 +103,7 @@ const MesIds: React.FC = () => {
         style={customStyles}
         contentLabel="Créer une id de bookMaker"
       >
-        {currentUser ? (
-          <CreateClientBookmaker
-            closeModal={closeModal}
-            currentUser={currentUser}
-          />
-        ) : (
-          'Une erreur est survenue'
-        )}
+        <CreateClientBookmaker closeModal={closeModal} />
       </Modal>
     </>
   );

@@ -18,7 +18,6 @@ import { COUNTRIES } from '@/components/ui/country-picker/lib/countries';
 import CountrySelector from '@/components/ui/country-picker/lib/selector';
 import { SelectMenuOption } from '@/components/ui/country-picker/lib/types';
 
-import useTelegramUser from '@/hooks/use-telegram-user';
 import {
   Bookmaker,
   Employee,
@@ -37,12 +36,11 @@ import EmployeeSelector from './employee-picker';
 import PaymentSelector from './payment-method-picker';
 import StepButton from './step-button';
 import SubmitButton from './submit-button';
-import { TelegramUser } from '@/types/api';
+
 import BookmakerSelector from '@/components/bookmaker-picker';
-import {
-  useGetBookmakersQuery,
-  useGetOrCreateClientMutation,
-} from '@/stores/api-slice';
+import { useGetBookmakersQuery } from '@/stores/api-slice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/stores';
 
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
@@ -60,7 +58,8 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   // const [client, setClient] = useState<number>();
-  const currentUser = useTelegramUser();
+
+  const { client, created } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
 
@@ -110,24 +109,12 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
 
   // console.log(employeePaymentData);
 
-  const [getOrCreateClient] = useGetOrCreateClientMutation();
   const [deposit] = useDepositMutation();
 
   const inputClasses =
     'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
   const iconClasses = 'w-12 h-12 text-neutral-content p-1';
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const handleGetOrCreateClient = async (theCurrentUser: TelegramUser) => {
-    const response = await getOrCreateClient({
-      chat_id: theCurrentUser.id,
-      country: country || 'TG',
-      nom: theCurrentUser.lastName,
-      prenom: theCurrentUser.firstName,
-      username: theCurrentUser.username,
-    }).unwrap();
-    return response;
-  };
 
   const [codeParrainage, setCodeParrainage] = useState<string | undefined>();
 
@@ -143,101 +130,88 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
       showCancelButton: true,
     });
     try {
-      let clientId: number;
+      if (created && prop.order_type === 'DEPOT') {
+        const result = await swalForParrainage.fire({
+          title: 'Parrainage',
+          icon: 'question',
 
-      if (currentUser) {
-        const response = await handleGetOrCreateClient(currentUser);
-        // setClient(response.id);
-        clientId = response.data.id;
-        console.log('Id_client', response.data.id);
-        console.log('Client Created', response);
-        setIsLoading(true); // Commence le chargement
+          text: 'Voulez vous utiliser un code de parrainage ?',
 
-        if (response.created && prop.order_type === 'DEPOT') {
-          const result = await swalForParrainage.fire({
-            title: 'Parrainage',
-            icon: 'question',
-
-            text: 'Voulez vous utiliser un code de parrainage ?',
-
-            confirmButtonText: 'Oui',
-            cancelButtonText: 'Non',
-            reverseButtons: true,
+          confirmButtonText: 'Oui',
+          cancelButtonText: 'Non',
+          reverseButtons: true,
+        });
+        if (result.isConfirmed) {
+          const { value: code_parrainage } = await swalForParrainage.fire({
+            title: 'Entrez le code de parrainage',
+            input: 'text',
+            inputLabel: 'Code',
+            inputValidator: (value) => {
+              if (!value) {
+                return 'Vous devez écrire le code de parrainage!';
+              }
+            },
+            confirmButtonText: 'Valider',
+            cancelButtonText: 'Annuler',
           });
-          if (result.isConfirmed) {
-            const { value: code_parrainage } = await swalForParrainage.fire({
-              title: 'Entrez le code de parrainage',
-              input: 'text',
-              inputLabel: 'Code',
-              inputValidator: (value) => {
-                if (!value) {
-                  return 'Vous devez écrire le code de parrainage!';
-                }
-              },
-              confirmButtonText: 'Valider',
-              cancelButtonText: 'Annuler',
+          if (code_parrainage) {
+            setCodeParrainage(code_parrainage);
+            await MySwal.fire({
+              text: `Code de parrainage ${code_parrainage} ajouté à votre commande`,
+              allowOutsideClick: false,
+              timer: 10000,
+              timerProgressBar: true,
+              showCloseButton: true,
+              showConfirmButton: false,
             });
-            if (code_parrainage) {
-              setCodeParrainage(code_parrainage);
-              await MySwal.fire({
-                text: `Code de parrainage ${code_parrainage} ajouté à votre commande`,
-                allowOutsideClick: false,
-                timer: 10000,
-                timerProgressBar: true,
-                showCloseButton: true,
-                showConfirmButton: false,
-              });
-            }
           }
         }
-        if (clientId && employeePaymentData) {
-          const data: OrderCreate = {
-            employee_payment_method: employeePaymentData.id as number,
-            order_type: prop.order_type,
-            bookmaker_identifiant: account as number,
-            reference_id: transaction as number,
-            montant: montant as number,
-            client: clientId,
-            code_parainage: codeParrainage,
-            contact: contact as string,
-          };
-          console.log(data);
-          const result = await deposit(data).unwrap();
-          console.log(`${prop.order_type} effectué:`, result);
+      }
+      if (client && employeePaymentData) {
+        const data: OrderCreate = {
+          employee_payment_method: employeePaymentData.id as number,
+          order_type: prop.order_type,
+          bookmaker_identifiant: account as number,
+          reference_id: transaction as number,
+          montant: montant as number,
+          client: client.id as number,
+          code_parainage: codeParrainage,
+          contact: contact as string,
+        };
+        console.log(data);
+        const result = await deposit(data).unwrap();
+        console.log(`${prop.order_type} effectué:`, result);
 
-          MySwal.fire({
-            title: 'Succès !',
+        MySwal.fire({
+          title: 'Succès !',
 
-            html: ` <div>
+          html: ` <div>
                       <h1>${prop.order_type} pris en compte et sera traité dans les plus bref délais !!!</h1>
                     </div>`,
-            icon: 'success',
+          icon: 'success',
 
-            background: '#938888',
-            color: '#f9f9f9',
-            didOpen: (alert) => {
-              alert.onmouseenter = MySwal.stopTimer;
-              alert.onmouseleave = MySwal.resumeTimer;
-            },
-            allowOutsideClick: false,
-            timer: 10000,
-            timerProgressBar: true,
-            showCloseButton: true,
-            showConfirmButton: false,
-          });
-          // Réinitialiser le formulaire après le succès
-          setCountry('TG');
-          setPayment(undefined);
-          setBookmaker(undefined);
-          setCaissier(undefined);
-          setTransaction('');
-          setMontant('');
-          setAccount('');
-          setContact('');
-          prop.order_type === 'DEPOT' ? navigate('/') : navigate('/retrait');
-        } else {
-          throw new Error('No client');
-        }
+          background: '#938888',
+          color: '#f9f9f9',
+          didOpen: (alert) => {
+            alert.onmouseenter = MySwal.stopTimer;
+            alert.onmouseleave = MySwal.resumeTimer;
+          },
+          allowOutsideClick: false,
+          timer: 10000,
+          timerProgressBar: true,
+          showCloseButton: true,
+          showConfirmButton: false,
+        });
+        // Réinitialiser le formulaire après le succès
+        setCountry('TG');
+        setPayment(undefined);
+        setBookmaker(undefined);
+        setCaissier(undefined);
+        setTransaction('');
+        setMontant('');
+        setAccount('');
+        setContact('');
+        prop.order_type === 'DEPOT' ? navigate('/') : navigate('/retrait');
       } else {
         throw new Error('No client');
       }

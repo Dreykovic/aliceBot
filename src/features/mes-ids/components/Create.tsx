@@ -7,25 +7,19 @@ import withReactContent from 'sweetalert2-react-content';
 import { Bookmaker, ClientBookmaker } from '@/types/models-interfaces';
 
 import BookmakerSelector from '@/components/bookmaker-picker';
-import {
-  useGetBookmakersQuery,
-  useGetOrCreateClientMutation,
-} from '@/stores/api-slice';
+import { useGetBookmakersQuery } from '@/stores/api-slice';
 import { useCreateClientBookmakerMutation } from '../api';
 import { TelegramUser } from '@/types/api';
+import { RootState } from '@/stores';
+import { useSelector } from 'react-redux';
 
-const CreateClientBookmaker = ({
-  closeModal,
-  currentUser,
-}: {
-  closeModal: () => void;
-  currentUser: TelegramUser;
-}) => {
+const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
   const [isBookmakerSelectOpen, setIsBookmakerSelectOpen] = useState(false);
 
   const [bookmaker, setBookmaker] = useState<number>();
   const [identifiant, setIdentifiant] = useState<string>();
   // const [client, setClient] = useState<number>();
+  const { client } = useSelector((state: RootState) => state.user);
 
   const { data: BOOKMAKERS, isLoading: isBookmakersLoading } =
     useGetBookmakersQuery();
@@ -34,18 +28,9 @@ const CreateClientBookmaker = ({
     'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
   const iconClasses = 'w-12 h-12 text-neutral-content p-1';
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [getOrCreateClient] = useGetOrCreateClientMutation();
 
   const [createClientBookmaker] = useCreateClientBookmakerMutation();
-  const handleGetOrCreateClient = async (theCurrentUser: TelegramUser) => {
-    const response = await getOrCreateClient({
-      chat_id: theCurrentUser.id,
-      nom: theCurrentUser.lastName,
-      prenom: theCurrentUser.firstName,
-      username: theCurrentUser.username,
-    }).unwrap();
-    return response;
-  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(e);
@@ -53,52 +38,39 @@ const CreateClientBookmaker = ({
     const MySwal = withReactContent(Swal);
 
     try {
-      let clientId: number;
+      if (client) {
+        const data: Partial<ClientBookmaker> = {
+          identifiant: identifiant as string,
+          bookmaker: bookmaker as number,
+          client: client.id,
+        };
+        console.log(data);
+        await createClientBookmaker(data).unwrap();
 
-      if (currentUser) {
-        const response = await handleGetOrCreateClient(currentUser);
-        // setClient(response.id);
-        clientId = response.data.id;
-        console.log('Id_client', response.data.id);
-        console.log('Client Created', response);
-        setIsLoading(true); // Commence le chargement
+        MySwal.fire({
+          title: 'Succès !',
 
-        if (clientId) {
-          const data: Partial<ClientBookmaker> = {
-            identifiant: identifiant as string,
-            bookmaker: bookmaker as number,
-            client: clientId,
-          };
-          console.log(data);
-          await createClientBookmaker(data).unwrap();
-
-          MySwal.fire({
-            title: 'Succès !',
-
-            html: ` <div>
+          html: ` <div>
                       <h1>Enregistré avec succès</h1>
                     </div>`,
-            icon: 'success',
+          icon: 'success',
 
-            background: '#938888',
-            color: '#f9f9f9',
-            didOpen: (alert) => {
-              alert.onmouseenter = MySwal.stopTimer;
-              alert.onmouseleave = MySwal.resumeTimer;
-            },
-            allowOutsideClick: false,
-            timer: 10000,
-            timerProgressBar: true,
-            showCloseButton: true,
-            showConfirmButton: false,
-          });
-          // Réinitialiser le formulaire après le succès
+          background: '#938888',
+          color: '#f9f9f9',
+          didOpen: (alert) => {
+            alert.onmouseenter = MySwal.stopTimer;
+            alert.onmouseleave = MySwal.resumeTimer;
+          },
+          allowOutsideClick: false,
+          timer: 10000,
+          timerProgressBar: true,
+          showCloseButton: true,
+          showConfirmButton: false,
+        });
+        // Réinitialiser le formulaire après le succès
 
-          setIdentifiant('');
-          setBookmaker(undefined);
-        } else {
-          throw new Error('No client');
-        }
+        setIdentifiant('');
+        setBookmaker(undefined);
       } else {
         throw new Error('No client');
       }

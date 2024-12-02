@@ -26,9 +26,9 @@ export const apiSlice = createApi({
     'EmployeePaymentMethods',
   ],
 
-  refetchOnReconnect: true, // Relance toutes les requêtes après une reconnexion
-  refetchOnFocus: true, // Relance toutes les requêtes après un retour en focus
-  keepUnusedDataFor: 300, // Garde les données en cache 5 minutes globalement
+  // refetchOnReconnect: false, // Relance toutes les requêtes après une reconnexion
+  // refetchOnFocus: false, // Relance toutes les requêtes après un retour en focus
+  // keepUnusedDataFor: 50000, // Garde les données en cache 5 minutes globalement
 
   endpoints: (builder) => ({
     getBookmakers: builder.query<Bookmaker[], void>({

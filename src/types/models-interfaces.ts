@@ -13,6 +13,7 @@ export interface Client {
   prenom: string;
   contact: string;
   create_at: string;
+  id_chat: string;
   username: string;
   code_parainage_depot: string;
   montant_parainage_depot: string;
