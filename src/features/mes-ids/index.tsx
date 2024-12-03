@@ -18,7 +18,7 @@ const customStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, 0%)',
+    transform: 'translate(-50%, -50%)',
   },
 };
 const MesIds: React.FC = () => {
