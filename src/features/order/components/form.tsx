@@ -52,12 +52,11 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string | number>('');
   const [contact, setContact] = useState<string | number>('');
-  // console.log(caissier);
 
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   // const [client, setClient] = useState<number>();
 
-  const { client, created } = useSelector((state: RootState) => state.user);
+  const { client } = useSelector((state: RootState) => state.user);
 
   const navigate = useNavigate();
 
@@ -114,57 +113,12 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const iconClasses = 'w-12 h-12 text-neutral-content p-1';
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [codeParrainage, setCodeParrainage] = useState<string | undefined>();
-
   const handleSubmit = async (e: number) => {
-    // e.preventDefault();
     console.log(e);
 
     const MySwal = withReactContent(Swal);
-    const swalForParrainage = MySwal.mixin({
-      allowOutsideClick: false,
 
-      allowEscapeKey: false,
-      showCancelButton: true,
-    });
     try {
-      if (created && prop.order_type === 'DEPOT') {
-        const result = await swalForParrainage.fire({
-          title: 'Parrainage',
-          icon: 'question',
-
-          text: 'Voulez vous utiliser un code de parrainage ?',
-
-          confirmButtonText: 'Oui',
-          cancelButtonText: 'Non',
-          reverseButtons: true,
-        });
-        if (result.isConfirmed) {
-          const { value: code_parrainage } = await swalForParrainage.fire({
-            title: 'Entrez le code de parrainage',
-            input: 'text',
-            inputLabel: 'Code',
-            inputValidator: (value) => {
-              if (!value) {
-                return 'Vous devez écrire le code de parrainage!';
-              }
-            },
-            confirmButtonText: 'Valider',
-            cancelButtonText: 'Annuler',
-          });
-          if (code_parrainage) {
-            setCodeParrainage(code_parrainage);
-            await MySwal.fire({
-              text: `Code de parrainage ${code_parrainage} ajouté à votre commande`,
-              allowOutsideClick: false,
-              timer: 10000,
-              timerProgressBar: true,
-              showCloseButton: true,
-              showConfirmButton: false,
-            });
-          }
-        }
-      }
       if (client && employeePaymentData) {
         const data: OrderCreate = {
           employee_payment_method: employeePaymentData.id as number,
@@ -173,7 +127,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           reference_id: transaction as number,
           montant: montant as number,
           client: client.id as number,
-          code_parainage: codeParrainage,
+          code_parainage: client.codeparainageclient ?? undefined,
           contact: contact as string,
         };
         console.log(data);

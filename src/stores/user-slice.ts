@@ -9,9 +9,10 @@ interface UserState {
 
 const initialState: UserState = {
   created: false,
+  client: undefined,
 };
 export const userSlice = createSlice({
-  name: 'nav',
+  name: 'user',
   initialState,
   reducers: {
     setUserState: (state, action: PayloadAction<UserState>) => {

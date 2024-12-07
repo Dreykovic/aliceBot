@@ -17,6 +17,7 @@ export interface Client {
   username: string;
   code_parainage_depot: string;
   montant_parainage_depot: string;
+  codeparainageclient: string | null;
   country: string;
 }
 export interface ClientBookmaker {

@@ -60,7 +60,8 @@ const useTelegramUser = (): TelegramUser | null => {
 
   return env.appState === 'dev'
     ? {
-        id: '7332983362',
+        // id: '7332983362',
+        id: '122214562',
         firstName: 'Tester',
         lastName: 'Local',
         username: 'CodeurPassionnes',

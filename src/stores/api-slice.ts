@@ -9,6 +9,10 @@ interface CLientCreateParams {
   prenom: string | null;
   username: string | null;
 }
+interface CLientUpdateParams {
+  chat_id: string;
+  codeparainageclient: string;
+}
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: async (args, api, extraOptions) => {
@@ -48,9 +52,20 @@ export const apiSlice = createApi({
         body: { id_chat: chat_id, country, nom, prenom, username },
       }),
     }),
+    updateClient: builder.mutation({
+      query: ({ chat_id, codeparainageclient }: CLientUpdateParams) => ({
+        url: `clients/update/${chat_id}`,
+        method: 'PUT',
+        body: { id_chat: chat_id, codeparainageclient },
+      }),
+    }),
   }),
 });
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBookmakersQuery, useGetOrCreateClientMutation } = apiSlice;
+export const {
+  useGetBookmakersQuery,
+  useGetOrCreateClientMutation,
+  useUpdateClientMutation,
+} = apiSlice;
 export default apiSlice;
