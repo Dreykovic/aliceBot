@@ -21,7 +21,7 @@ function Header() {
       <div className="navbar-end">
         {/* Notification icon */}
         {/* <HeaderActions /> */}
-        {client ? `${client?.nom} ${client?.prenom}` : 'Username'}
+        {client ? `${client?.username}` : 'Username'}
         {/* <Clock /> */}
       </div>
     </div>
