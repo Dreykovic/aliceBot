@@ -131,13 +131,14 @@ const App: React.FC = () => {
     }
 
     try {
-      const { data: clientData } = await handleGetOrCreateClient(currentUser);
+      const { data: clientData, created } =
+        await handleGetOrCreateClient(currentUser);
       if (!clientData?.id)
         throw new Error('Erreur lors de la récupération de vos informations.');
 
       setUser(clientData as Client);
       dispatch(setUserState({ created: true, client: clientData }));
-      if (!isInitialized) {
+      if (created) {
         await handleParrainage(currentUser);
       }
     } catch (error) {
