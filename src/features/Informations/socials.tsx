@@ -45,7 +45,7 @@ const socials: SocialIconType[] = [
     label: 'Tiktok',
     icon: <Icon.Tiktok className={`${IconClasses}`} />,
 
-    link: 'tiktok.com/@alice_bot_officiel',
+    link: 'https://tiktok.com/@alice_bot_officiel',
   },
 ];
 export default socials;
