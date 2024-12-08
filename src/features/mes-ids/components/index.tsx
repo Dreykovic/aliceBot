@@ -9,7 +9,7 @@ import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
 import { ClientBookmaker } from '@/types/models-interfaces';
 
-import CLientBookmakerItem from './CLientBookmakerItem';
+import CLientBookmakerItem from './client-bookmaker-item';
 
 const listVariants: Variants = {
   visible: {
@@ -101,5 +101,5 @@ const Ids: React.FC<IdsDataType> = React.memo(({ ids }: IdsDataType) => {
     </motion.div>
   );
 });
-
+Ids.displayName = 'Ids';
 export default Ids;

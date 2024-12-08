@@ -174,5 +174,6 @@ const History: React.FC<HistoryDataType> = React.memo(
     );
   },
 );
+History.displayName = 'History';
 
 export default History;

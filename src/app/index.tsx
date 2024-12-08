@@ -6,6 +6,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 import BgParticles from '@/components/ui/bg-particles';
 import { Loading } from '@/components/ui/loading';
+import Page404 from '@/components/ui/page-404';
 import useTelegramUser from '@/hooks/use-telegram-user';
 import Layout from '@/layouts';
 import routes from '@/routes';
@@ -16,9 +17,8 @@ import {
   useUpdateClientMutation,
 } from '@/stores/api-slice';
 import { setUserState } from '@/stores/user-slice';
-import Page404 from '@/components/ui/page-404';
-import { Client } from '@/types/models-interfaces';
 import { TelegramUser } from '@/types/api';
+import { Client } from '@/types/models-interfaces';
 
 const MySwal = withReactContent(Swal);
 const swalForParrainage = MySwal.mixin({
@@ -121,7 +121,7 @@ const App: React.FC = () => {
         console.error('Erreur de parrainage :', error);
       }
     },
-    [handleUpdateClient],
+    [handleUpdateClient, dispatch],
   );
 
   const initUser = useCallback(async () => {
@@ -154,13 +154,7 @@ const App: React.FC = () => {
         allowOutsideClick: false,
       });
     }
-  }, [
-    currentUser,
-    handleGetOrCreateClient,
-    handleParrainage,
-    dispatch,
-    isInitialized,
-  ]);
+  }, [currentUser, handleGetOrCreateClient, handleParrainage, dispatch]);
 
   useEffect(() => {
     if (!isInitialized && currentUser) {

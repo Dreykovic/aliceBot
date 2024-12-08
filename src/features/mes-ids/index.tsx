@@ -3,12 +3,14 @@ import * as Icon from 'react-bootstrap-icons';
 import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch, RootState } from '@/stores';
+
 import { useGetClientBookmakersListQuery } from './api';
 import Ids from './components';
-import CreateClientBookmaker from './components/Create';
+import CreateClientBookmaker from './components/create';
 Modal.setAppElement('#root');
 
 const customStyles = {
