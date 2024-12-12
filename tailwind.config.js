@@ -1,12 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import colors from './colors.config';
 export default {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    'node_modules/daisyui/dist/**/*.js',
-    'node_modules/react-daisyui/dist/**/*.js',
-    './node_modules/react-tailwindcss-datepicker/dist/index.esm.js',
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx}', 'node_modules/daisyui/dist/**/*.js'],
   theme: {
     extend: {
       colors: { ...colors },
