@@ -1,3 +1,3 @@
-import { COUNTRIES } from './countries';
+import { COUNTRIES } from '../../../../utils/countries';
 
 export type SelectMenuOption = (typeof COUNTRIES)[number];

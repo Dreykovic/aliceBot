@@ -43,7 +43,6 @@ const History: React.FC<HistoryDataType> = React.memo(
     const [contentHeight, setContentHeight] = useState<number>(0);
     const dispatch = useDispatch<AppDispatch>();
     const [lastScrollTop, setLastScrollTop] = useState<number>(0);
-    console.log('orders', orders);
 
     // Mémoïrisation de la fonction de scroll
     const handleScroll = useCallback(() => {

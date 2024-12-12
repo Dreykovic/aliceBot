@@ -31,7 +31,6 @@ const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(e);
 
     const MySwal = withReactContent(Swal);
 
@@ -42,7 +41,7 @@ const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
           bookmaker: bookmaker as number,
           client: client.id,
         };
-        console.log(data);
+
         await createClientBookmaker(data).unwrap();
 
         MySwal.fire({

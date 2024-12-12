@@ -10,7 +10,6 @@ import {
 import routes from '@/routes';
 
 const iconsClassName = 'w-8 h-8 ';
-// console.log('private', routes);
 
 const navs = [
   {
@@ -44,6 +43,5 @@ const navs = [
     path: routes.informations?.path,
   },
 ];
-// console.log('navs', navs);
 
 export default navs;

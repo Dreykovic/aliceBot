@@ -16,7 +16,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 // import ALICE from '@/assets/images/alice.png';
 import BookmakerSelector from '@/components/bookmaker-picker';
-import { COUNTRIES } from '@/components/ui/country-picker/lib/countries';
+import { COUNTRIES } from '@/utils/countries';
 import CountrySelector from '@/components/ui/country-picker/lib/selector';
 import { SelectMenuOption } from '@/components/ui/country-picker/lib/types';
 import { RootState } from '@/stores';
@@ -104,8 +104,6 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     },
   );
 
-  // console.log(employeePaymentData);
-
   const [deposit] = useDepositMutation();
 
   const inputClasses =
@@ -113,9 +111,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const iconClasses = 'w-12 h-12 text-neutral-content p-1';
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (e: number) => {
-    console.log(e);
-
+  const handleSubmit = async () => {
     const MySwal = withReactContent(Swal);
 
     try {
@@ -130,9 +126,9 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           code_parainage: client.codeparainageclient ?? undefined,
           contact: contact as string,
         };
-        console.log(data);
-        const result = await deposit(data).unwrap();
-        console.log(`${prop.order_type} effectué:`, result);
+
+        setIsLoading(true);
+        await deposit(data).unwrap();
 
         MySwal.fire({
           title: 'Succès !',
@@ -309,7 +305,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">
           <KeyFill className={iconClasses} />
           <input
-            type="number"
+            type="text"
             id="transactionId"
             className={inputClasses}
             placeholder={
@@ -318,7 +314,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
                 : 'Code Retrait'
             }
             value={transaction || ''}
-            onChange={(e) => setTransaction(Number(e.target.value))}
+            onChange={(e) => setTransaction(e.target.value)}
           />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">

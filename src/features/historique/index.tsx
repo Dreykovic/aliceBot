@@ -31,7 +31,7 @@ const Historique: React.FC = () => {
     dispatch(setPageTitle({ title: 'Historique' }));
     dispatch(setPageType({ type: 'main' }));
   }, [dispatch, navigate, width]);
-  console.log('list', orderList);
+
   return (
     <>
       <div className="p-4 overflow-hidden h-full">

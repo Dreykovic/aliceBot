@@ -28,9 +28,7 @@ const CLientBookmakerItem = ({ IdsItem }: Props) => {
     },
   );
   const [deleteClientBookmaker] = useDeleteClientBookmakerMutation();
-  const handleDelete = async (e: any) => {
-    console.log(e);
-
+  const handleDelete = async () => {
     const MySwal = withReactContent(Swal);
     const swalForParrainage = MySwal.mixin({
       allowOutsideClick: false,
@@ -115,7 +113,6 @@ const CLientBookmakerItem = ({ IdsItem }: Props) => {
           <CopyToClipboard
             text={IdsItem.identifiant}
             onCopy={() => {
-              console.log('copied');
               setCopied(true);
 
               setTimeout(() => {
