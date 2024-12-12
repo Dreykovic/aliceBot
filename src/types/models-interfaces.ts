@@ -58,7 +58,7 @@ export interface OrderCreate {
   employee_payment_method: number;
   order_type: 'DEPOT' | 'RETRAIT';
   bookmaker_identifiant: number;
-  reference_id: number;
+  reference_id: number | string;
   montant: number;
   code_parainage?: string;
   state?: 'COMMING' | 'CONFIRMED' | 'CANCELLED';

@@ -50,7 +50,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [bookmaker, setBookmaker] = useState<number>();
   const [account, setAccount] = useState<number | string>('');
   const [caissier, setCaissier] = useState<number>();
-  const [transaction, setTransaction] = useState<string | number>('');
+  const [transaction, setTransaction] = useState<string>('');
   const [contact, setContact] = useState<string | number>('');
 
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
@@ -120,7 +120,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           employee_payment_method: employeePaymentData.id as number,
           order_type: prop.order_type,
           bookmaker_identifiant: account as number,
-          reference_id: transaction as number,
+          reference_id: transaction,
           montant: montant as number,
           client: client.id as number,
           code_parainage: client.codeparainageclient ?? undefined,
@@ -238,7 +238,7 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
           <Cash className={iconClasses} />
           <input
             type="number"
-            id="transactionId"
+            id="montantId"
             className={inputClasses}
             placeholder="Montant"
             value={montant || ''}
