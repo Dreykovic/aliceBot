@@ -30,6 +30,7 @@ import {
 
 import {
   useDepositMutation,
+  useGetAllCaissierQuery,
   useGetCaissierByPMAndBookmakerQuery,
   useGetEmployeePaymentMethodQuery,
   useGetPaymentMethodsQuery,
@@ -72,17 +73,19 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     useGetBookmakersQuery();
 
   const { data: caissiersData, isLoading: isCaissierLoading } =
-    useGetCaissierByPMAndBookmakerQuery(
-      {
-        bookmaker_id: bookmaker as number,
-        payment_method_id: payment as number,
-        country_code: country,
-      },
-      {
-        skip: !payment || !bookmaker || !country,
-        refetchOnMountOrArgChange: true,
-      },
-    );
+    prop.order_type === 'DEPOT'
+      ? useGetCaissierByPMAndBookmakerQuery(
+          {
+            bookmaker_id: bookmaker as number,
+            payment_method_id: payment as number,
+            country_code: country,
+          },
+          {
+            skip: !payment || !bookmaker || !country,
+            refetchOnMountOrArgChange: true,
+          },
+        )
+      : useGetAllCaissierQuery();
 
   const caissiers = caissiersData || [];
 

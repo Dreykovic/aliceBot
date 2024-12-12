@@ -32,6 +32,10 @@ const appApi = apiSlice.injectEndpoints({
         `employees/filter/${bookmaker_id}/${payment_method_id}/${country_code}`,
       providesTags: ['Employees'], // Ajouter un tag
     }),
+    getAllCaissier: builder.query<Employee[], void>({
+      query: () => `employees`,
+      providesTags: ['Employees'], // Ajouter un tag
+    }),
 
     getEmployeePaymentMethod: builder.query<
       EmployeePaymentMethod,
@@ -62,7 +66,7 @@ const appApi = apiSlice.injectEndpoints({
 // auto-generated based on the defined endpoints
 export const {
   useGetPaymentMethodsQuery,
-
+  useGetAllCaissierQuery,
   useGetCaissierByPMAndBookmakerQuery,
   useGetEmployeePaymentMethodQuery,
   useDepositMutation,
