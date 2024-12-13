@@ -40,10 +40,10 @@ export const apiSlice = createApi({
       providesTags: ['Bookmakers'], // Ajouter un tag
     }),
     getOrCreateClient: builder.mutation({
-      query: ({ chat_id, country }: CLientCreateParams) => ({
+      query: ({ chat_id, country, nom, prenom }: CLientCreateParams) => ({
         url: `clients/get_or_create/${chat_id}`,
         method: 'POST',
-        body: { id_chat: chat_id, country },
+        body: { id_chat: chat_id, country, nom, prenom },
       }),
     }),
     updateClient: builder.mutation({
