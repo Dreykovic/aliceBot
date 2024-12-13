@@ -3,6 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import Modal from 'react-modal';
 
 import BgParticles from '@/components/ui/bg-particles';
 import { Loading } from '@/components/ui/loading';
@@ -12,13 +13,11 @@ import Layout from '@/layouts';
 import routes from '@/routes';
 import RoutesProvider from '@/routes/provider';
 import { AppDispatch } from '@/stores';
-import {
-  useGetOrCreateClientMutation,
-  useUpdateClientMutation,
-} from '@/stores/api-slice';
+import { useGetOrCreateClientMutation } from '@/stores/api-slice';
 import { setUserState } from '@/stores/user-slice';
 import { TelegramUser } from '@/types/api';
 import { Client } from '@/types/models-interfaces';
+import CheckParrainModal from './checkParrain';
 
 const MySwal = withReactContent(Swal);
 const swalForParrainage = MySwal.mixin({
@@ -26,13 +25,29 @@ const swalForParrainage = MySwal.mixin({
   allowEscapeKey: false,
   showCancelButton: true,
 });
-
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 const App: React.FC = () => {
   const [user, setUser] = useState<Client | null>(null);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
 
+  function closeModal() {
+    setIsOpen(false);
+  }
   const [getOrCreateClient] = useGetOrCreateClientMutation();
-  const [updateClient] = useUpdateClientMutation();
+
   const dispatch = useDispatch<AppDispatch>();
   const currentUser = useTelegramUser();
 
@@ -57,72 +72,23 @@ const App: React.FC = () => {
     [getOrCreateClient],
   );
 
-  const handleUpdateClient = useCallback(
-    async (chat_id: string, codeparainageclient: string) => {
-      try {
-        const response = await updateClient({
-          chat_id,
-          codeparainageclient,
-        }).unwrap();
-        return response;
-      } catch (error) {
-        console.error('Erreur lors de la mise à jour du client :', error);
-        throw error;
-      }
-    },
-    [updateClient],
-  );
+  const handleParrainage = useCallback(async () => {
+    try {
+      const { isConfirmed } = await swalForParrainage.fire({
+        title: 'Parrainage',
+        icon: 'question',
+        text: 'Voulez-vous utiliser un code de parrainage ?',
+        confirmButtonText: 'Oui',
+        cancelButtonText: 'Non',
+        reverseButtons: true,
+      });
 
-  const handleParrainage = useCallback(
-    async (currentUser: TelegramUser) => {
-      try {
-        const { isConfirmed } = await swalForParrainage.fire({
-          title: 'Parrainage',
-          icon: 'question',
-          text: 'Voulez-vous utiliser un code de parrainage ?',
-          confirmButtonText: 'Oui',
-          cancelButtonText: 'Non',
-          reverseButtons: true,
-        });
-
-        if (!isConfirmed) return;
-
-        const { value: code_parrainage } = await swalForParrainage.fire({
-          title: 'Entrez le code de parrainage',
-          input: 'text',
-          inputLabel: 'Code',
-          inputValidator: (value) =>
-            !value ? 'Vous devez écrire le code de parrainage !' : undefined,
-          confirmButtonText: 'Valider',
-          cancelButtonText: 'Annuler',
-        });
-
-        if (code_parrainage) {
-          const updateResponse = await handleUpdateClient(
-            currentUser.id,
-            code_parrainage,
-          );
-          if (!updateResponse?.id)
-            throw new Error(
-              'Erreur lors de la récupération de vos informations.',
-            );
-          setUser((prevUser) => ({ ...prevUser, ...updateResponse }));
-          dispatch(setUserState({ created: true, client: updateResponse }));
-          await MySwal.fire({
-            text: `Code de parrainage "${code_parrainage}" ajouté à votre compte.`,
-            allowOutsideClick: false,
-            timer: 10000,
-            timerProgressBar: true,
-            showCloseButton: true,
-            showConfirmButton: false,
-          });
-        }
-      } catch (error) {
-        console.error('Erreur de parrainage :', error);
-      }
-    },
-    [handleUpdateClient, dispatch],
-  );
+      if (!isConfirmed) return;
+      openModal();
+    } catch (error) {
+      console.error('Erreur de parrainage :', error);
+    }
+  }, [dispatch]);
 
   const initUser = useCallback(async () => {
     if (!currentUser) {
@@ -139,7 +105,7 @@ const App: React.FC = () => {
       setUser(clientData as Client);
       dispatch(setUserState({ created: true, client: clientData }));
       if (created) {
-        await handleParrainage(currentUser);
+        await handleParrainage();
       }
     } catch (error) {
       console.error(
@@ -171,6 +137,14 @@ const App: React.FC = () => {
         <Layout>
           <RoutesProvider routes={routes} />
           <BgParticles />
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Ajouter Code Parrain"
+          >
+            <CheckParrainModal closeModal={closeModal} setUser={setUser} />
+          </Modal>
         </Layout>
       ) : (
         <Layout>

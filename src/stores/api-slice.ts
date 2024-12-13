@@ -39,6 +39,9 @@ export const apiSlice = createApi({
       query: () => `bookmakers`,
       providesTags: ['Bookmakers'], // Ajouter un tag
     }),
+    checkCodeParrain: builder.query({
+      query: ({ code }) => `codeparainages/check/${code}`,
+    }),
     getOrCreateClient: builder.mutation({
       query: ({ chat_id, country, nom, prenom }: CLientCreateParams) => ({
         url: `clients/get_or_create/${chat_id}`,
@@ -61,5 +64,6 @@ export const {
   useGetBookmakersQuery,
   useGetOrCreateClientMutation,
   useUpdateClientMutation,
+  useCheckCodeParrainQuery,
 } = apiSlice;
 export default apiSlice;
