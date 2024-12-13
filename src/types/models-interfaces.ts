@@ -15,7 +15,7 @@ export interface Client {
   create_at: string;
   id_chat: string;
   username: string;
-  code_parainage_depot: string;
+  code_parainage_depot: number;
   montant_parainage_depot: string;
   codeparainageclient: string | null;
   country: string;
@@ -76,4 +76,11 @@ export interface Order {
   state?: 'COMMING' | 'CONFIRMED' | 'CANCELLED';
   client: number;
   contact?: string;
+}
+export interface CodeParrainage {
+  id: number;
+  code: string;
+  plafond_retrait: number;
+  pourcentage_benefice: number;
+  state: boolean;
 }

@@ -99,12 +99,14 @@ const App: React.FC = () => {
     try {
       const { data: clientData, created } =
         await handleGetOrCreateClient(currentUser);
+      console.log(clientData);
+
       if (!clientData?.id)
         throw new Error('Erreur lors de la récupération de vos informations.');
 
       setUser(clientData as Client);
       dispatch(setUserState({ created: true, client: clientData }));
-      if (created) {
+      if (true) {
         await handleParrainage();
       }
     } catch (error) {
@@ -142,6 +144,7 @@ const App: React.FC = () => {
             onRequestClose={closeModal}
             style={customStyles}
             contentLabel="Ajouter Code Parrain"
+            shouldCloseOnOverlayClick={false} // add this to prevent outside click to prevent modal close
           >
             <CheckParrainModal closeModal={closeModal} setUser={setUser} />
           </Modal>

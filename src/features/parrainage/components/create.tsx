@@ -1,19 +1,47 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import * as Icon from 'react-bootstrap-icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import { RootState } from '@/stores';
+import { AppDispatch, RootState } from '@/stores';
 
 import { RetraitParrainage, useWithdrawReferralMutation } from '../api';
+import useTelegramUser from '@/hooks/use-telegram-user';
+import { useGetOrCreateClientMutation } from '@/stores/api-slice';
+import { TelegramUser } from '@/types/api';
+import { setUserState } from '@/stores/user-slice';
 
 const WithdrawModal = ({ closeModal }: { closeModal: () => void }) => {
   const [montant, setMontant] = useState<number>();
   const [numero, setNumero] = useState<string>();
   // const [client, setClient] = useState<number>();
   const { client } = useSelector((state: RootState) => state.user);
+  const [getOrCreateClient] = useGetOrCreateClientMutation();
 
+  const dispatch = useDispatch<AppDispatch>();
+  const currentUser = useTelegramUser();
+
+  const handleGetOrCreateClient = useCallback(
+    async (theCurrentUser: TelegramUser) => {
+      try {
+        const response = await getOrCreateClient({
+          chat_id: theCurrentUser.id,
+          nom: theCurrentUser.lastName,
+          prenom: theCurrentUser.firstName,
+          username: theCurrentUser.username,
+        }).unwrap();
+        return response;
+      } catch (error) {
+        console.error(
+          'Erreur lors de la création ou de la récupération du client :',
+          error,
+        );
+        throw error;
+      }
+    },
+    [getOrCreateClient],
+  );
   const inputClasses =
     'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
   const iconClasses = 'w-12 h-12 text-neutral-content p-1';
@@ -60,6 +88,17 @@ const WithdrawModal = ({ closeModal }: { closeModal: () => void }) => {
 
         setNumero('');
         setMontant(undefined);
+        const { data: clientData } = await handleGetOrCreateClient(
+          currentUser as TelegramUser,
+        );
+        console.log(clientData);
+
+        if (!clientData?.id)
+          throw new Error(
+            'Erreur lors de la récupération de vos informations.',
+          );
+
+        dispatch(setUserState({ created: true, client: clientData }));
       } else {
         throw new Error('No client');
       }

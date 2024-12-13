@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import env from '@/config/env';
-import { Bookmaker } from '@/types/models-interfaces';
+import { Bookmaker, CodeParrainage } from '@/types/models-interfaces';
 interface CLientCreateParams {
   chat_id: string;
   country?: string;
@@ -11,7 +11,7 @@ interface CLientCreateParams {
 }
 interface CLientUpdateParams {
   chat_id: string;
-  codeparainageclient: string;
+  codeparainageclient: number;
 }
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -39,7 +39,7 @@ export const apiSlice = createApi({
       query: () => `bookmakers`,
       providesTags: ['Bookmakers'], // Ajouter un tag
     }),
-    checkCodeParrain: builder.query({
+    checkCodeParrain: builder.query<CodeParrainage, { code: string }>({
       query: ({ code }) => `codeparainages/check/${code}`,
     }),
     getOrCreateClient: builder.mutation({

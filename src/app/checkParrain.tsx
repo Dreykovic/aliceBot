@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import * as Icon from 'react-bootstrap-icons';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -14,6 +14,7 @@ import { TelegramUser } from '@/types/api';
 import { Client } from '@/types/models-interfaces';
 import { setUserState } from '@/stores/user-slice';
 import useTelegramUser from '@/hooks/use-telegram-user';
+
 const MySwal = withReactContent(Swal);
 
 const CheckParrainModal = ({
@@ -23,101 +24,101 @@ const CheckParrainModal = ({
   closeModal: () => void;
   setUser: React.Dispatch<React.SetStateAction<Client | null>>;
 }) => {
-  const [code, setCode] = useState<string>();
-  // const [client, setClient] = useState<number>();
+  const [code, setCode] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [updateClient] = useUpdateClientMutation();
   const dispatch = useDispatch<AppDispatch>();
   const currentUser = useTelegramUser();
 
-  const inputClasses =
-    'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
-  const iconClasses = 'w-12 h-12 text-neutral-content p-1';
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { data: codeParrain } = useCheckCodeParrainQuery(
+  // Récupère le code de parrainage à chaque fois que "code" change, mais uniquement si "code" est non vide
+  const { data: codeParrain, refetch } = useCheckCodeParrainQuery(
+    { code },
     {
-      code: code,
-    },
-    {
-      skip: !code,
+      skip: !code, // N'exécute la requête que si un code est saisi
       refetchOnMountOrArgChange: true,
     },
   );
 
-  const handleParrainage = useCallback(
-    async (currentUser: TelegramUser) => {
-      try {
-        if (codeParrain) {
-          const updateResponse = await handleUpdateClient(currentUser.id);
-          if (!updateResponse?.id)
-            throw new Error(
-              'Erreur lors de la récupération de vos informations.',
-            );
-          setUser((prevUser) => ({ ...prevUser, ...updateResponse }));
-          dispatch(setUserState({ created: true, client: updateResponse }));
-          await MySwal.fire({
-            text: `Code de parrainage "${code}" ajouté à votre compte.`,
-            allowOutsideClick: false,
-            timer: 10000,
-            timerProgressBar: true,
-            showCloseButton: true,
-            showConfirmButton: false,
-          });
-        } else {
-          throw Error('Code parrain erroné');
-        }
-      } catch (error) {
-        console.error('Erreur de parrainage :', error);
-        throw Error((error as any).message);
-      }
-    },
-    [dispatch],
-  );
+  useEffect(() => {
+    if (code) refetch(); // Recharger la vérification lorsque le code change
+  }, [code, refetch]);
+
+  const inputClasses =
+    'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary';
+  const iconClasses = 'w-12 h-12 text-neutral-content p-1';
+
+  /**
+   * Gère la mise à jour du client en envoyant le code parrain
+   */
   const handleUpdateClient = useCallback(
     async (chat_id: string) => {
       try {
         const response = await updateClient({
           chat_id,
-          codeparainageclient: String(codeParrain.id),
+          codeparainageclient: codeParrain?.id as number,
         }).unwrap();
+
         return response;
       } catch (error) {
         console.error('Erreur lors de la mise à jour du client :', error);
-        throw error;
+        throw new Error('Impossible de mettre à jour vos informations.');
       }
     },
-    [updateClient],
+    [updateClient, codeParrain],
   );
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
 
-    const MySwal = withReactContent(Swal);
+  /**
+   * Gère le processus de parrainage
+   */
+  const handleParrainage = useCallback(
+    async (currentUser: TelegramUser) => {
+      if (!codeParrain)
+        throw new Error('Code de parrainage erroné ou inexistant.');
+
+      const updateResponse = await handleUpdateClient(currentUser.id);
+      if (!updateResponse?.id)
+        throw new Error('Impossible de récupérer vos informations.');
+
+      setUser((prevUser) => ({ ...prevUser, ...updateResponse }));
+      dispatch(setUserState({ created: true, client: updateResponse }));
+
+      await MySwal.fire({
+        text: `Code de parrainage "${code}" ajouté à votre compte.`,
+        allowOutsideClick: false,
+        timer: 10000,
+        timerProgressBar: true,
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+    },
+    [dispatch, handleUpdateClient, code, codeParrain, setUser],
+  );
+
+  /**
+   * Gère la soumission du formulaire de parrainage
+   */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
-      console.log('GO');
+      if (!currentUser) throw new Error('Utilisateur introuvable.');
 
-      if (currentUser) {
-        setIsLoading(true);
-        console.log('GP');
-
-        await handleParrainage(currentUser);
-      } else {
-        throw new Error('No client');
-      }
+      await handleParrainage(currentUser);
     } catch (error) {
-      MySwal.fire({
+      console.error('Erreur lors de l’enregistrement du parrainage :', error);
+      await MySwal.fire({
         title: 'Erreur',
-        text: `Une erreur est survenue lors de l’enregistrement ${(error as any).message}`,
+        text: `Une erreur est survenue : ${(error as Error).message}`,
         icon: 'error',
         confirmButtonText: 'Réessayer',
-
         allowOutsideClick: false,
       });
     } finally {
-      console.log('G');
-
-      setIsLoading(false); // Arrête le chargement, quelle que soit l'issue
+      setIsLoading(false);
     }
   };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -127,25 +128,27 @@ const CheckParrainModal = ({
             type="text"
             id="codeId"
             className={inputClasses}
-            placeholder={'Entrez le code de parrainage'}
-            value={code || ''}
+            placeholder="Entrez le code de parrainage"
+            value={code}
             onChange={(e) => setCode(e.target.value)}
           />
         </div>
 
         <div className="m-auto flex items-center">
           <button
-            className={`btn btn-secondary m-auto `}
+            className="btn btn-secondary m-auto"
             type="reset"
             onClick={closeModal}
           >
             Annuler
           </button>
+
           <button
             className={`btn btn-primary m-auto ${isLoading ? 'loading loading-spinner text-warning' : ''}`}
             type="submit"
+            disabled={isLoading}
           >
-            Enregistrer
+            {isLoading ? 'Chargement...' : 'Enregistrer'}
           </button>
         </div>
       </form>
