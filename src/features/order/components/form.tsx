@@ -30,9 +30,9 @@ import {
 
 import {
   useDepositMutation,
-  useGetAllCaissierQuery,
   useGetCaissierByPMAndBookmakerQuery,
   useGetEmployeePaymentMethodQuery,
+  useGetEmployeesByBookmakerQuery,
   useGetPaymentMethodsQuery,
 } from '../api';
 
@@ -85,7 +85,15 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             refetchOnMountOrArgChange: true,
           },
         )
-      : useGetAllCaissierQuery();
+      : useGetEmployeesByBookmakerQuery(
+          {
+            bookmaker_id: bookmaker as number,
+          },
+          {
+            skip: !payment || !bookmaker,
+            refetchOnMountOrArgChange: true,
+          },
+        );
 
   const caissiers = caissiersData || [];
 
@@ -269,9 +277,8 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
             <span className="loading loading-dots">
               Chargement du code à taper
             </span>
-          ) : (
+          ) : prop.order_type === 'DEPOT' ? (
             employeePaymentData &&
-            prop.order_type === 'DEPOT' &&
             isEmployeePaymentDataSuccess && (
               <div role="alert" className="alert alert-info mb-6">
                 <svg
@@ -288,6 +295,26 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
                   ></path>
                 </svg>
                 <span>{`Tapez : ${employeePaymentData?.syntaxe}, puis entrez l'id de votre transaction sur la page suivante`}</span>
+              </div>
+            )
+          ) : (
+            employeePaymentData &&
+            isEmployeePaymentDataSuccess && (
+              <div role="alert" className="alert alert-info mb-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="h-6 w-6 shrink-0 stroke-current"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span>{`Ville : ${employeePaymentData?.ville}, Rue :  ${employeePaymentData?.rue}`}</span>
               </div>
             )
           )}

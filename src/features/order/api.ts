@@ -23,10 +23,14 @@ const appApi = apiSlice.injectEndpoints({
       query: () => `payment_methods`,
       providesTags: ['PaymentMethods'], // Ajouter un tag
     }),
-    // getBookmakers: builder.query<Bookmaker[], void>({
-    //   query: () => `bookmakers`,
-    //   providesTags: ['Bookmakers'], // Ajouter un tag
-    // }),
+    getEmployeesByBookmaker: builder.query<
+      Employee[],
+      { bookmaker_id: number }
+    >({
+      query: ({ bookmaker_id }) =>
+        `employees/filter/by/bookmaker/${bookmaker_id}`,
+      providesTags: ['Employees'], // Ajouter un tag
+    }),
     getCaissierByPMAndBookmaker: builder.query<Employee[], EmployeeGetParams>({
       query: ({ bookmaker_id, payment_method_id, country_code }) =>
         `employees/filter/${bookmaker_id}/${payment_method_id}/${country_code}`,
@@ -70,4 +74,5 @@ export const {
   useGetCaissierByPMAndBookmakerQuery,
   useGetEmployeePaymentMethodQuery,
   useDepositMutation,
+  useGetEmployeesByBookmakerQuery,
 } = appApi;
