@@ -57,6 +57,12 @@ const Informations: React.FC = () => {
           </div>
         </div>
         <span className="text-base-100">Powered by Emile Business</span>
+        <a
+          className="text-primary underline mb-5"
+          href="https://alicebot.me/terms-of-use.html"
+        >
+          COnditions D'utilisation
+        </a>
       </div>
     </div>
   );

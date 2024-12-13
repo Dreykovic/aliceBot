@@ -5,11 +5,32 @@ import { useNavigate } from 'react-router-dom';
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch, RootState } from '@/stores';
+import Modal from 'react-modal';
+import WithdrawModal from './components/create';
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 const Parrainage: React.FC = () => {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
   const dispatch = useDispatch<AppDispatch>();
   const { client } = useSelector((state: RootState) => state.user);
   const montant = parseFloat(client?.montant_parainage_depot as string) ?? 0;
+  // const montant = 30000;
   const navigate = useNavigate();
   const { width } = useWindowDimensions();
 
@@ -35,6 +56,7 @@ const Parrainage: React.FC = () => {
                   className={`btn btn-${montant < 2000 ? 'disabled' : 'sm'}`}
                   tabIndex={-1}
                   role="button"
+                  onClick={openModal}
                   aria-disabled={montant < 2000 ? 'true' : undefined}
                 >
                   Retirer
@@ -63,6 +85,14 @@ const Parrainage: React.FC = () => {
           </div>
         </div>{' '}
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Créer une id de bookMaker"
+      >
+        <WithdrawModal closeModal={closeModal} />
+      </Modal>
     </>
   );
 };

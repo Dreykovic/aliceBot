@@ -4,30 +4,22 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-import BookmakerSelector from '@/components/bookmaker-picker';
 import { RootState } from '@/stores';
-import { useGetBookmakersQuery } from '@/stores/api-slice';
-import { Bookmaker, ClientBookmaker } from '@/types/models-interfaces';
 
-import { useCreateClientBookmakerMutation } from '../api';
+import { RetraitParrainage, useWithdrawReferralMutation } from '../api';
 
-const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
-  const [isBookmakerSelectOpen, setIsBookmakerSelectOpen] = useState(false);
-
-  const [bookmaker, setBookmaker] = useState<number>();
-  const [identifiant, setIdentifiant] = useState<string>();
+const WithdrawModal = ({ closeModal }: { closeModal: () => void }) => {
+  const [montant, setMontant] = useState<number>();
+  const [numero, setNumero] = useState<string>();
   // const [client, setClient] = useState<number>();
   const { client } = useSelector((state: RootState) => state.user);
-
-  const { data: BOOKMAKERS, isLoading: isBookmakersLoading } =
-    useGetBookmakersQuery();
 
   const inputClasses =
     'bg-neutral rounded pl-6 py-2 focus:outline-none w-full text-neutral-content focus:bg-base-100 m-1 focus:text-neutral focus:ring-1 focus:ring-primary ';
   const iconClasses = 'w-12 h-12 text-neutral-content p-1';
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [createClientBookmaker] = useCreateClientBookmakerMutation();
+  const [withdraw] = useWithdrawReferralMutation();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -36,19 +28,19 @@ const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
 
     try {
       if (client) {
-        const data: Partial<ClientBookmaker> = {
-          identifiant: identifiant as string,
-          bookmaker: bookmaker as number,
-          client: client.id,
+        const data: RetraitParrainage = {
+          numero_retrait: numero as string,
+          montant_retrait: montant as number,
+          client: client.id as number,
         };
         setIsLoading(true);
-        await createClientBookmaker(data).unwrap();
+        await withdraw(data).unwrap();
 
         MySwal.fire({
           title: 'Succès !',
 
           html: ` <div>
-                      <h1>Enregistré avec succès</h1>
+                      <h1>Retrait Enregistré avec succès</h1>
                     </div>`,
           icon: 'success',
 
@@ -66,8 +58,8 @@ const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
         });
         // Réinitialiser le formulaire après le succès
 
-        setIdentifiant('');
-        setBookmaker(undefined);
+        setNumero('');
+        setMontant(undefined);
       } else {
         throw new Error('No client');
       }
@@ -89,28 +81,25 @@ const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">
-          <Icon.Journals className={iconClasses} />
-          <BookmakerSelector
-            id="bookmaker"
-            open={isBookmakerSelectOpen}
-            onToggle={() => setIsBookmakerSelectOpen(!isBookmakerSelectOpen)}
-            onChange={setBookmaker}
-            selectedValue={
-              BOOKMAKERS?.find((option) => option.id === bookmaker) as Bookmaker
-            }
-            dataArray={BOOKMAKERS}
-            isLoading={isBookmakersLoading}
+          <Icon.Cash className={iconClasses} />
+          <input
+            type="number"
+            id="montantId"
+            className={inputClasses}
+            placeholder={'Montant À Retirer'}
+            value={montant || ''}
+            onChange={(e) => setMontant(Number(e.target.value))}
           />
         </div>
         <div className="flex items-center text-lg mb-6 bg-base-300 rounded-lg bordered">
           <Icon.PersonBadge className={iconClasses} />
           <input
             type="text"
-            id="identifiant"
+            id="numero"
             className={inputClasses}
-            placeholder={'ID Compte'}
-            value={identifiant || ''}
-            onChange={(e) => setIdentifiant(e.target.value)}
+            placeholder={'Numéro De Retrait'}
+            value={numero || ''}
+            onChange={(e) => setNumero(e.target.value)}
           />
         </div>
         <div className="m-auto flex items-center">
@@ -126,4 +115,4 @@ const CreateClientBookmaker = ({ closeModal }: { closeModal: () => void }) => {
   );
 };
 
-export default CreateClientBookmaker;
+export default WithdrawModal;
