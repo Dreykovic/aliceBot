@@ -60,6 +60,7 @@ const Informations: React.FC = () => {
         <a
           className="text-primary underline mb-5"
           href="https://alicebot.me/terms-of-use.html"
+          target="_blank"
         >
           COnditions D'utilisation
         </a>
