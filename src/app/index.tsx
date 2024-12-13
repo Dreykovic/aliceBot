@@ -106,7 +106,7 @@ const App: React.FC = () => {
 
       setUser(clientData as Client);
       dispatch(setUserState({ created: true, client: clientData }));
-      if (true) {
+      if (created) {
         await handleParrainage();
       }
     } catch (error) {
