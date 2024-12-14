@@ -7,6 +7,8 @@ import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch, RootState } from '@/stores';
 import Modal from 'react-modal';
 import WithdrawModal from './components/create';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 const customStyles = {
   content: {
@@ -18,9 +20,12 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
+const MySwal = withReactContent(Swal);
+
 const Parrainage: React.FC = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
+  function openModal(e: any) {
+    e.stopPropagation();
     setIsOpen(true);
   }
 
@@ -42,6 +47,18 @@ const Parrainage: React.FC = () => {
     dispatch(setPageTitle({ title: 'Parrainage' }));
     dispatch(setPageType({ type: 'main' }));
   }, [dispatch, navigate, width]);
+  const showMessage = async () => {
+    if (montant < 2000) {
+      await MySwal.fire({
+        text: `Retrait disponible uniquement lorsque le solde de parrainage est upérieur ou égale à 2000.`,
+        allowOutsideClick: false,
+        timer: 10000,
+        timerProgressBar: true,
+        showCloseButton: true,
+        showConfirmButton: false,
+      });
+    }
+  };
   return (
     <>
       {/* {contentHeight} /{height} /{rect?.top} */}
@@ -51,9 +68,9 @@ const Parrainage: React.FC = () => {
             <div className="stat">
               <div className="stat-title">Montant Total de parrainage</div>
               <div className="stat-value">{`${montant}  FCFA`}</div>
-              <div className="stat-actions">
+              <div className="stat-actions " onClick={showMessage}>
                 <button
-                  className={`btn btn-${montant < 2000 ? 'disabled' : 'sm'}`}
+                  className={`btn btn-${montant < 2000 ? 'disabled' : 'sm'} tooltip`}
                   tabIndex={-1}
                   role="button"
                   onClick={openModal}
@@ -63,25 +80,6 @@ const Parrainage: React.FC = () => {
                 </button>
               </div>
             </div>
-          </div>
-          <div role="alert" className="alert alert-info">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="h-6 w-6 shrink-0 stroke-current"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
-            </svg>
-            <span>
-              Retrait disponible uniquement lorsque le solde de parrainage est
-              supérieur ou égale à 2000.
-            </span>
           </div>
         </div>{' '}
       </div>

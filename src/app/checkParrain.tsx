@@ -81,15 +81,6 @@ const CheckParrainModal = ({
 
       setUser((prevUser) => ({ ...prevUser, ...updateResponse }));
       dispatch(setUserState({ created: true, client: updateResponse }));
-
-      await MySwal.fire({
-        text: `Code de parrainage "${code}" ajouté à votre compte.`,
-        allowOutsideClick: false,
-        timer: 10000,
-        timerProgressBar: true,
-        showCloseButton: true,
-        showConfirmButton: false,
-      });
     },
     [dispatch, handleUpdateClient, code, codeParrain, setUser],
   );

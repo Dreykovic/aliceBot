@@ -71,7 +71,7 @@ export default function EmployeeSelector({
                 src={`assets/svg/payments/${selectedValue.nom_moyen}.svg`}
                 className={'inline mr-2 h-4 rounded-sm'}
               /> */}
-              {selectedValue.username}
+              {`${selectedValue.username} (${selectedValue.nom}${selectedValue.prenom})`}
             </span>
           ) : (
             <span className="truncate flex items-center">
@@ -133,8 +133,8 @@ export default function EmployeeSelector({
                   'max-h-64  scrollbar-track-accent scrollbar-thumb-accent hover:scrollbar-thumb-secondary scrollbar-thumb-rounded scrollbar-thin overflow-y-scroll'
                 }
               >
-                {dataArray?.filter((payment) =>
-                  payment.username
+                {dataArray?.filter((employee) =>
+                  `${employee.username} (${employee.nom}${employee.prenom})`
                     .toLowerCase()
                     .startsWith(query.toLowerCase()),
                 ).length === 0 ? (
@@ -147,8 +147,8 @@ export default function EmployeeSelector({
                   )
                 ) : (
                   dataArray
-                    ?.filter((payment) =>
-                      payment.username
+                    ?.filter((employee) =>
+                      `${employee.username} (${employee.nom}${employee.prenom})`
                         .toLowerCase()
                         .startsWith(query.toLowerCase()),
                     )
@@ -172,7 +172,7 @@ export default function EmployeeSelector({
                         /> */}
 
                           <span className="font-normal truncate">
-                            {value.username}
+                            {`${value.username} ( ${value.nom}${value.prenom} )`}
                           </span>
                           {value.username === selectedValue?.username ? (
                             <span className="text-primary absolute inset-y-0 right-0 flex items-center pr-8">
