@@ -105,6 +105,7 @@ const CheckParrainModal = ({
       if (!currentUser) throw new Error('Utilisateur introuvable.');
 
       await handleParrainage(currentUser);
+      closeModal();
     } catch (error) {
       console.error('Erreur lors de l’enregistrement du parrainage :', error);
       await MySwal.fire({
