@@ -8,6 +8,7 @@ import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
 
 import socials from './socials';
+import clients from './clients';
 
 const Informations: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,6 +36,29 @@ const Informations: React.FC = () => {
           </div>
           <div className="flex  items-center justify-around gap-5 flex-wrap">
             {socials.map((social) => {
+              return (
+                <a
+                  href={social.link}
+                  target="_blank"
+                  className="flex flex-col items-center"
+                  key={social.label}
+                  rel="noreferrer"
+                >
+                  <div className="avatar placeholder">
+                    <div className="bg-neutral text-neutral-content w-8 rounded-full">
+                      <span className="text-xs">{social.icon}</span>
+                    </div>
+                  </div>
+                  <span className="text-[8px] text-base-content">
+                    {social.label}
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+          <h3 className="text-base-content my-5">Service CLient</h3>
+          <div className="flex  items-center justify-around gap-5 flex-wrap">
+            {clients.map((social) => {
               return (
                 <a
                   href={social.link}
