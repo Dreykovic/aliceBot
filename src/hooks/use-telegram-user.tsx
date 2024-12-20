@@ -58,17 +58,7 @@ const useTelegramUser = (): TelegramUser | null => {
     }
   };
 
-  return env.appState === 'dev'
-    ? {
-        id: '7332983362',
-
-        firstName: 'Tester',
-        lastName: 'Local',
-        username: 'CodeurPassionnes',
-        photoUrl: 'https://t.me/CodeurPassionnes',
-        languageCode: 'string',
-      }
-    : user;
+  return user;
 };
 
 export default useTelegramUser;
