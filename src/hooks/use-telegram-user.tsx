@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import env from '@/config/env';
-
 import { TelegramUser } from '../types/api';
 
 const useTelegramUser = (): TelegramUser | null => {
