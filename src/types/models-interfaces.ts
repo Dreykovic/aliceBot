@@ -34,11 +34,13 @@ export interface PaymentMethod {
   contact: string;
   mot_recharge: string;
   mot_retrait: string;
+  payement_method_img: string;
 }
 
 export interface Bookmaker {
   id: undefined | number;
   nom_bookmaker: string;
+  bookmaker_img: string;
 }
 
 export interface EmployeePaymentMethod {

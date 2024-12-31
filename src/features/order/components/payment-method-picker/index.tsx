@@ -2,7 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { PaymentMethod } from '@/types/models-interfaces';
-
+import env from '@/config/env';
+import DefaultPaymentImg from '@/assets/images/payments/images.png';
 export interface PaymentSelectorProps {
   id: string;
   open: boolean;
@@ -66,11 +67,15 @@ export default function PaymentSelector({
         >
           {selectedValue ? (
             <span className="truncate flex items-center">
-              {/* <img
+              <img
                 alt={`${selectedValue.nom_moyen}`}
-                src={`assets/svg/payments/${selectedValue.nom_moyen}.svg`}
+                src={
+                  selectedValue.payement_method_img
+                    ? `${env.baseServerUrl}${selectedValue.payement_method_img}`
+                    : DefaultPaymentImg
+                }
                 className={'inline mr-2 h-4 rounded-sm'}
-              /> */}
+              />{' '}
               {selectedValue.nom_moyen}
             </span>
           ) : (
@@ -163,11 +168,15 @@ export default function PaymentSelector({
                             onToggle();
                           }}
                         >
-                          {/* <img
-                          alt={`${value.value}`}
-                          src={`assets/svg/payments/${value.value}.svg`}
-                          className={'inline mr-2 h-4 rounded-sm'}
-                        /> */}
+                          <img
+                            alt={`${value.nom_moyen}`}
+                            src={
+                              value.payement_method_img
+                                ? `${env.baseServerUrl}${value.payement_method_img}`
+                                : DefaultPaymentImg
+                            }
+                            className={'inline mr-2 h-4 rounded-sm'}
+                          />
 
                           <span className="font-normal truncate">
                             {value.nom_moyen}

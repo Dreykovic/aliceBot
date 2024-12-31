@@ -11,7 +11,6 @@ const useTelegramUser = (): TelegramUser | null => {
     const _telegram = (window as any).Telegram;
 
     if (!_telegram || !_telegram.WebApp || !_telegram.WebApp.initData) {
-      // console.log("En attente de l'initialisation de Telegram...");
       return null;
     }
 

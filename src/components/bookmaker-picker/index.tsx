@@ -1,7 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
-
+import DefaultBookMakerImg from '@/assets/images/bookmakers/download.png';
 import { Bookmaker } from '@/types/models-interfaces';
+import env from '@/config/env';
 export interface BookmakerSelector {
   id: string;
   open: boolean;
@@ -66,7 +67,11 @@ export default function BookmakerSelector({
             <span className="truncate flex items-center">
               <img
                 alt={`${selectedValue.nom_bookmaker}`}
-                src={`assets/svg/bookmakers/${selectedValue.nom_bookmaker}.svg`}
+                src={
+                  selectedValue.bookmaker_img
+                    ? `${env.baseServerUrl}${selectedValue.bookmaker_img}`
+                    : DefaultBookMakerImg
+                }
                 className={'inline mr-2 h-4 rounded-sm'}
               />
               {selectedValue.nom_bookmaker}
@@ -163,7 +168,11 @@ export default function BookmakerSelector({
                         >
                           <img
                             alt={`${value.nom_bookmaker}`}
-                            src={`assets/svg/bookmakers/${value.nom_bookmaker}.svg`}
+                            src={
+                              value.bookmaker_img
+                                ? `${env.baseServerUrl}${value.bookmaker_img}`
+                                : DefaultBookMakerImg
+                            }
                             className={'inline mr-2 h-4 rounded-sm'}
                           />
 

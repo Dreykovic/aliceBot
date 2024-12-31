@@ -79,6 +79,9 @@ const Informations: React.FC = () => {
               );
             })}
           </div>
+          <div className="text-base-content">
+            Code promo : <span className="font-bold">ABT88</span>{' '}
+          </div>
         </div>
         <span className="text-base-100">Powered by Emile Business</span>
         <a

@@ -99,7 +99,6 @@ const App: React.FC = () => {
     try {
       const { data: clientData, created } =
         await handleGetOrCreateClient(currentUser);
-      console.log(clientData);
 
       if (!clientData?.id)
         throw new Error('Erreur lors de la récupération de vos informations.');

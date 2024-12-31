@@ -91,7 +91,6 @@ const WithdrawModal = ({ closeModal }: { closeModal: () => void }) => {
         const { data: clientData } = await handleGetOrCreateClient(
           currentUser as TelegramUser,
         );
-        console.log(clientData);
 
         if (!clientData?.id)
           throw new Error(

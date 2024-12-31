@@ -3,7 +3,9 @@ import * as Icon from 'react-bootstrap-icons';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import DefaultBookMakerImg from '@/assets/images/bookmakers/download.png';
 
+import env from '@/config/env';
 import { ClientBookmaker } from '@/types/models-interfaces';
 
 import { useDeleteClientBookmakerMutation, useGetBookmakerQuery } from '../api';
@@ -85,7 +87,11 @@ const CLientBookmakerItem = ({ IdsItem }: Props) => {
             {isBookmakerSuccess ? (
               <img
                 alt={`${bookmakerData.nom_bookmaker}`}
-                src={`assets/svg/bookmakers/${bookmakerData.nom_bookmaker}.svg`}
+                src={
+                  bookmakerData.bookmaker_img
+                    ? `${env.baseServerUrl}${bookmakerData.bookmaker_img}`
+                    : DefaultBookMakerImg
+                }
                 className={' mr-2 object-cover  w-28 h-7'}
               />
             ) : (

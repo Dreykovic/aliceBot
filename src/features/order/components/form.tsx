@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import CopyToClipboard from 'react-copy-to-clipboard';
 
 // import ALICE from '@/assets/images/alice.png';
 import BookmakerSelector from '@/components/bookmaker-picker';
@@ -45,7 +44,7 @@ import SubmitButton from './submit-button';
 type FormPropsType = {
   order_type: 'RETRAIT' | 'DEPOT';
 };
-const actionBtnClasses = 'btn btn-ghost p-2 ';
+const actionBtnClasses = 'font-semibold ';
 const MySwal = withReactContent(Swal);
 
 const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
@@ -57,7 +56,6 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
   const [caissier, setCaissier] = useState<number>();
   const [transaction, setTransaction] = useState<string>('');
   const [contact, setContact] = useState<string | number>('');
-  const [copied, setCopied] = useState<boolean>(false);
 
   const [montant, setMontant] = useState<number | string>(''); // Initialize with an empty string
   // const [client, setClient] = useState<number>();
@@ -300,34 +298,9 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
                 <span>
                   {`Tapez : `}
 
-                  <CopyToClipboard
-                    text={`${employeePaymentData?.syntaxe.replace('{montant}', String(montant))}`}
-                    onCopy={async () => {
-                      setCopied(true);
-                      await MySwal.fire({
-                        text: `Syntaxe "${employeePaymentData?.syntaxe.replace('{montant}', String(montant))}" copié dans la presse papier.`,
-                        allowOutsideClick: false,
-                        timer: 10000,
-                        timerProgressBar: true,
-                        showCloseButton: true,
-                        showConfirmButton: false,
-                        position: 'bottom',
-                      });
-                      setTimeout(() => {
-                        setCopied(false);
-                      }, 3000);
-                    }}
-                  >
-                    <div className={` tooltip`} data-tip="Copier">
-                      <button
-                        className={`${actionBtnClasses} ${copied ? 'text-base-100' : ''}`}
-                      >
-                        {`${employeePaymentData?.syntaxe.replace('{montant}', String(montant))}`}
-                      </button>
-                    </div>
-                  </CopyToClipboard>
-
-                  {`, puis entrez l'id de votre transaction sur la page suivante`}
+                  <span className={`${actionBtnClasses} `}>
+                    {`${employeePaymentData?.syntaxe.replace('{montant}', String(montant))}`}
+                  </span>
                 </span>
               </div>
             )
