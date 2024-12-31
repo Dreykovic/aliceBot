@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
+
 import DefaultBookMakerImg from '@/assets/images/bookmakers/download.png';
-import { Bookmaker } from '@/types/models-interfaces';
 import env from '@/config/env';
+import { Bookmaker } from '@/types/models-interfaces';
 export interface BookmakerSelector {
   id: string;
   open: boolean;

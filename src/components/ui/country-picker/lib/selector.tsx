@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { COUNTRIES } from '../../../../utils/countries';
+
 import { SelectMenuOption } from './types';
 
 export interface CountrySelectorProps {

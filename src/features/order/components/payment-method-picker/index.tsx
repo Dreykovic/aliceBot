@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
-import { PaymentMethod } from '@/types/models-interfaces';
-import env from '@/config/env';
 import DefaultPaymentImg from '@/assets/images/payments/images.png';
+import env from '@/config/env';
+import { PaymentMethod } from '@/types/models-interfaces';
 export interface PaymentSelectorProps {
   id: string;
   open: boolean;

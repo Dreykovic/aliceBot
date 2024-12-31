@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
+import useTelegramUser from '@/hooks/use-telegram-user';
 import { AppDispatch, RootState } from '@/stores';
+import { useGetOrCreateClientMutation } from '@/stores/api-slice';
+import { setUserState } from '@/stores/user-slice';
+import { TelegramUser } from '@/types/api';
 
 import { RetraitParrainage, useWithdrawReferralMutation } from '../api';
-import useTelegramUser from '@/hooks/use-telegram-user';
-import { useGetOrCreateClientMutation } from '@/stores/api-slice';
-import { TelegramUser } from '@/types/api';
-import { setUserState } from '@/stores/user-slice';
 
 const WithdrawModal = ({ closeModal }: { closeModal: () => void }) => {
   const [montant, setMontant] = useState<number>();

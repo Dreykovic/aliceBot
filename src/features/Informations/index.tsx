@@ -7,8 +7,8 @@ import { setPageTitle, setPageType } from '@/components/header/header-slice';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch } from '@/stores';
 
-import socials from './socials';
 import clients from './clients';
+import socials from './socials';
 
 const Informations: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -88,8 +88,9 @@ const Informations: React.FC = () => {
           className="text-primary underline mb-5"
           href="https://alicebot.me/terms-of-use.html"
           target="_blank"
+          rel="noreferrer"
         >
-          COnditions D'utilisation
+          COnditions D&apos;utilisation
         </a>
       </div>
     </div>

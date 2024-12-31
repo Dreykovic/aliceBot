@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import Modal from 'react-modal';
 
 import BgParticles from '@/components/ui/bg-particles';
 import { Loading } from '@/components/ui/loading';
@@ -17,7 +17,8 @@ import { useGetOrCreateClientMutation } from '@/stores/api-slice';
 import { setUserState } from '@/stores/user-slice';
 import { TelegramUser } from '@/types/api';
 import { Client } from '@/types/models-interfaces';
-import CheckParrainModal from './checkParrain';
+
+import CheckParrainModal from './check-parrain';
 
 const MySwal = withReactContent(Swal);
 const swalForParrainage = MySwal.mixin({
@@ -88,7 +89,7 @@ const App: React.FC = () => {
     } catch (error) {
       console.error('Erreur de parrainage :', error);
     }
-  }, [dispatch]);
+  }, []);
 
   const initUser = useCallback(async () => {
     if (!currentUser) {

@@ -3,8 +3,8 @@ import * as Icon from 'react-bootstrap-icons';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import DefaultBookMakerImg from '@/assets/images/bookmakers/download.png';
 
+import DefaultBookMakerImg from '@/assets/images/bookmakers/download.png';
 import env from '@/config/env';
 import { ClientBookmaker } from '@/types/models-interfaces';
 

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import SuspenseContent from '@/components/ui/suspens-content';
-import store from '@/stores/';
+import store from '@/stores';
 
 const App = lazy(() => import('./app'));
 
@@ -15,8 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Suspense fallback={<SuspenseContent />}>
         <Provider store={store}>
           <App />
-
-          {/* <div></div> */}
         </Provider>
       </Suspense>
     </BrowserRouter>

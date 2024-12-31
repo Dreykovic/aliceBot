@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
+import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 import { setPageTitle, setPageType } from '@/components/header/header-slice';
 import useWindowDimensions from '@/hooks/use-window-dimensions';
 import { AppDispatch, RootState } from '@/stores';
-import Modal from 'react-modal';
+
 import WithdrawModal from './components/create';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
 
 const customStyles = {
   content: {

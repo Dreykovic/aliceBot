@@ -4,16 +4,15 @@ import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
+import useTelegramUser from '@/hooks/use-telegram-user';
 import { AppDispatch } from '@/stores';
-
 import {
   useCheckCodeParrainQuery,
   useUpdateClientMutation,
 } from '@/stores/api-slice';
+import { setUserState } from '@/stores/user-slice';
 import { TelegramUser } from '@/types/api';
 import { Client } from '@/types/models-interfaces';
-import { setUserState } from '@/stores/user-slice';
-import useTelegramUser from '@/hooks/use-telegram-user';
 
 const MySwal = withReactContent(Swal);
 
@@ -82,7 +81,7 @@ const CheckParrainModal = ({
       setUser((prevUser) => ({ ...prevUser, ...updateResponse }));
       dispatch(setUserState({ created: true, client: updateResponse }));
     },
-    [dispatch, handleUpdateClient, code, codeParrain, setUser],
+    [dispatch, handleUpdateClient, setUser, codeParrain],
   );
 
   /**

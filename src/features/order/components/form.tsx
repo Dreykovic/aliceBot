@@ -16,7 +16,6 @@ import withReactContent from 'sweetalert2-react-content';
 
 // import ALICE from '@/assets/images/alice.png';
 import BookmakerSelector from '@/components/bookmaker-picker';
-import { COUNTRIES } from '@/utils/countries';
 import CountrySelector from '@/components/ui/country-picker/lib/selector';
 import { SelectMenuOption } from '@/components/ui/country-picker/lib/types';
 import { RootState } from '@/stores';
@@ -27,6 +26,7 @@ import {
   OrderCreate,
   PaymentMethod,
 } from '@/types/models-interfaces';
+import { COUNTRIES } from '@/utils/countries';
 
 import {
   useDepositMutation,
@@ -74,31 +74,38 @@ const Form: React.FC<FormPropsType> = (prop: FormPropsType) => {
     useGetPaymentMethodsQuery();
   const { data: BOOKMAKERS, isLoading: isBookmakersLoading } =
     useGetBookmakersQuery();
+  const shouldFetchCaissiers =
+    prop.order_type === 'DEPOT' && payment && bookmaker && country;
+  const shouldFetchEmployees = prop.order_type !== 'DEPOT' && bookmaker;
 
-  const { data: caissiersData, isLoading: isCaissierLoading } =
-    prop.order_type === 'DEPOT'
-      ? useGetCaissierByPMAndBookmakerQuery(
-          {
-            bookmaker_id: bookmaker as number,
-            payment_method_id: payment as number,
-            country_code: country,
-          },
-          {
-            skip: !payment || !bookmaker || !country,
-            refetchOnMountOrArgChange: true,
-          },
-        )
-      : useGetEmployeesByBookmakerQuery(
-          {
-            bookmaker_id: bookmaker as number,
-          },
-          {
-            skip: !payment || !bookmaker,
-            refetchOnMountOrArgChange: true,
-          },
-        );
+  const { data: caissiersData, isLoading: isCaissierDataLoading } =
+    useGetCaissierByPMAndBookmakerQuery(
+      {
+        bookmaker_id: bookmaker as number,
+        payment_method_id: payment as number,
+        country_code: country,
+      },
+      {
+        skip: !shouldFetchCaissiers,
+        refetchOnMountOrArgChange: true,
+      },
+    );
 
-  const caissiers = caissiersData || [];
+  const { data: employeesData, isLoading: isEmployeesLoading } =
+    useGetEmployeesByBookmakerQuery(
+      {
+        bookmaker_id: bookmaker as number,
+      },
+      {
+        skip: !shouldFetchEmployees,
+        refetchOnMountOrArgChange: true,
+      },
+    );
+  const data = prop.order_type === 'DEPOT' ? caissiersData : employeesData;
+  const isCaissierLoading =
+    prop.order_type === 'DEPOT' ? isCaissierDataLoading : isEmployeesLoading;
+
+  const caissiers = data || [];
 
   const isCaissierDisabled = !payment || !bookmaker;
 
