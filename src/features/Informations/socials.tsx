@@ -15,7 +15,7 @@ const socials: SocialIconType[] = [
         className={`${IconClasses} bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045]`}
       />
     ),
-    link: 'https://www.instagram.com/alice_bot_/',
+    link: 'https://www.instagram.com/alicetelbot/profilecard/?igsh=ajB2dm81bnlpdmw4',
   },
   {
     label: 'YouTube',

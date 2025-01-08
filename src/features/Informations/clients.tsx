@@ -12,7 +12,7 @@ const clients: SocialIconType[] = [
     label: 'WhatsApp',
     icon: <Icon.Whatsapp className={`${IconClasses} text-success`} />,
 
-    link: 'https://wa.me/message/TPXZT6NXX5U5K1',
+    link: 'https://wa.me/+48532676920',
   },
   {
     label: 'Telegram',
